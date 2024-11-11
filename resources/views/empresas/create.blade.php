@@ -12,7 +12,7 @@
     <div class="bg-[url('/public/img/pared.jpg')] bg-cover bg-no-repeat">
         <x-cuerpo-pagina/>
         <div class="flex items-center justify-center min-h-screen bg-no-repeat bg-center drop-shadow-3xl z-20">
-            <div class="w-full max-w-lg p-6 space-y-2 bg-gray-800 bg-opacity-70 rounded-lg shadow-xl z-10">
+            <div class="backdrop-blur-sm w-full max-w-lg p-6 space-y-2 bg-gray-800 bg-opacity-70 rounded-lg shadow-xl z-10">
                 <h1 class="text-2xl font-bold text-center text-white mb-3">Registrar Nueva Empresa</h1>
                 <form action="{{ route('empresas.store') }}" method="POST" onsubmit="showLoading()">
                     @csrf
@@ -42,7 +42,7 @@
                     </div>
                     <div class="mb-3 flex items-center">
                         <input type="checkbox" id="confirmar_subscripcion" name="confirmar_subscripcion" class="checked:bg-red-600 form-checkbox h-4 w-4 text-blue-600 rounded" required>
-                        <label for="confirmar_subscripcion" class="ml-2 text-gray-300 text-sm">Confirmar Subscripción*</label>
+                        <label for="confirmar_subscripcion" class=" accent-red-600 ml-2 text-gray-300 text-sm">Confirmar Subscripción*</label>
                     </div>
                     <div class="mb-3 flex items-center">
                         <input type="checkbox" id="confirmar_terminos" name="confirmar_terminos" class="checked:bg-red-600 form-checkbox h-4 w-4 text-blue-600 rounded" required>
