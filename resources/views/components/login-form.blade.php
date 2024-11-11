@@ -27,7 +27,7 @@
                     <label for="password" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Contraseña') }}</label>
                     <input id="password" class="text-white block mt-1 w-full bg-gray-600 border-gray-600 focus:border-red-600 focus:ring-red-600 hover:border-red-600 rounded-md shadow-sm" type="password" name="password" required autocomplete="current-password" />
                     @error('password')
-                        <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
+                        <span class="text-white text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
                     @enderror
                 </div>
     
