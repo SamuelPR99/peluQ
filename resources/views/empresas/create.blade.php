@@ -18,15 +18,15 @@
                     @csrf
                     <div class="mb-3">
                         <label for="nombre_empresa" class="block text-gray-300 text-sm">Nombre de la Empresa</label>
-                        <input type="text" class="hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded" id="nombre_empresa" name="nombre_empresa" required>
+                        <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded" id="nombre_empresa" name="nombre_empresa" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="block text-gray-300 text-sm">Correo Electrónico</label>
-                        <input type="email" class="hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded" id="email" name="email" required>
+                        <input type="email" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded" id="email" name="email" required>
                     </div>
                     <div class="mb-3">
                         <label for="telefono" class="block text-gray-300 text-sm">Teléfono</label>
-                        <input type="text" class="hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="telefono" name="telefono" required>
+                        <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="telefono" name="telefono" required>
                     </div>
                     <div class="mb-3">
                         <label for="map" class="block text-gray-300 text-sm">Selecciona Dirección</label>
@@ -34,11 +34,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="direccion" class="block text-gray-300 text-sm">Dirección</label>
-                        <input type="text" class="hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="direccion" name="direccion" required>
+                        <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="direccion" name="direccion" required>
                     </div>
                     <div class="mb-3">
                         <label for="codigo_postal" class="block text-gray-300 text-sm">Código Postal</label>
-                        <input type="text" class="hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="codigo_postal" name="codigo_postal" required>
+                        <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="codigo_postal" name="codigo_postal" required>
                     </div>
                     <div class="mb-3 flex items-center">
                         <input type="checkbox" id="confirmar_subscripcion" name="confirmar_subscripcion" class="checked:bg-red-600 form-checkbox h-4 w-4 text-blue-600 rounded" required>
