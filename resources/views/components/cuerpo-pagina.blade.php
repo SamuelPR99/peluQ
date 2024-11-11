@@ -4,15 +4,15 @@
         <nav>
             <ul class="flex space-x-4">
                 @if (Auth::check())
-                <li><span class="hover:text-red-600 hover:scale-110">{{ Auth::user()->name }}</span></li>
+                <li><span class="hover:text-red-600 hover:scale-110 hover:animate-pulse">{{ Auth::user()->name }}</span></li>
                 <li>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf {{-- el csrf es para evitar ataques de tipo csrf --}}
-                        <button type="submit" class="hover:text-red-600 hover:scale-110">Cerrar Sesión</button>
+                        <button type="submit" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">Cerrar Sesión</button>
                     </form>
                 </li>
                 @elseif (!Request::is('log'))
-                <li><a href="{{ route('login') }}" class="hover:text-red-600 hover:scale-110">Iniciar Sesión</a></li>
+                <li><a href="{{ route('login') }}" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">Iniciar Sesión</a></li>
                 @endif
                 <li><button onclick="window.location='{{ url('/') }}'" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">Inicio</button></li>
                 <li><button onclick="window.location='{{ url('/sobreNosotros') }}'" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">Sobre nosotros</button></li>
