@@ -6,9 +6,13 @@ use App\Models\Empresa;
 use App\Services\GeocodingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class EmpresasController extends Controller
 {
+    use AuthorizesRequests;
     protected $geocodingService;
 
     public function __construct(GeocodingService $geocodingService)
@@ -46,36 +50,42 @@ class EmpresasController extends Controller
             'telefono' => $request->telefono,
             'direccion' => $request->direccion,
             'codigo_postal' => $request->codigo_postal,
-            'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo', // Asegúrate de manejar este campo correctamente
+            'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
             'coordenadas' => $coordenadas,
-            'user_id' => Auth::id(), // Aquí se asigna el ID del usuario autenticado
+            'user_id' => Auth::id(),
         ]);
+
+        DB::statement('CALL update_user_type(?)', [Auth::id()]);
 
         return redirect()->route('empresas.peluqueros.index', ['empresa' => $empresa->id]);
     }
 
     public function show(Empresa $empresa)
     {
+        $this->authorize('view', $empresa);
         return view('empresas.show', compact('empresa'));
     }
 
     public function edit(Empresa $empresa)
     {
+        $this->authorize('update', $empresa);
         return view('empresas.edit', compact('empresa'));
     }
 
     public function update(Request $request, Empresa $empresa)
     {
+        $this->authorize('update', $empresa);
+
         $request->validate([
             'nombre_empresa' => 'required',
             'email' => 'required|email',
             'telefono' => 'required',
             'direccion' => 'required',
             'codigo_postal' => 'required',
-            'estado_subscripcion' => 'required',
+            'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
         ]);
 
-        $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', '. $request->codigo_postal);
+        $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
 
         $empresa->update([
             'nombre_empresa' => $request->nombre_empresa,
@@ -83,16 +93,16 @@ class EmpresasController extends Controller
             'telefono' => $request->telefono,
             'direccion' => $request->direccion,
             'codigo_postal' => $request->codigo_postal,
-            'estado_subscripcion' => $request->estado_subscripcion,
+            'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
             'coordenadas' => $coordenadas,
-            'user_id' => Auth::id(), 
         ]);
 
-        return redirect()->route('empresas.index');
+        return redirect()->route('dashboard');
     }
 
     public function destroy(Empresa $empresa)
     {
+        $this->authorize('delete', $empresa);
         $empresa->delete();
         return redirect()->route('empresas.index');
     }
