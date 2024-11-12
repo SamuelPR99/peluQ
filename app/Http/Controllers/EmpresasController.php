@@ -75,23 +75,22 @@ class EmpresasController extends Controller
             'telefono' => 'required',
             'direccion' => 'required',
             'codigo_postal' => 'required',
-            'estado_subscripcion' => 'required',
+            'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo', // Asegúrate de manejar este campo correctamente
         ]);
 
-        $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', '. $request->codigo_postal);
+        $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
 
-        $empresa->update([
+        $empresa->where('id', $empresa->id)->update([
             'nombre_empresa' => $request->nombre_empresa,
             'email' => $request->email,
             'telefono' => $request->telefono,
             'direccion' => $request->direccion,
             'codigo_postal' => $request->codigo_postal,
-            'estado_subscripcion' => $request->estado_subscripcion,
+            'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
             'coordenadas' => $coordenadas,
-            'user_id' => Auth::id(), 
         ]);
 
-        return redirect()->route('empresas.index');
+        return redirect()->route('dashboard');
     }
 
     public function destroy(Empresa $empresa)
