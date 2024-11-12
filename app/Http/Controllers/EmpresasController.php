@@ -6,6 +6,7 @@ use App\Models\Empresa;
 use App\Services\GeocodingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class EmpresasController extends Controller
 {
@@ -48,8 +49,10 @@ class EmpresasController extends Controller
             'codigo_postal' => $request->codigo_postal,
             'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo', // Asegúrate de manejar este campo correctamente
             'coordenadas' => $coordenadas,
-            'user_id' => Auth::id(), // Aquí se asigna el ID del usuario autenticado
+            'user_id' => Auth::id(),
         ]);
+
+        DB::statement('CALL update_user_type(?)', [Auth::id()]);
 
         return redirect()->route('empresas.peluqueros.index', ['empresa' => $empresa->id]);
     }
