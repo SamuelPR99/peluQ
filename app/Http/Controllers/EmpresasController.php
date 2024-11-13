@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
+use App\Providers\AuthServiceProvider;
 class EmpresasController extends Controller
 {
     use AuthorizesRequests;
@@ -56,7 +56,7 @@ class EmpresasController extends Controller
         ]);
 
         DB::statement('CALL update_user_type(?)', [Auth::id()]);
-
+        
         return redirect()->route('empresas.peluqueros.index', ['empresa' => $empresa->id]);
     }
 
