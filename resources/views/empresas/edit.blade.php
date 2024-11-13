@@ -118,9 +118,12 @@
             document.getElementById('termsModal').classList.add('hidden');
         }
         document.addEventListener('DOMContentLoaded', function () {
-            var map = L.map('map').setView([40.416, -3.70], 5);
+            var coordenadas = "{{ $empresa->coordenadas }}".split(',');
+            var empresaLat = parseFloat(coordenadas[0]);
+            var empresaLng = parseFloat(coordenadas[1]);
+            var map = L.map('map').setView([empresaLat, empresaLng], 15);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            var marker;
+            var marker = L.marker([empresaLat, empresaLng]).addTo(map);
             map.on('click', function (e) {
                 if (marker) map.removeLayer(marker);
                 marker = L.marker(e.latlng).addTo(map);

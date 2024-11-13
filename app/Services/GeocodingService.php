@@ -43,7 +43,6 @@ class GeocodingService
 
     private function simplifyAddress($address)
     {
-        // Implementar lógica para simplificar la dirección
         // Por ejemplo, eliminar números de calle y detalles específicos
         return preg_replace('/\d+/', '', $address);
     }
