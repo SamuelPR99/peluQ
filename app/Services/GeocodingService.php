@@ -11,9 +11,12 @@ class GeocodingService
     {
         $client = new Client();
         try {
+            // Simplificar la dirección eliminando detalles específicos
+            $simplifiedAddress = $this->simplifyAddress($address);
+
             $response = $client->get('https://nominatim.openstreetmap.org/search', [
                 'query' => [
-                    'q' => $address,
+                    'q' => $simplifiedAddress,
                     'format' => 'json',
                     'limit' => 1
                 ],
@@ -24,20 +27,25 @@ class GeocodingService
 
             $data = json_decode($response->getBody(), true);
 
-            // Agregar registro para ver la respuesta de la API
-            Log::info('Respuesta de Nominatim para la dirección ' . $address . ': ' . json_encode($data));
+            Log::info('Respuesta de Nominatim para la dirección ' . $simplifiedAddress . ': ' . json_encode($data));
 
             if (!empty($data)) {
                 return $data[0]['lat'] . ',' . $data[0]['lon'];
             } else {
-                Log::warning('No se encontraron coordenadas para la dirección: ' . $address);
+                Log::warning('No se encontraron coordenadas para la dirección: ' . $simplifiedAddress);
             }
         } catch (\Exception $e) {
-            Log::error('Error al obtener coordenadas para la dirección: ' . $address . ' - ' . $e->getMessage());
+            Log::error('Error al obtener coordenadas para la dirección: ' . $simplifiedAddress . ' - ' . $e->getMessage());
         }
 
-        // Valor predeterminado si no se pueden obtener las coordenadas
         return '0.000000,0.000000';
+    }
+
+    private function simplifyAddress($address)
+    {
+        // Implementar lógica para simplificar la dirección
+        // Por ejemplo, eliminar números de calle y detalles específicos
+        return preg_replace('/\d+/', '', $address);
     }
 
     public function getAddressFromCoordinates($lat, $lng)
