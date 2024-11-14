@@ -6,10 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('citas', function (Blueprint $table) {
             $table->id();
@@ -17,16 +20,24 @@ return new class extends Migration
             $table->time('hora_cita');
             $table->text('observaciones')->nullable();
             $table->string('tipo_cita');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('peluquero_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('peluquero_id');
+            $table->unsignedBigInteger('empresa_id');
+            $table->string('estado_cita')->default('pendiente');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('peluquero_id')->references('id')->on('peluqueros')->onDelete('cascade');
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('citas');
     }

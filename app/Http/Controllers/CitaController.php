@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cita;
 use Illuminate\Http\Request;
+use App\Models\Empresa;
 
 class CitaController extends Controller
 {
@@ -23,7 +24,8 @@ class CitaController extends Controller
     public function create()
     {
         // create() es el método que muestra el formulario de creación de una nueva cita
-        return view('citas.create');
+        $empresas = Empresa::where('estado_subscripcion', 'activo')->get();
+        return view('citas.create', compact('empresas'));
     }
 
     /**
@@ -33,16 +35,18 @@ class CitaController extends Controller
     {
         // store() es el método que se encarga de guardar la nueva cita en la base de datos
         $request->validate([
-            'fecha' => 'required',
-            'hora' => 'required',
-            'motivo' => 'required',
-            'paciente_id' => 'required',
-            'medico_id' => 'required',
+            'fecha_cita' => 'required|date',
+            'hora_cita' => 'required|date_format:H:i',
+            'observaciones' => 'nullable|string',
+            'tipo_cita' => 'required|string',
+            'empresa_id' => 'required|exists:empresas,id',
+            'peluquero_id' => 'required|exists:peluqueros,id',
+            'estado_cita' => 'required|string',
         ]);
 
-        Cita::create($request->all());
+        $cita = Cita::create($request->all());
 
-        return redirect()->route('citas.index');
+        return redirect()->route('citas.show', $cita);
     }
 
     /**
@@ -70,11 +74,13 @@ class CitaController extends Controller
     {
         // update() es el método que se encarga de actualizar la cita en la base de datos
         $request->validate([
-            'fecha' => 'required',
-            'hora' => 'required',
-            'motivo' => 'required',
-            'paciente_id' => 'required',
-            'medico_id' => 'required',
+            'fecha_cita' => 'required|date',
+            'hora_cita' => 'required|date_format:H:i',
+            'observaciones' => 'nullable|string',
+            'tipo_cita' => 'required|string',
+            'empresa_id' => 'required|exists:empresas,id',
+            'peluquero_id' => 'required|exists:peluqueros,id',
+            'estado_cita' => 'required|string',
         ]);
 
         $cita->update($request->all());

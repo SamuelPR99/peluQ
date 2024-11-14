@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Nueva Empresa</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-</head>
-<body>
+<x-app-layout>
     <div class="bg-[url('/public/img/pared.jpg')] bg-cover bg-no-repeat">
-        <x-cuerpo-pagina/>
         <div class="flex items-center justify-center min-h-screen bg-no-repeat bg-center drop-shadow-3xl z-20">
             <div class="backdrop-blur-sm w-full max-w-lg p-6 space-y-2 bg-gray-800 bg-opacity-70 rounded-lg shadow-xl z-10">
                 <h1 class="text-2xl font-bold text-center text-white mb-3">Registrar Nueva Empresa</h1>
@@ -55,7 +44,6 @@
             </div>
         </div>
     </div>
-    <x-pie-pagina/>
     <div id="termsModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
         <div class="bg-white p-4 rounded-lg shadow-lg max-w-md max-h-[80vh] overflow-y-auto">
             <h2 class="text-xl font-bold mb-4">Términos y Condiciones</h2>
@@ -104,6 +92,7 @@
             <p class="mt-4 text-gray-700">Registrando empresa, por favor espera...</p>
         </div>
     </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         function showLoading() {
             document.getElementById('loadingModal').classList.remove('hidden');
@@ -133,5 +122,4 @@
             });
         });
     </script>
-</body>
-</html>
+</x-app-layout>

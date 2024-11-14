@@ -16,6 +16,8 @@ class Cita extends Model
         'tipo_cita',
         'user_id',
         'peluquero_id',
+        'empresa_id',
+        'estado_cita',
     ];
 
     public function user()
@@ -26,5 +28,10 @@ class Cita extends Model
     public function peluquero()
     {
         return $this->belongsTo(Peluquero::class);
+    }
+
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
     }
 }
