@@ -18,6 +18,7 @@ class CitaFactory extends Factory
             'tipo_cita' => $this->faker->randomElement(['consulta', 'tratamiento']),
             'user_id' => \App\Models\User::factory(),
             'peluquero_id' => \App\Models\Peluquero::factory(),
+            'empresa_id' => \App\Models\Empresa::factory(),
         ];
     }
 }
