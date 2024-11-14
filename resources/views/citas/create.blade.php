@@ -1,40 +1,101 @@
-@extends('layouts.app')
+<x-app-layout>
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold mb-4">Crear Cita</h1>
+        <form action="{{ route('citas.store') }}" method="POST" class="space-y-4">
+            @csrf
+            <div id="map" class="h-96 mb-4"></div>
+            <input type="hidden" name="empresa_id" id="empresa_id">
+            <div id="empresa-info" class="mb-4"></div>
+            <div id="peluqueros" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"></div>
+            <div class="form-group">
+                <label for="fecha_cita" class="block text-sm font-medium text-gray-700">Fecha</label>
+                <input type="date" name="fecha_cita" id="fecha_cita" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+            </div>
+            <div class="form-group">
+                <label for="hora_cita" class="block text-sm font-medium text-gray-700">Hora</label>
+                <input type="time" name="hora_cita" id="hora_cita" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+            </div>
+            <div class="form-group">
+                <label for="observaciones" class="block text-sm font-medium text-gray-700">Observaciones</label>
+                <textarea name="observaciones" id="observaciones" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="tipo_cita" class="block text-sm font-medium text-gray-700">Tipo de Cita</label>
+                <select name="tipo_cita" id="tipo_cita" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <option value="corte">Corte</option>
+                    <option value="tinte">Tinte</option>
+                    <option value="peinado">Peinado</option>
+                </select>
+            </div>
+            <input type="hidden" name="estado_cita" value="pendiente">
+            <button type="submit" class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded-md">Crear Cita</button>
+        </form>
+    </div>
 
-@section('content')
-<div class="container">
-    <h1>Crear Cita</h1>
-    <form action="{{ route('citas.store') }}" method="POST">
-        @csrf
-        <div id="map" style="height: 400px;"></div>
-        <input type="hidden" name="empresa_id" id="empresa_id">
-        <div id="empresa-info"></div>
-        <div id="peluqueros" class="row"></div>
-        <div class="form-group">
-            <label for="fecha_cita">Fecha</label>
-            <input type="date" name="fecha_cita" id="fecha_cita" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="hora_cita">Hora</label>
-            <input type="time" name="hora_cita" id="hora_cita" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="observaciones">Observaciones</label>
-            <textarea name="observaciones" id="observaciones" class="form-control"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="tipo_cita">Tipo de Cita</label>
-            <select name="tipo_cita" id="tipo_cita" class="form-control">
-                <option value="corte">Corte</option>
-                <option value="tinte">Tinte</option>
-                <option value="peinado">Peinado</option>
-            </select>
-        </div>
-        <input type="hidden" name="estado_cita" value="pendiente">
-        <button type="submit" class="btn btn-primary">Crear Cita</button>
-    </form>
-</div>
+    <script>
+        let map;
+        let markers = [];
+        let empresas = @json($empresas);
 
-<script>
-    // Código JavaScript para inicializar el mapa y manejar la selección de empresas y peluqueros
-</script>
-@endsection
+        function initMap() {
+            map = L.map('map').setView([40.416, -3.70], 5);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            empresas.forEach(empresa => {
+                let marker = L.marker([parseFloat(empresa.coordenadas.split(',')[0]), parseFloat(empresa.coordenadas.split(',')[1])]).addTo(map)
+                    .bindPopup(empresa.nombre_empresa)
+                    .on('click', function() {
+                        document.getElementById('empresa_id').value = empresa.id;
+                        document.getElementById('empresa-info').innerHTML = `
+                            <h3 class="text-lg font-bold">${empresa.nombre_empresa}</h3>
+                            <p>${empresa.direccion}</p>
+                            <p>${empresa.telefono}</p>
+                        `;
+                        fetchPeluqueros(empresa.id);
+                    });
+
+                markers.push(marker);
+            });
+        }
+
+        function fetchPeluqueros(empresaId) {
+            fetch(`/api/empresas/${empresaId}/peluqueros`)
+                .then(response => response.json())
+                .then(data => {
+                    let peluquerosDiv = document.getElementById('peluqueros');
+                    peluquerosDiv.innerHTML = '';
+                    data.forEach(peluquero => {
+                        let peluqueroDiv = document.createElement('div');
+                        peluqueroDiv.className = 'col-md-4';
+                        peluqueroDiv.innerHTML = `
+                            <div class="card bg-white shadow-md rounded-lg overflow-hidden">
+                                <div class="card-body p-4">
+                                    <h5 class="card-title text-lg font-bold">${peluquero.nombre}</h5>
+                                    <button class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded-md mt-2" onclick="selectPeluquero(${peluquero.id})">Seleccionar</button>
+                                </div>
+                            </div>
+                        `;
+                        peluquerosDiv.appendChild(peluqueroDiv);
+                    });
+                });
+        }
+
+        function selectPeluquero(peluqueroId) {
+            fetch(`/api/peluqueros/${peluqueroId}/cuadrantes`)
+                .then(response => response.json())
+                .then(data => {
+                    // Mostrar el cuadrante de horarios para el peluquero seleccionado
+                    // Aquí puedes agregar el código para mostrar los horarios disponibles
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+        });
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</x-app-layout>

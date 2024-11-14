@@ -4,7 +4,11 @@
         <nav>
             <ul class="flex space-x-4">
                 @if (Auth::check())
-                <li><span class="hover:text-red-600 hover:scale-110 hover:animate-pulse">{{ Auth::user()->name }}</span></li>
+                <li>
+                    <a href="{{ route('dashboard') }}" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">
+                        {{ Auth::user()->name }}
+                    </a>
+                </li>
                 <li>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf {{-- el csrf es para evitar ataques de tipo csrf --}}
@@ -32,3 +36,4 @@ la fecha de la misma, y una copia comentada del código antes de la modificació
 {{-- 11/11/2024 Enrique - Se ha modificado los <a> para en su lugar poner <button> y que se apliquen los estilos y se ha añadido [hover:animate-pulse]. --}}
 {{-- 11/11/2024 Hugo - Se ha añadido JavaScript en los botones del header para que al clicarlos se redireccione a la página correspondiente --}}
 {{-- 11/11/2024 Hugo - Se han creado rutas para las páginas de "Sobre nosotros", "Servicios" y "Contacto" --}}
+{{-- 14/11/2024 Samu - Se ha añadido un enlace al nombre del usuario autenticado para redirigir al dashboard --}}
