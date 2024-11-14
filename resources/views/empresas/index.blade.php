@@ -1,12 +1,5 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beneficios de Nuestros Servicios</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
+<x-app-layout>
     <div class="bg-[url('/public/img/pared.jpg')] bg-cover bg-no-repeat">
-        <x-cuerpo-pagina/>
         <x-marcodiv>
             <h1 class="mt-16 text-3xl font-bold text-center text-white mb-4">Beneficios de Comprar Nuestros Servicios</h1>
             <p class="text-white mb-4">Nuestra aplicación ofrece una variedad de beneficios para tu empresa, incluyendo:</p>
@@ -21,6 +14,4 @@
             </div>
         </x-marcodiv>
     </div>
-    <x-pie-pagina/>
-</body>
-</html>
+</x-app-layout>
