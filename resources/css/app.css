@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Estilo para el bocadillo de Leaflet */
+.leaflet-popup {
+    @apply bg-gray-800 text-white rounded-lg shadow-lg; /* Usando Tailwind CSS */
+}
+
+.leaflet-popup h3 {
+    @apply text-red-700; /* Usando Tailwind CSS */
+}
+
+.leaflet-popup p {
+    @apply text-white; /* Usando Tailwind CSS */
+}
