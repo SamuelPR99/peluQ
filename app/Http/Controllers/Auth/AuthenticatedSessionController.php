@@ -24,6 +24,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        $credentials = $request->only('email', 'password');
+
+        if (!Auth::attempt($credentials)) {
+            $credentials = $request->only('username', 'password');
+        }
+
         $request->authenticate();
 
         $request->session()->regenerate();

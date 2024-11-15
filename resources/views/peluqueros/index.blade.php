@@ -16,32 +16,24 @@
                 <a href="{{ route('peluqueros.create', ['empresa_id' => $empresa->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Añadir Peluquero</a>
             </div>
         @else
-            <table class="min-w-full bg-white shadow-md rounded mb-8">
-                <thead class="bg-gray-800 text-white">
-                    <tr>
-                        <th class="w-1/2 py-3 px-4 uppercase font-semibold text-sm">Nombre</th>
-                        <th class="w-1/2 py-3 px-4 uppercase font-semibold text-sm">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody class="text-gray-700">
-                    @foreach($peluqueros as $peluquero)
-                    <tr class="border-b">
-                        <td class="py-3 px-4">{{ $peluquero->nombre }}</td>
-                        <td class="py-3 px-4">
-                            <a href="{{ route('peluqueros.edit', $peluquero) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2">Editar</a>
-                            <a href="{{ route('cuadrantes.create', ['peluquero_id' => $peluquero->id]) }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Añadir Cuadrante</a>
-                            <form action="{{ route('peluqueros.destroy', $peluquero) }}" method="POST" class="inline-block">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <div class="text-center">
-                <a href="{{ route('peluqueros.create', ['empresa_id' => $empresa->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Añadir Peluquero</a>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach($peluqueros as $peluquero)
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <div class="p-4">
+                            <h2 class="text-xl font-bold mb-2">{{ $peluquero->nombre }}</h2>
+                            <img src="{{ asset('storage/' . $peluquero->imagen) }}" alt="Imagen de {{ $peluquero->nombre }}" class="w-full h-48 object-cover mb-4">
+                            <div class="flex justify-between">
+                                <a href="{{ route('peluqueros.edit', $peluquero) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Editar</a>
+                                <a href="{{ route('cuadrantes.create', ['peluquero_id' => $peluquero->id]) }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Añadir Cuadrante</a>
+                                <form action="{{ route('peluqueros.destroy', $peluquero) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         @endif
     </div>

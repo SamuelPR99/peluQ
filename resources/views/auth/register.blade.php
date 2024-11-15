@@ -19,10 +19,37 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <!-- Name -->
+            <!-- Username -->
             <div>
+                <label for="username" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Username') }}</label>
+                <input id="username" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
+                @error('username')
+                    <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- First Name -->
+            <div class="mt-4">
+                <label for="first_name" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('First Name') }}</label>
+                <input id="first_name" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" type="text" name="first_name" :value="old('first_name')" required autocomplete="first_name" />
+                @error('first_name')
+                    <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Last Name -->
+            <div class="mt-4">
+                <label for="last_name" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Last Name') }}</label>
+                <input id="last_name" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" type="text" name="last_name" :value="old('last_name')" required autocomplete="last_name" />
+                @error('last_name')
+                    <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Name -->
+            <div class="mt-4">
                 <label for="name" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Nombre') }}</label>
-                <input id="name" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <input id="name" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" type="text" name="name" :value="old('name')" required autocomplete="name" />
                 @error('name')
                     <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
                 @enderror
