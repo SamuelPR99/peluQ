@@ -7,7 +7,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="nombre_empresa" class="block text-gray-300 text-sm">Nombre de la Empresa</label>
-                        <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded" id="nombre_empresa" name="nombre_empresa" required>
+                        <input type="text" class=" text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded" id="nombre_empresa" name="nombre_empresa" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="block text-gray-300 text-sm">Correo Electrónico</label>
