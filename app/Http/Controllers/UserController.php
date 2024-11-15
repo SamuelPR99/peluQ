@@ -33,8 +33,11 @@ class UserController extends Controller
     {
         // store() es el método que se encarga de guardar el nuevo usuario en la base de datos
         $request->validate([
+            'username' => 'required|unique:users',
             'name' => 'required',
-            'email' => 'required|email',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
         ]);
 
@@ -68,8 +71,11 @@ class UserController extends Controller
     {
         // update() es el método que se encarga de actualizar los datos de un usuario en la base de datos
         $request->validate([
+            'username' => 'required|unique:users,username,' . $user->id,
             'name' => 'required',
-            'email' => 'required|email',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'required',
         ]);
 
