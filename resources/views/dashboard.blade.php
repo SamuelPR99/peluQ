@@ -44,7 +44,7 @@
                             
                             @if((Auth::user()->user_type == 'user' || Auth::user()->user_type == 'empresario') && Auth::user()->empresas->isEmpty())
                             <h4 class="mt-4">{{ __('¿Tienes una peluquería / barbería?') }}</h4>
-                            <a href="{{ route('empresas.index') }}" class="inline-block px-4 py-2 mt-2 text-white bg-blue-500 rounded hover:bg-blue-700">{{ __('Ver Empresas') }}</a>
+                            <a href="{{ route('empresas.index') }}" class="inline-block px-4 py-2 mt-2bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Dar de alta') }}</a>
                             @endif
                             
                             @if(Auth::user()->user_type == 'admin')
