@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body class="font-sans antialiased">
-    <x-cuerpo-pagina />
-    <main>
-        {{ $slot }}
-    </main>
-    <x-pie-pagina />
+    <div class="bg-[url('/public/img/pared.jpg')] bg-cover bg-no-repeat min-h-screen">
+        <x-cuerpo-pagina class="absolute top-0 left-0 w-full"/>
+        <main>
+            {{ $slot }}
+        </main>
+    </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </body>
+<x-pie-pagina/>
 </html>
