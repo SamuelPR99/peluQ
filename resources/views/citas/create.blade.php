@@ -3,7 +3,7 @@
         <h1 class="text-2xl font-bold mb-4">Crear Cita</h1>
         <form action="{{ route('citas.store') }}" method="POST" class="space-y-4">
             @csrf
-            <div id="map" class="h-96 mb-4"></div>
+            <div id="map" class="h-96 mb-4 z-10"></div>
             <input type="hidden" name="empresa_id" id="empresa_id">
             <div id="empresa-info" class="mb-4"></div>
             <div id="peluqueros" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"></div>

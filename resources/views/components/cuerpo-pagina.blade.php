@@ -1,4 +1,4 @@
-<header class="backdrop-blur-sm bg-gray-800 text-white p-8 sticky top-0 shadow-2xl bg-opacity-80 z-10">
+<header class="backdrop-blur-sm bg-gray-800 text-white p-8 sticky top-0 shadow-2xl bg-opacity-80 z-20">
     <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-2xl font-bold">PeluQ</h1>
         <nav>

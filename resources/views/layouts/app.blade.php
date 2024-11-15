@@ -7,13 +7,15 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <x-cuerpo-pagina/>
 </head>
 <body class="font-sans antialiased">
-    <x-cuerpo-pagina />
+    <div class="bg-[url('/public/img/pared.jpg')] bg-cover bg-no-repeat">
     <main>
         {{ $slot }}
     </main>
-    <x-pie-pagina />
+    </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </body>
+<x-pie-pagina/>
 </html>
