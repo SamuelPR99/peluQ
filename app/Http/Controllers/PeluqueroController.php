@@ -35,16 +35,8 @@ class PeluqueroController extends Controller
         // store() es el método que se encarga de guardar el nuevo peluquero en la base de datos
         $request->validate([
             'nombre' => 'required',
-            'apellidos' => 'required',
-            'telefono' => 'required',
-            'email' => 'required|email',
-            'direccion' => 'required',
-            'codigo_postal' => 'required',
-            'ciudad' => 'required',
-            'provincia' => 'required',
-            'pais' => 'required',
-            'coordenadas' => 'required',
-            'estado' => 'required',
+            'imagen' => 'required|image', // La imagen es obligatoria y debe ser una imagen
+            'servicios' => 'required'
         ]);
 
         Peluquero::create($request->all());
@@ -73,24 +65,26 @@ class PeluqueroController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    
     public function update(Request $request, Peluquero $peluquero)
     {
-        // update() es el método que se encarga de actualizar el peluquero en la base de datos
+        // Validar los datos del formulario
         $request->validate([
             'nombre' => 'required',
-            'apellidos' => 'required',
-            'telefono' => 'required',
-            'email' => 'required|email',
-            'direccion' => 'required',
-            'codigo_postal' => 'required',
-            'ciudad' => 'required',
-            'provincia' => 'required',
-            'pais' => 'required',
-            'coordenadas' => 'required',
-            'estado' => 'required',
+            'imagen' => 'nullable|image', // La imagen no es obligatoria, pero si se proporciona, debe ser una imagen
+            'servicios' => 'required'
         ]);
 
-        $peluquero->update($request->all());
+        // Si se proporciona una nueva imagen, procesarla y actualizar el campo de la imagen
+        if ($request->hasFile('imagen')) {
+            $path = $request->file('imagen')->store('public/imagenes');
+            $peluquero->imagen = basename($path);
+        }
+
+        // Actualizar los demás campos
+        $peluquero->nombre = $request->nombre;
+        $peluquero->servicios = $request->servicios;
+        $peluquero->save();
 
         return redirect()->route('peluqueros.index');
     }

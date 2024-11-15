@@ -21,7 +21,11 @@
                     <div class="bg-white shadow-md rounded-lg overflow-hidden">
                         <div class="p-4">
                             <h2 class="text-xl font-bold mb-2">{{ $peluquero->nombre }}</h2>
-                            <img src="{{ asset('storage/' . $peluquero->imagen) }}" alt="Imagen de {{ $peluquero->nombre }}" class="w-full h-48 object-cover mb-4">
+                            @if($peluquero->imagen)
+                            <img src="{{ asset('img/' . $peluquero->imagen) }}" alt="Imagen de {{ $peluquero->nombre }}" class="w-full h-48 object-cover mb-4">
+                        @else
+                            <img src="{{ asset('img/default.png') }}" alt="Imagen por defecto" class="w-full h-48 object-cover mb-4">
+                        @endif
                             <div class="flex justify-between">
                                 <a href="{{ route('peluqueros.edit', $peluquero) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Editar</a>
                                 <a href="{{ route('cuadrantes.create', ['peluquero_id' => $peluquero->id]) }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Añadir Cuadrante</a>
