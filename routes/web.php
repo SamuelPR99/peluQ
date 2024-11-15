@@ -16,15 +16,6 @@ Route::get('/', function () {
 
 });
 
-Route::get('/ejemplo', function () {
-    return view('pruebas.ejemplo');
-});
-
-Route::get('/log', function () {
-    Log::info('Cargando la vista de login-form');
-    return view('pruebas.login-form');
-});
-
 Route::get('/sobreNosotros', function () {
     return view('sobreNosotros'); 
 });
