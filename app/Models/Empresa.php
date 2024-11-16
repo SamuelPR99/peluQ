@@ -34,4 +34,9 @@ class Empresa extends Model
     {
         return $this->hasMany(Valoracion::class);
     }
+
+    public function servicios()
+    {
+        return $this->hasMany(Servicio::class);
+    }
 }

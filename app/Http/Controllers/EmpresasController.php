@@ -28,11 +28,14 @@ class EmpresasController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Empresa::class);
         return view('empresas.create');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', Empresa::class);
+
         $request->validate([
             'nombre_empresa' => 'required',
             'email' => 'required|email',
@@ -54,6 +57,10 @@ class EmpresasController extends Controller
             'coordenadas' => $coordenadas,
             'user_id' => Auth::id(),
         ]);
+
+        foreach ($request->servicios as $servicio) {
+            $empresa->servicios()->create($servicio);
+        }
 
         DB::statement('CALL update_user_type(?)', [Auth::id()]);
         
@@ -97,6 +104,11 @@ class EmpresasController extends Controller
             'coordenadas' => $coordenadas,
         ]);
 
+        $empresa->servicios()->delete();
+        foreach ($request->servicios as $servicio) {
+            $empresa->servicios()->create($servicio);
+        }
+
         return redirect()->route('dashboard');
     }
 
@@ -104,6 +116,6 @@ class EmpresasController extends Controller
     {
         $this->authorize('delete', $empresa);
         $empresa->delete();
-        return redirect()->route('empresas.index');
+        return redirect()->route('dashboard');
     }
 }

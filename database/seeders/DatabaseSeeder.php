@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             CitaSeeder::class,
             ValoracionSeeder::class,
             CuadranteSeeder::class,
+            ServicioSeeder::class,
         ]);
     }
 }
