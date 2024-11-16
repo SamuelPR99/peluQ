@@ -14,10 +14,11 @@ class Cita extends Model
         'hora_cita',
         'observaciones',
         'tipo_cita',
+        'estado_cita',
         'user_id',
         'peluquero_id',
         'empresa_id',
-        'estado_cita',
+        'servicio_id',
     ];
 
     public function user()
@@ -33,5 +34,10 @@ class Cita extends Model
     public function empresa()
     {
         return $this->belongsTo(Empresa::class);
+    }
+
+    public function servicio()
+    {
+        return $this->belongsTo(Servicio::class);
     }
 }

@@ -19,6 +19,7 @@ class CitaFactory extends Factory
             'user_id' => \App\Models\User::factory(),
             'peluquero_id' => \App\Models\Peluquero::factory(),
             'empresa_id' => \App\Models\Empresa::factory(),
+            'servicio_id' => \App\Models\Servicio::factory(),
         ];
     }
 }
