@@ -35,6 +35,9 @@
     <body>
         <div class="container">
             <div class="title">
+                @yield('title')
+            </div>
+            <div class="message">
                 @yield('message')
             </div>
         </div>
