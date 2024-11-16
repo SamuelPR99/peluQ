@@ -21,11 +21,9 @@
                     <textarea name="observaciones" id="observaciones" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="tipo_cita" class="block text-sm font-medium text-white">Tipo de Cita</label>
-                    <select name="tipo_cita" id="tipo_cita" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                        <option value="corte">Corte</option>
-                        <option value="tinte">Tinte</option>
-                        <option value="peinado">Peinado</option>
+                    <label for="servicio_id" class="block text-sm font-medium text-white">Servicio</label>
+                    <select name="servicio_id" id="servicio_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <!-- Opciones de servicios se llenarán dinámicamente -->
                     </select>
                 </div>
                 <input type="hidden" name="estado_cita" value="pendiente">
@@ -72,6 +70,7 @@
                             <h3 class="text-lg font-bold text-white"> Cita para ${empresa.nombre_empresa}</h3>
                         `;
                         fetchPeluqueros(empresa.id);
+                        fetchServicios(empresa.id);
                     })
                     .on('mouseover', function() {
                         document.getElementById('leyenda').classList.remove('hidden');
@@ -97,33 +96,21 @@
         }
 
         function fetchPeluqueros(empresaId) {
-            fetch(`/api/empresas/${empresaId}/peluqueros`)
-                .then(response => response.json())
-                .then(data => {
-                    let peluquerosDiv = document.getElementById('peluqueros');
-                    peluquerosDiv.innerHTML = '';
-                    data.forEach(peluquero => {
-                        let peluqueroDiv = document.createElement('div');
-                        peluqueroDiv.className = 'col-md-4';
-                        peluqueroDiv.innerHTML = `
-                            <div class="card bg-white shadow-md rounded-lg overflow-hidden">
-                                <div class="card-body p-4">
-                                    <h5 class="card-title text-lg font-bold">${peluquero.nombre}</h5>
-                                    <button class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded-md mt-2" onclick="selectPeluquero(${peluquero.id})">Seleccionar</button>
-                                </div>
-                            </div>
-                        `;
-                        peluquerosDiv.appendChild(peluqueroDiv);
-                    });
-                });
+            // ...existing code...
         }
 
-        function selectPeluquero(peluqueroId) {
-            fetch(`/api/peluqueros/${peluqueroId}/cuadrantes`)
+        function fetchServicios(empresaId) {
+            fetch(`/api/empresas/${empresaId}/servicios`)
                 .then(response => response.json())
                 .then(data => {
-                    // Mostrar el cuadrante de horarios para el peluquero seleccionado
-                    // Aquí puedes agregar el código para mostrar los horarios disponibles
+                    const servicioSelect = document.getElementById('servicio_id');
+                    servicioSelect.innerHTML = '';
+                    data.forEach(servicio => {
+                        const option = document.createElement('option');
+                        option.value = servicio.id;
+                        option.textContent = `${servicio.servicio} - ${servicio.precio}€`;
+                        servicioSelect.appendChild(option);
+                    });
                 });
         }
 

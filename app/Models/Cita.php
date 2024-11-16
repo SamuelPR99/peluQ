@@ -13,7 +13,6 @@ class Cita extends Model
         'fecha_cita',
         'hora_cita',
         'observaciones',
-        'tipo_cita',
         'estado_cita',
         'user_id',
         'peluquero_id',

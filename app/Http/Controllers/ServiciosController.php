@@ -53,4 +53,9 @@ class ServiciosController extends Controller
         $servicio->delete();
         return redirect()->route('empresas.servicios.index', $empresa);
     }
+
+    public function getServiciosByEmpresa(Empresa $empresa)
+    {
+        return response()->json($empresa->servicios);
+    }
 }

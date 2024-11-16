@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('fecha_cita');
             $table->time('hora_cita');
             $table->text('observaciones')->nullable();
-            $table->string('tipo_cita');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('peluquero_id');
             $table->unsignedBigInteger('empresa_id');
