@@ -58,6 +58,10 @@ class EmpresasController extends Controller
             'user_id' => Auth::id(),
         ]);
 
+        foreach ($request->servicios as $servicio) {
+            $empresa->servicios()->create($servicio);
+        }
+
         DB::statement('CALL update_user_type(?)', [Auth::id()]);
         
         return redirect()->route('empresas.peluqueros.index', ['empresa' => $empresa->id]);
@@ -99,6 +103,11 @@ class EmpresasController extends Controller
             'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
             'coordenadas' => $coordenadas,
         ]);
+
+        $empresa->servicios()->delete();
+        foreach ($request->servicios as $servicio) {
+            $empresa->servicios()->create($servicio);
+        }
 
         return redirect()->route('dashboard');
     }

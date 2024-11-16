@@ -26,7 +26,7 @@ class ServiciosController extends Controller
             'precio' => 'required|numeric',
         ]);
 
-        $empresa->servicios()->create($request->all());
+        $empresa->servicios()->create($request->only(['servicio', 'precio']));
 
         return redirect()->route('empresas.servicios.index', $empresa);
     }
@@ -43,7 +43,7 @@ class ServiciosController extends Controller
             'precio' => 'required|numeric',
         ]);
 
-        $servicio->update($request->all());
+        $servicio->update($request->only(['servicio', 'precio']));
 
         return redirect()->route('empresas.servicios.index', $empresa);
     }

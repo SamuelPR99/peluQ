@@ -29,6 +29,19 @@
                         <label for="codigo_postal" class="block text-gray-300 text-sm">Código Postal</label>
                         <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="codigo_postal" name="codigo_postal" required>
                     </div>
+                    <div id="servicios-container">
+                        <div class="mb-3 flex space-x-2">
+                            <div class="w-1/2">
+                                <label for="servicio" class="block text-gray-300 text-sm">Servicio</label>
+                                <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="servicio" name="servicios[0][servicio]" required>
+                            </div>
+                            <div class="w-1/2">
+                                <label for="precio" class="block text-gray-300 text-sm">Precio</label>
+                                <input type="number" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="precio" name="servicios[0][precio]" required>
+                            </div>
+                            <button type="button" class="bg-green-500 text-white font-bold py-2 px-4 rounded mt-6 h-10" onclick="addServicio()">+</button>
+                        </div>
+                    </div>
                     <div class="mb-3 flex items-center">
                         <input type="checkbox" id="confirmar_subscripcion" name="confirmar_subscripcion" class="checked:bg-red-600 form-checkbox h-4 w-4 text-blue-600 rounded" required>
                         <label for="confirmar_subscripcion" class=" accent-red-600 ml-2 text-gray-300 text-sm">Confirmar Subscripción*</label>
@@ -121,5 +134,29 @@
                     .catch(error => console.error('Error:', error));
             });
         });
+
+        let servicioIndex = 1;
+        function addServicio() {
+            const container = document.getElementById('servicios-container');
+            const newServicio = document.createElement('div');
+            newServicio.classList.add('mb-3', 'flex', 'space-x-2');
+            newServicio.innerHTML = `
+                <div class="w-1/2">
+                    <label for="servicio" class="block text-gray-300 text-sm">Servicio</label>
+                    <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="servicio" name="servicios[${servicioIndex}][servicio]" required>
+                </div>
+                <div class="w-1/2">
+                    <label for="precio" class="block text-gray-300 text-sm">Precio</label>
+                    <input type="number" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="precio" name="servicios[${servicioIndex}][precio]" required>
+                </div>
+                <button type="button" class="bg-red-500 text-white font-bold py-2 px-4 rounded mt-6 h-10" onclick="removeServicio(this)">-</button>
+            `;
+            container.appendChild(newServicio);
+            servicioIndex++;
+        }
+
+        function removeServicio(button) {
+            button.parentElement.remove();
+        }
     </script>
 </x-app-layout>
