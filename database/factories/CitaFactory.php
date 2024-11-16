@@ -15,7 +15,7 @@ class CitaFactory extends Factory
             'fecha_cita' => $this->faker->date,
             'hora_cita' => $this->faker->time,
             'observaciones' => $this->faker->sentence,
-            'tipo_cita' => $this->faker->randomElement(['consulta', 'tratamiento']),
+            'tipo_cita' => $this->faker->randomElement(['Corte', 'Barba', 'Tinte']),
             'user_id' => \App\Models\User::factory(),
             'peluquero_id' => \App\Models\Peluquero::factory(),
             'empresa_id' => \App\Models\Empresa::factory(),
