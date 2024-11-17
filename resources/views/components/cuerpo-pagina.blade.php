@@ -42,4 +42,4 @@ la fecha de la misma, y una copia comentada del código antes de la modificació
 {{-- 11/11/2024 Hugo - Se ha añadido JavaScript en los botones del header para que al clicarlos se redireccione a la página correspondiente --}}
 {{-- 11/11/2024 Hugo - Se han creado rutas para las páginas de "Sobre nosotros", "Servicios" y "Contacto" --}}
 {{-- 14/11/2024 Samu - Se ha añadido un enlace al nombre del usuario autenticado para redirigir al dashboard --}}
-{{-- 17/11/2024 Samu - he añadio que el cerrar sesion salga ultimo y que sea un icono }}
+{{-- 17/11/2024 Samu - he añadio que el cerrar sesion salga ultimo y que sea un icono --}}
