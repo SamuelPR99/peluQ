@@ -53,18 +53,8 @@
                             <button type="button" class="bg-red-500 text-white font-bold py-2 px-4 rounded mt-6 h-10" onclick="removeServicio(this)">-</button>
                         </div>
                         @endforeach
-                        <div class="mb-3 flex space-x-2">
-                            <div class="w-1/2">
-                                <label for="servicio" class="block text-gray-300 text-sm">Servicio</label>
-                                <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="servicio" name="servicios[{{ $empresa->servicios->count() }}][servicio]" required>
-                            </div>
-                            <div class="w-1/2">
-                                <label for="precio" class="block text-gray-300 text-sm">Precio</label>
-                                <input type="number" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="precio" name="servicios[{{ $empresa->servicios->count() }}][precio]" required>
-                            </div>
-                            <button type="button" class="bg-green-500 text-white font-bold py-2 px-4 rounded mt-6 h-10" onclick="addServicio()">+</button>
-                        </div>
                     </div>
+                    <button type="button" class="bg-green-500 text-white font-bold py-2 px-4 rounded mt-6 h-10" onclick="addServicio()">Añadir Servicio</button>
                     <div class="mb-3 flex items-center">
                         <input type="checkbox" id="confirmar_subscripcion" name="confirmar_subscripcion" class="checked:bg-red-600 form-checkbox h-4 w-4 text-blue-600 rounded" {{ $empresa->estado_subscripcion == 'activo' ? 'checked' : '' }} required>
                         <label for="confirmar_subscripcion" class="ml-2 text-gray-300 text-sm">Confirmar Subscripción*</label>
@@ -187,7 +177,7 @@
             });
         });
 
-        let servicioIndex = {{ $empresa->servicios->count() + 1 }};
+        let servicioIndex = {{ $empresa->servicios->count() }};
         function addServicio() {
             const container = document.getElementById('servicios-container');
             const newServicio = document.createElement('div');
