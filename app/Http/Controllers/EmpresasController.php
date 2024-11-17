@@ -43,6 +43,7 @@ class EmpresasController extends Controller
             'direccion' => 'required',
             'codigo_postal' => 'required',
             'confirmar_subscripcion' => 'required',
+            'tipo_empresa' => 'required|in:peluqueria,barberia,peluqueria y barberia',
         ]);
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
@@ -56,6 +57,7 @@ class EmpresasController extends Controller
             'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
             'coordenadas' => $coordenadas,
             'user_id' => Auth::id(),
+            'tipo_empresa' => $request->tipo_empresa,
         ]);
 
         foreach ($request->servicios as $servicio) {
@@ -90,6 +92,7 @@ class EmpresasController extends Controller
             'direccion' => 'required',
             'codigo_postal' => 'required',
             'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
+            'tipo_empresa' => 'required|in:peluqueria,barberia,peluqueria y barberia',
         ]);
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
@@ -102,6 +105,7 @@ class EmpresasController extends Controller
             'codigo_postal' => $request->codigo_postal,
             'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
             'coordenadas' => $coordenadas,
+            'tipo_empresa' => $request->tipo_empresa,
         ]);
 
         $empresa->servicios()->delete();

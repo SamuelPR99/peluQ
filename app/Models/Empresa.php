@@ -10,7 +10,8 @@ class Empresa extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nombre_empresa', 
+        'nombre_empresa',
+        'tipo_empresa',
         'email',
         'telefono',
         'direccion',

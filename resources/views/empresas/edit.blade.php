@@ -11,6 +11,14 @@
                         <input type="text" class=" text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded" id="nombre_empresa" name="nombre_empresa" value="{{ $empresa->nombre_empresa }}" required>
                     </div>
                     <div class="mb-3">
+                        <label for="tipo_empresa" class="block text-gray-300 text-sm">Tipo de Empresa</label>
+                        <select class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded" id="tipo_empresa" name="tipo_empresa" required>
+                            <option value="peluqueria" {{ $empresa->tipo_empresa == 'peluqueria' ? 'selected' : '' }}>Peluquería</option>
+                            <option value="barberia" {{ $empresa->tipo_empresa == 'barberia' ? 'selected' : '' }}>Barbería</option>
+                            <option value="peluqueria y barberia" {{ $empresa->tipo_empresa == 'peluqueria y barberia' ? 'selected' : '' }}>Peluquería y Barbería</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="email" class="block text-gray-300 text-sm">Correo Electrónico</label>
                         <input type="email" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded" id="email" name="email" value="{{ $empresa->email }}" required>
                     </div>
