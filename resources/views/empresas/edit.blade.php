@@ -145,10 +145,37 @@
             var empresaLng = parseFloat(coordenadas[1]);
             var map = L.map('map').setView([empresaLat, empresaLng], 15);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            var marker = L.marker([empresaLat, empresaLng]).addTo(map);
+            var marker;
+
+            function getIcon(tipoEmpresa) {
+                var iconUrl;
+                switch (tipoEmpresa) {
+                    case 'barberia':
+                        iconUrl = '/img/bar.png';
+                        break;
+                    case 'peluqueria':
+                        iconUrl = '/img/pelu.png';
+                        break;
+                    case 'peluqueria y barberia':
+                        iconUrl = '/img/peluqueria.png';
+                        break;
+                    default:
+                        iconUrl = '/img/peluqueria.png';
+                }
+                return L.icon({
+                    iconUrl: iconUrl,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [0, -32]
+                });
+            }
+
+            marker = L.marker([empresaLat, empresaLng], { icon: getIcon("{{ $empresa->tipo_empresa }}") }).addTo(map);
+
             map.on('click', function (e) {
                 if (marker) map.removeLayer(marker);
-                marker = L.marker(e.latlng).addTo(map);
+                var tipoEmpresa = document.getElementById('tipo_empresa').value;
+                marker = L.marker(e.latlng, { icon: getIcon(tipoEmpresa) }).addTo(map);
                 fetch(`/api/geocode?lat=${e.latlng.lat}&lng=${e.latlng.lng}`)
                     .then(response => response.json())
                     .then(data => {
