@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('content')
     <div class="container">
         <h1>Detalles de la Cita</h1>
         <p><strong>Fecha:</strong> {{ $cita->fecha_cita }}</p>
@@ -10,4 +11,4 @@
         <p><strong>Estado de la Cita:</strong> {{ $cita->estado_cita }}</p>
         <a href="{{ route('dashboard') }}" class="btn btn-primary">Volver al Dashboard</a>
     </div>
-</x-app-layout>
+@endsection
