@@ -42,21 +42,37 @@
         let map;
         let markers = [];
         let empresas = @json($empresas);
-        
+
+        function getIcon(tipoEmpresa) {
+            var iconUrl;
+            switch (tipoEmpresa) {
+                case 'barberia':
+                    iconUrl = '/img/bar.png';
+                    break;
+                case 'peluqueria':
+                    iconUrl = '/img/pelu.png';
+                    break;
+                case 'peluqueria y barberia':
+                    iconUrl = '/img/peluqueria.png';
+                    break;
+                default:
+                    iconUrl = '/img/peluqueria.png';
+            }
+            return L.icon({
+                iconUrl: iconUrl,
+                iconSize: [32, 32],
+                iconAnchor: [16, 32],
+                popupAnchor: [0, -32]
+            });
+        }
+
         function initMap() {
             map = L.map('map').setView([40.416, -3.70], 5);
             
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
-            
-            var customIcon = L.icon({
-                iconUrl: '/img/peluqueria.png',
-                iconSize: [30, 30],
-                iconAnchor: [22, 38],
-                popupAnchor: [-3, -38]
-            });
 
             empresas.forEach(empresa => {
-                let marker = L.marker([parseFloat(empresa.coordenadas.split(',')[0]), parseFloat(empresa.coordenadas.split(',')[1])], { icon: customIcon }).addTo(map)
+                let marker = L.marker([parseFloat(empresa.coordenadas.split(',')[0]), parseFloat(empresa.coordenadas.split(',')[1])], { icon: getIcon(empresa.tipo_empresa) }).addTo(map)
                     .bindPopup(`
                         <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
                             <h3 class="text-lg font-bold text-red-700">${empresa.nombre_empresa}</h3>
