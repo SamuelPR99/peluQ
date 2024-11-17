@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('content')
     <div class="bg-[url('/public/img/pared.jpg')] bg-cover bg-no-repeat">
         <x-marcodiv>
             <h1 class="mt-16 text-3xl font-bold text-center text-white mb-4">Beneficios de Comprar Nuestros Servicios</h1>
@@ -14,4 +15,4 @@
             </div>
         </x-marcodiv>
     </div>
-</x-app-layout>
+@endsection

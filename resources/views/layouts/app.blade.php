@@ -12,7 +12,7 @@
     <div class="bg-[url('/public/img/pared.jpg')] bg-cover bg-no-repeat min-h-screen">
         <x-cuerpo-pagina class="absolute top-0 left-0 w-full"/>
         <main>
-            {{ $slot }}
+            @yield('content')
         </main>
     </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>

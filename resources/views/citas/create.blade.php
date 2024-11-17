@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('content')
     <div class="container mx-auto p-4">
         <div class="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-md max-w-2xl mx-auto">
             <h1 class="text-center text-white text-xl bold">Elegir Peluquería/Barbería</h1>
@@ -136,4 +137,4 @@
     </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-</x-app-layout>
+@endsection

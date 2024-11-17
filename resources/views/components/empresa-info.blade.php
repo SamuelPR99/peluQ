@@ -1,4 +1,3 @@
-
 <div>
     <h5 class="font-semibold">{{ $empresa->nombre_empresa }}</h5>
     <p>{{ __('Email: ') }} {{ $empresa->email }}</p>

@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('content')
     <div class="bg-[url('/public/img/pared.jpg')] bg-cover bg-no-repeat">
         <div class="flex items-center justify-center min-h-screen bg-no-repeat bg-center drop-shadow-3xl z-20">
             <div class="backdrop-blur-sm w-full max-w-lg p-6 space-y-2 bg-gray-800 bg-opacity-70 rounded-lg shadow-xl z-10">
@@ -192,4 +193,4 @@
             button.parentElement.remove();
         }
     </script>
-</x-app-layout>
+@endsection
