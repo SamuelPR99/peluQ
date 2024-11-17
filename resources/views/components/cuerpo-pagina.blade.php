@@ -9,19 +9,24 @@
                         {{ Auth::user()->name }}
                     </a>
                 </li>
-                <li>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf {{-- el csrf es para evitar ataques de tipo csrf --}}
-                        <button type="submit" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">Cerrar Sesión</button>
-                    </form>
-                </li>
-                @elseif (!Request::is('log'))
+                @endif
+                @if (!Request::is('log') && !Auth::check())
                 <li><a href="{{ route('login') }}" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">Iniciar Sesión</a></li>
                 @endif
                 <li><button onclick="window.location='{{ url('/') }}'" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">Inicio</button></li>
                 <li><button onclick="window.location='{{ url('/sobreNosotros') }}'" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">Sobre nosotros</button></li>
                 <li><button onclick="window.location='{{ url('/Servicios') }}'" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">Servicios</button></li>
                 <li><button onclick="window.location='{{ url('/Contacto') }}'" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">Contacto</button></li>
+                @if (Auth::check())
+                <li>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf {{-- el csrf es para evitar ataques de tipo csrf --}}
+                        <button type="submit" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </form>
+                </li>
+                @endif
             </ul>
         </nav>
     </div>
@@ -37,3 +42,4 @@ la fecha de la misma, y una copia comentada del código antes de la modificació
 {{-- 11/11/2024 Hugo - Se ha añadido JavaScript en los botones del header para que al clicarlos se redireccione a la página correspondiente --}}
 {{-- 11/11/2024 Hugo - Se han creado rutas para las páginas de "Sobre nosotros", "Servicios" y "Contacto" --}}
 {{-- 14/11/2024 Samu - Se ha añadido un enlace al nombre del usuario autenticado para redirigir al dashboard --}}
+{{-- 17/11/2024 Samu - he añadio que el cerrar sesion salga ultimo y que sea un icono }}
