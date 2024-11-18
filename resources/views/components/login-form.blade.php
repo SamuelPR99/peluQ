@@ -15,8 +15,8 @@
     
                 <!-- Email Address -->
                 <div>
-                    <label for="email" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Email') }}</label>
-                    <input id="email" class="text-white block mt-1 w-full bg-gray-600 border-gray-600 focus:border-red-600 focus:ring-red-600 hover:border-red-600 rounded-md shadow-sm" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                    <label for="email"class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Email') }}</label>
+                    <input id="email" class="invalid:text-red-400 text-white block mt-1 w-full bg-gray-600 border-gray-600 focus:border-red-600 focus:ring-red-600 hover:border-red-600 rounded-md shadow-sm" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
                     @error('email')
                         <span class="text-sm text-white mt-2">{{ 'Usuario no encontrado.' }}</span>
                     @enderror
