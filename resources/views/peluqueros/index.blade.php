@@ -6,16 +6,16 @@
     @if($peluqueros->isEmpty())
         <p class="text-lg text-center mb-4">No hay peluqueros en esta empresa.</p>
         <div class="text-center">
-            <a href="{{ route('peluqueros.create', ['empresa_id' => $empresa->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Añadir Peluquero</a>
+            <a href="{{ route('peluqueros.create', ['empresa' => $empresa->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Añadir Peluquero</a>
         </div>
     @else
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($peluqueros as $peluquero)
-                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="bg-white shadow-md rounded-lg ">
                     <div class="p-4">
-                        <h2 class="text-xl font-bold mb-2">{{ $peluquero->nombre }}</h2>
+                        <h2 class="text-xl font-bold mb-2">{{ $peluquero->user->name }}</h2>
                         @if($peluquero->imagen)
-                        <img src="{{ asset('img/' . $peluquero->imagen) }}" alt="Imagen de {{ $peluquero->nombre }}" class="w-full h-48 object-cover mb-4">
+                        <img src="{{ Storage::url('public/' . $peluquero->imagen) }}" alt="Imagen de {{ $peluquero->user->name }}" class="w-full h-48 object-cover mb-4">
                     @else
                         <img src="{{ asset('img/default.png') }}" alt="Imagen por defecto" class="w-full h-48 object-cover mb-4">
                     @endif

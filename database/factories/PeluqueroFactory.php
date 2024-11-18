@@ -12,7 +12,6 @@ class PeluqueroFactory extends Factory
     public function definition()
     {
         return [
-            'nombre' => $this->faker->name,
             'imagen' => $this->faker->imageUrl,
             'servicios' => $this->faker->sentence,
             'empresa_id' => \App\Models\Empresa::factory(),
