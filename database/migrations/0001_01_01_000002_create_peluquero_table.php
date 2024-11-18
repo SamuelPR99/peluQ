@@ -9,7 +9,6 @@ return new class extends Migration
     {
         Schema::create('peluqueros', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
             $table->string('imagen')->nullable();
             $table->text('servicios')->nullable();
             $table->foreignId('empresa_id')->constrained()->onDelete('cascade');
