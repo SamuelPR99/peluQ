@@ -1,8 +1,8 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class=" bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 text-gray-100">
                     <h3 class="text-lg font-semibold">{{ __('Bienvenido, ') }} {{ Auth::user()->name }}</h3>
                     @if(Auth::user()->user_type == 'empresario')
                         <h4 class="mt-4"></h4>
@@ -14,6 +14,7 @@
                                 <li class="mb-6"><strong>{{ __('Teléfono:') }}</strong> {{ Auth::user()->empresas->first()->telefono }}</li>
                             </ul>
                             <a href="{{ route('empresas.edit', Auth::user()->empresas->first()->id) }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Editar Datos de la Empresa') }}</a>
+                            <a href="{{ route('peluqueros.index') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Editar Peluqueros') }}</a>
                         </div>     
                             <div class="bg-gray-600 p-4 rounded-lg shadow-lg mt-7 mb-7">
                                 <h4 class="mt-4">{{ __('Valoraciones de la Empresa') }}</h4>
@@ -44,7 +45,7 @@
                             
                             @if((Auth::user()->user_type == 'user' || Auth::user()->user_type == 'empresario') && Auth::user()->empresas->isEmpty())
                             <h4 class="mt-4">{{ __('¿Tienes una peluquería / barbería?') }}</h4>
-                            <a href="{{ route('empresas.index') }}" class="inline-block px-4 py-2 mt-2bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Dar de alta') }}</a>
+                            <a href="{{ route('empresas.index') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Dar de alta') }}</a>
                             @endif
                             
                             @if(Auth::user()->user_type == 'admin')
