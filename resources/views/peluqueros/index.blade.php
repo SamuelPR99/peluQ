@@ -13,9 +13,9 @@
             @foreach($peluqueros as $peluquero)
                 <div class="bg-white shadow-md rounded-lg overflow-hidden">
                     <div class="p-4">
-                        <h2 class="text-xl font-bold mb-2">{{ $peluquero->nombre }}</h2>
+                        <h2 class="text-xl font-bold mb-2">{{ $peluquero->user->name }}</h2>
                         @if($peluquero->imagen)
-                        <img src="{{ asset('img/' . $peluquero->imagen) }}" alt="Imagen de {{ $peluquero->nombre }}" class="w-full h-48 object-cover mb-4">
+                        <img src="{{ Storage::url('public/' . $peluquero->imagen) }}" alt="Imagen de {{ $peluquero->user->name }}" class="w-full h-48 object-cover mb-4">
                     @else
                         <img src="{{ asset('img/default.png') }}" alt="Imagen por defecto" class="w-full h-48 object-cover mb-4">
                     @endif
