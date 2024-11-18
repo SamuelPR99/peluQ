@@ -39,7 +39,6 @@ Route::get('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'index
 
 Route::get('/empresas/{empresa}/peluqueros/create', [PeluqueroController::class, 'store']);
 
-
 Route::get('/api/geocode', [GeocodingController::class, 'getAddressFromCoordinates']);
 
 Route::get('/api/empresas/{empresa}/servicios', [ServiciosController::class, 'getServiciosByEmpresa']);

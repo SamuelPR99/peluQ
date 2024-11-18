@@ -11,7 +11,7 @@
     @else
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($peluqueros as $peluquero)
-                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="bg-white shadow-md rounded-lg ">
                     <div class="p-4">
                         <h2 class="text-xl font-bold mb-2">{{ $peluquero->user->name }}</h2>
                         @if($peluquero->imagen)
