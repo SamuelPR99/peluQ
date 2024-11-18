@@ -7,7 +7,6 @@
         @csrf
         <input type="hidden" name="empresa_id" value="{{ $empresa->id }}"> <!-- Campo oculto para empresa_id -->
         
-
         <div class="mb-4">
             <label for="username" class="block text-gray-700">Nombre de Usuario</label>
             <input type="text" class="form-control w-full mt-2 p-2 border rounded" id="username" name="username" required>
