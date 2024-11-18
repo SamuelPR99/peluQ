@@ -28,6 +28,7 @@
                     </select>
                 </div>
                 <input type="hidden" name="estado_cita" value="pendiente">
+                <input type="hidden" name="peluquero_id" id="peluquero_id">
                 <div class="justify-center flex">
                     <button type="submit" class="btn btn-primary bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Crear Cita</button>
                 </div>
@@ -113,7 +114,34 @@
         }
 
         function fetchPeluqueros(empresaId) {
-            // ...existing code...
+            fetch(`/api/empresas/${empresaId}/peluqueros`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const peluquerosDiv = document.getElementById('peluqueros');
+                    peluquerosDiv.innerHTML = '';
+                    data.forEach(peluquero => {
+                        const peluqueroDiv = document.createElement('div');
+                        peluqueroDiv.classList.add('p-4', 'bg-gray-700', 'rounded-lg', 'shadow-md', 'text-white', 'cursor-pointer');
+                        peluqueroDiv.innerHTML = `
+                            <h3 class="text-lg font-bold">${peluquero.name}</h3>
+                            <p>${peluquero.servicios}</p>
+                        `;
+                        peluqueroDiv.addEventListener('click', () => {
+                            document.getElementById('peluquero_id').value = peluquero.id;
+                            document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+                            peluqueroDiv.classList.add('selected');
+                        });
+                        peluquerosDiv.appendChild(peluqueroDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
         }
 
         function fetchServicios(empresaId) {

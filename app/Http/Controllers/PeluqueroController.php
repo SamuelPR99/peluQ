@@ -137,4 +137,15 @@ class PeluqueroController extends Controller
 
         return redirect()->route('empresas.peluqueros.index', $empresa)->with('success', 'Peluquero eliminado exitosamente.');
     }
+
+    public function getPeluquerosByEmpresa(Empresa $empresa)
+    {
+        return response()->json($empresa->peluqueros()->with('user')->get()->map(function ($peluquero) {
+            return [
+                'id' => $peluquero->id,
+                'name' => $peluquero->user->name,
+                'servicios' => $peluquero->servicios,
+            ];
+        }));
+    }
 }
