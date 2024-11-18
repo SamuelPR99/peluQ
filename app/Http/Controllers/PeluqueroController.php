@@ -44,7 +44,14 @@ class PeluqueroController extends Controller
             'password' => 'required',
             'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'servicios' => 'required'
-        ]);
+        ], [
+            'imagen.required' => 'Hola!',
+            'imagen.image' => 'El archivo debe ser una imagen.',
+            'imagen.mimes' => 'La imagen debe ser un archivo de tipo: jpeg, png, jpg, gif, svg.',
+            'imagen.max' => 'La imagen no debe ser mayor de 2048 kilobytes.',
+        
+        ]
+    );
         $imagePath = $request->file('imagen')->store('images', 'public');
 
         $user = User::create([
