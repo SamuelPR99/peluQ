@@ -1,57 +1,57 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1 class="mb-4">Crear Peluquero</h1>
+<div class="container bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-md max-w-2xl mx-auto text-white">
+    <h1 class="mb-4 justify-center flex"><strong>Crear Peluquero</strong></h1>
     <form action="{{ route('peluqueros.store', ['empresa' => $empresa->id]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="empresa_id" value="{{ $empresa->id }}"> <!-- Campo oculto para empresa_id -->
         
 
         <div class="mb-4">
-            <label for="username" class="block text-gray-700">Nombre de Usuario</label>
-            <input type="text" class="form-control w-full mt-2 p-2 border rounded" id="username" name="username" required>
+            <label for="username" class="block text-white">Nombre de Usuario</label>
+            <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="username" name="username" required>
             
         </div>
         <div class="mb-4">
-            <label for="name" class="block text-gray-700">Nombre</label>
-            <input type="text" class="form-control w-full mt-2 p-2 border rounded" id="name" name="name" required>
+            <label for="name" class="block text-white">Nombre</label>
+            <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="name" name="name" required>
            
         </div>
         <div class="mb-4">
-            <label for="first_name" class="block text-gray-700">Primer Apellido</label>
-            <input type="text" class="form-control w-full mt-2 p-2 border rounded" id="first_name" name="first_name" required>
+            <label for="first_name" class="block text-white">Primer Apellido</label>
+            <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="first_name" name="first_name" required>
             
         </div>
         <div class="mb-4">
-            <label for="last_name" class="block text-gray-700">Segundo Apellido</label>
-            <input type="text" class="form-control w-full mt-2 p-2 border rounded" id="last_name" name="last_name" required>
+            <label for="last_name" class="block text-white">Segundo Apellido</label>
+            <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="last_name" name="last_name" required>
             
         </div>
         <div class="mb-4">
-            <label for="email" class="block text-gray-700">Correo Electrónico</label>
-            <input type="email" class="form-control w-full mt-2 p-2 border rounded" id="email" name="email" required>
+            <label for="email" class="block text-white">Correo Electrónico</label>
+            <input type="email" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="email" name="email" required>
             
         </div>
         <div class="mb-4">
-            <label for="password" class="block text-gray-700">Contraseña</label>
-            <input type="password" class="form-control w-full mt-2 p-2 border rounded" id="password" name="password" required>
+            <label for="password" class="block text-white">Contraseña</label>
+            <input type="password" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="password" name="password" required>
             
         </div>
         <div class="mb-4">
-            <label for="imagen" class="block text-gray-700">Adjuntar Imagen</label>
+            <label for="imagen" class="block text-white">Adjuntar Imagen</label>
             <input type="file" class="form-control w-full mt-2 p-2 border rounded" id="imagen" name="imagen" required>
             @error('imagen')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
         </div>
         <div class="mb-4">
-            <label for="servicios" class="block text-gray-700">Descripción de los Servicios</label>
-            <textarea class="form-control w-full mt-2 p-2 border rounded" id="servicios" name="servicios" rows="4" required></textarea>
+            <label for="servicios" class="block text-white">Descripción de los Servicios</label>
+            <textarea class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="servicios" name="servicios" rows="4" required></textarea>
             
         </div>
         <div class="text-center">
-            <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear Peluquero</button>
+            <button type="submit" class="mt-5 btn btn-primary bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Crear Peluquero</button>
         </div>
     </form>
 </div>
