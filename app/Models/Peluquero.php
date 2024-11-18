@@ -12,7 +12,6 @@ class Peluquero extends Model
     public $timestamps = false; // Desactivar timestamps
 
     protected $fillable = [
-        'nombre',
         'imagen',
         'servicios',
         'empresa_id',

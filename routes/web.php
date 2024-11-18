@@ -14,7 +14,6 @@ use App\Http\Controllers\ServiciosController;
 
 Route::get('/', function () {
     return view('welcome');
-
 });
 
 Route::get('/sobreNosotros', function () {
@@ -38,6 +37,9 @@ Route::resource('peluqueros', PeluqueroController::class);
 // Nueva ruta para redirigir al index de peluqueros después de crear una empresa
 Route::get('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'index'])->name('empresas.peluqueros.index');
 
+Route::get('/empresas/{empresa}/peluqueros/create', [PeluqueroController::class, 'store']);
+
+
 Route::get('/api/geocode', [GeocodingController::class, 'getAddressFromCoordinates']);
 
 Route::get('/api/empresas/{empresa}/servicios', [ServiciosController::class, 'getServiciosByEmpresa']);
@@ -55,6 +57,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('empresas', EmpresasController::class);
     Route::resource('cuadrantes', CuadranteController::class);
     Route::resource('citas', CitaController::class);
+    // Nueva ruta para redirigir al index de peluqueros después de crear una empresa
+    Route::get('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'index'])->name('empresas.peluqueros.index');
+    Route::get('/empresas/{empresa}/peluqueros/create', [PeluqueroController::class, 'create'])->name('peluqueros.create');
+    Route::post('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'store'])->name('peluqueros.store');
 });
 
 require __DIR__.'/auth.php';
