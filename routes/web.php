@@ -38,6 +38,9 @@ Route::resource('peluqueros', PeluqueroController::class);
 // Nueva ruta para redirigir al index de peluqueros después de crear una empresa
 Route::get('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'index'])->name('empresas.peluqueros.index');
 
+Route::get('/empresas/{empresa}/peluqueros/create', [PeluqueroController::class, 'store']);
+
+
 Route::get('/api/geocode', [GeocodingController::class, 'getAddressFromCoordinates']);
 
 Route::get('/api/empresas/{empresa}/servicios', [ServiciosController::class, 'getServiciosByEmpresa']);
