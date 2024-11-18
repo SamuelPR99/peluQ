@@ -14,8 +14,8 @@
                                 <li><strong>{{ __('Dirección:') }}</strong> {{ Auth::user()->empresas->first()->direccion }}</li>
                                 <li class="mb-6"><strong>{{ __('Teléfono:') }}</strong> {{ Auth::user()->empresas->first()->telefono }}</li>
                             </ul>
-                            <a href="{{ route('empresas.edit', Auth::user()->empresas->first()->id) }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Editar Datos de la Empresa') }}</a>
-                            <button type="button" class="inline-block px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition ease-in-out duration-150" onclick="document.getElementById('deleteModal').style.display='block'">{{ __('Eliminar Empresa') }}</button>
+                            <a href="{{ route('empresas.edit', Auth::user()->empresas->first()->id) }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-green-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Editar Datos de la Empresa') }}</a>
+                            <button type="button" class="inline-block px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition ease-in-out duration-150" onclick="document.getElementById('deleteModal').style.display='block'">{{ __('Eliminar Empresa') }}</button>
                             <div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto" style="display:none;">
                                 <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                                     <div class="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -59,8 +59,8 @@
                                     @endif
                                 @endif
                             </div>
-                    <div class="bg-gray-600 p-4 rounded-lg shadow-lg mb-7">            
-                        <h4 class="mt-4"><strong>{{ __('Citas Programadas') }}</strong></h4>
+                    <div class="bg-gray-600 p-4 ml-5 mr-5 rounded-lg shadow-lg mb-7 text-gray-200">            
+                        <h4 class="mt-1"><strong>{{ __('Citas Programadas') }}</strong></h4>
                         @if(Auth::user()->citas->isEmpty())
                         <p>{{ __('No tienes citas programadas.') }}</p>
                         <a href="{{ route('citas.index') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Pedir cita') }}</a>
@@ -69,16 +69,18 @@
                             @endif
                             
                         </div>
-                    <div class="bg-gray-600 p-4 rounded-lg shadow-lg mb-7">                
+                    <div class="bg-gray-600 p-4 rounded-lg shadow-lg ml-5 mr-5 mb-7 text-gray-200">                
                         <h4 class="mt-1 mb-3"><strong>{{ __('Valoraciones Realizadas') }}</strong></h4>
                         @if(Auth::user()->valoracion->isEmpty())
                         <p>{{ __('No tienes valoraciones.') }}</p>
                         @else
                         <x-valoraciones :valoraciones="Auth::user()->valoracion" />
                             @endif
-                            
+                        </div>                
+                        
+                        <div class="bg-gray-600 p-4 rounded-lg shadow-lg ml-5 mr-5 mb-7 text-gray-200 mt-0">                
                             @if((Auth::user()->user_type == 'user' || Auth::user()->user_type == 'empresario') && Auth::user()->empresas->isEmpty())
-                            <h4 class="mt-4">{{ __('¿Tienes una peluquería / barbería?') }}</h4>
+                            <h4 class="mt-1"><strong>{{ __('¿Tienes una peluquería / barbería?') }}</strong></h4>
                             <a href="{{ route('empresas.index') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Dar de alta') }}</a>
                             @endif
                             
@@ -86,6 +88,7 @@
                             <h4 class="mt-4">{{ __('Acciones Administrativas') }}</h4>
                             <x-admin-actions />
                             @endif
+                        </div>                
                             
                             @if(Auth::user()->user_type == 'peluquero')
                             <h4 class="mt-4">{{ __('Cuadrante') }}</h4>
@@ -95,7 +98,6 @@
                                     <h4 class="mt-4">{{ __('Citas Pendientes') }}</h4>
                                     <x-citas :citas="Auth::user()->citasPendientes" />
                                         @endif
-                        </div>                
                 </div>
             </div>
         </div>

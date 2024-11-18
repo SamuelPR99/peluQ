@@ -52,8 +52,11 @@
                 </div>
             </form>
         </div>
-
+        
     </form>
 </div>
+<div class="text-gray-400 flex justify-end items-center">
+    <a>¿No tienes una cuenta?<a class="ml-1 underline hover:text-red-600" href="{{ route('register') }}">Registrate</a></a>
+</div>    
 
 <!--AAAAAAAAAAAAAAAAA-->
