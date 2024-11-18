@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mx-auto p-4">
-    <h1 class="text-4xl font-bold text-center mb-8">Listado de Peluqueros de {{ $empresa->nombre_empresa }}</h1>
+    <h1 class="text-4xl font-bold text-center mb-8 text-white shadow-2xl">Listado de Peluqueros de {{ $empresa->nombre_empresa }}</h1>
     @if($peluqueros->isEmpty())
         <p class="text-lg text-center mb-4">No hay peluqueros en esta empresa.</p>
         <div class="text-center">
@@ -11,15 +11,21 @@
     @else
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($peluqueros as $peluquero)
-                <div class="bg-white shadow-md rounded-lg overflow-hidden relative group">
-                    <div class="p-4">
-                        <h2 class="text-xl font-bold mb-2">{{ $peluquero->user->name }}</h2>
-                        @if($peluquero->imagen)
-                            <img src="{{ Storage::url('public/' . $peluquero->imagen) }}" alt="Imagen de {{ $peluquero->user->name }}" class="w-full h-48 object-cover mb-4">
-                        @else
-                            <img src="{{ asset('img/default.png') }}" alt="Imagen por defecto" class="w-full h-48 object-cover mb-4">
-                        @endif
-                    </div>
+            <div class="bg-white shadow-md rounded-lg overflow-hidden relative group flex">
+                <!-- Imagen del peluquero -->
+                <div class="w-1/3">
+                    @if($peluquero->imagen)
+                        <img src="{{ Storage::url('public/' . $peluquero->imagen) }}" alt="Imagen de {{ $peluquero->user->name }}" class="w-full h-full object-cover">
+                    @else
+                        <img src="{{ asset('img/default.png') }}" alt="Imagen por defecto" class="w-full h-full object-cover">
+                    @endif
+                </div>
+                <!-- Información del peluquero -->
+                <div class="p-4 w-2/3">
+                    <h2 class="text-xl font-bold mb-1">{{ $peluquero->user->name }}</h2>
+                    <h3 class="text-lg mb-1">{{ $peluquero->user->first_name }}</h3>
+                    <h3 class="text-lg mb-1">{{ $peluquero->user->last_name }}</h3>
+                </div>
                     <!-- Contenedor de botones ocultos -->
                     <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div class="flex space-x-2">
@@ -41,6 +47,7 @@
                     <span class="text-lg">+</span>
                 </a>
             </div>
+        </div> <!--Lo mismo esto sobra nose-->
     @endif
 </div>
 @endsection
