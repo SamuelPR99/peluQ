@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'index'])->name('empresas.peluqueros.index');
     Route::get('/empresas/{empresa}/peluqueros/create', [PeluqueroController::class, 'create'])->name('peluqueros.create');
     Route::post('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'store'])->name('peluqueros.store');
+    Route::delete('/empresas/{empresa}/peluqueros/{peluquero}', [PeluqueroController::class, 'destroy'])->name('peluqueros.destroy');
 });
 
 require __DIR__.'/auth.php';
