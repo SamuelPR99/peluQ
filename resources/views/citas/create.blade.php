@@ -128,6 +128,7 @@
                         const peluqueroDiv = document.createElement('div');
                         peluqueroDiv.classList.add('p-4', 'bg-gray-700', 'rounded-lg', 'shadow-md', 'text-white', 'cursor-pointer');
                         peluqueroDiv.innerHTML = `
+                            <img src="${peluquero.imagen}" alt="${peluquero.name}" class="w-16 h-16 rounded-full mx-auto mb-2">
                             <h3 class="text-lg font-bold">${peluquero.name}</h3>
                             <p>${peluquero.servicios}</p>
                         `;

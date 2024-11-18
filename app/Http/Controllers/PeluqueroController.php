@@ -7,6 +7,7 @@ use App\Models\Empresa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class PeluqueroController extends Controller
 {
@@ -145,6 +146,7 @@ class PeluqueroController extends Controller
                 'id' => $peluquero->id,
                 'name' => $peluquero->user->name,
                 'servicios' => $peluquero->servicios,
+                'imagen' => $peluquero->imagen ? Storage::url($peluquero->imagen) : null,
             ];
         }));
     }
