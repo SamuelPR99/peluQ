@@ -10,7 +10,8 @@ class Empresa extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nombre_empresa', 
+        'nombre_empresa',
+        'tipo_empresa',
         'email',
         'telefono',
         'direccion',
@@ -33,5 +34,10 @@ class Empresa extends Model
     public function valoracion()
     {
         return $this->hasMany(Valoracion::class);
+    }
+
+    public function servicios()
+    {
+        return $this->hasMany(Servicio::class);
     }
 }

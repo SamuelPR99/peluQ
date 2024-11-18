@@ -28,11 +28,14 @@ class EmpresasController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Empresa::class);
         return view('empresas.create');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', Empresa::class);
+
         $request->validate([
             'nombre_empresa' => 'required',
             'email' => 'required|email',
@@ -40,6 +43,7 @@ class EmpresasController extends Controller
             'direccion' => 'required',
             'codigo_postal' => 'required',
             'confirmar_subscripcion' => 'required',
+            'tipo_empresa' => 'required|in:peluqueria,barberia,peluqueria y barberia',
         ]);
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
@@ -53,7 +57,12 @@ class EmpresasController extends Controller
             'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
             'coordenadas' => $coordenadas,
             'user_id' => Auth::id(),
+            'tipo_empresa' => $request->tipo_empresa,
         ]);
+
+        foreach ($request->servicios as $servicio) {
+            $empresa->servicios()->create($servicio);
+        }
 
         DB::statement('CALL update_user_type(?)', [Auth::id()]);
         
@@ -83,6 +92,7 @@ class EmpresasController extends Controller
             'direccion' => 'required',
             'codigo_postal' => 'required',
             'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
+            'tipo_empresa' => 'required|in:peluqueria,barberia,peluqueria y barberia',
         ]);
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
@@ -95,7 +105,13 @@ class EmpresasController extends Controller
             'codigo_postal' => $request->codigo_postal,
             'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
             'coordenadas' => $coordenadas,
+            'tipo_empresa' => $request->tipo_empresa,
         ]);
+
+        $empresa->servicios()->delete();
+        foreach ($request->servicios as $servicio) {
+            $empresa->servicios()->create($servicio);
+        }
 
         return redirect()->route('dashboard');
     }
@@ -104,6 +120,6 @@ class EmpresasController extends Controller
     {
         $this->authorize('delete', $empresa);
         $empresa->delete();
-        return redirect()->route('empresas.index');
+        return redirect()->route('dashboard');
     }
 }

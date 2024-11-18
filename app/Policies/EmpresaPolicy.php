@@ -26,5 +26,21 @@ class EmpresaPolicy
         return $user->id === $empresa->user_id;
     }
 
+    /**
+     * Determine whether the user can delete the empresa.
+     */
+    public function delete(User $user, Empresa $empresa)
+    {
+        return $user->id === $empresa->user_id;
+    }
+
+    /**
+     * Determine whether the user can create a new empresa.
+     */
+    public function create(User $user)
+    {
+        return $user->empresas->isEmpty();
+    }
+
     // Puedes agregar más métodos según sea necesario (delete, create, etc.)
 }

@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('content')
     <div class="container mx-auto p-4">
         <div class="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-md max-w-2xl mx-auto">
             <h1 class="text-center text-white text-xl bold">Elegir Peluquería/Barbería</h1>
@@ -21,16 +22,20 @@
                     <textarea name="observaciones" id="observaciones" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="tipo_cita" class="block text-sm font-medium text-white">Tipo de Cita</label>
-                    <select name="tipo_cita" id="tipo_cita" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                        <option value="corte">Corte</option>
-                        <option value="tinte">Tinte</option>
-                        <option value="peinado">Peinado</option>
+                    <label for="servicio_id" class="block text-sm font-medium text-white">Servicio</label>
+                    <select name="servicio_id" id="servicio_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <!-- Opciones de servicios se llenarán dinámicamente -->
                     </select>
                 </div>
                 <input type="hidden" name="estado_cita" value="pendiente">
-                <button type=S"submit" class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded-md">Crear Cita</button>
+                <div class="justify-center flex">
+                    <button type="submit" class="btn btn-primary bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Crear Cita</button>
+                </div>
             </form>
+            <div id="leyenda" class="z-20 bg-gray-800 bg-opacity-70 p-4 rounded-lg shadow-md max-w-xs absolute right-12 mr-20 top-60 hidden">
+                <h2 class="text-white text-lg font-bold mb-2">Información</h2>
+                <p id="leyenda-contenido" class="text-white">Pasa el mouse sobre el mapa para ver información.</p>
+            </div>
         </div>
     </div>
 
@@ -38,62 +43,91 @@
         let map;
         let markers = [];
         let empresas = @json($empresas);
-        function initMap() {
-    map = L.map('map').setView([40.416, -3.70], 5);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    empresas.forEach(empresa => {
-        let marker = L.marker([parseFloat(empresa.coordenadas.split(',')[0]), parseFloat(empresa.coordenadas.split(',')[1])]).addTo(map)
-            .bindPopup(`
-                <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
-                    <h3 class="text-lg font-bold text-red-700">${empresa.nombre_empresa}</h3>
-                    <p class="text-white">${empresa.direccion}</p>
-                    <p class="text-white">${empresa.telefono}</p>
-                </div>
-            `)
-            .on('click', function() {
-                document.getElementById('empresa_id').value = empresa.id;
-                document.getElementById('empresa-info').innerHTML = `
-                    <h3 class="text-lg font-bold text-white"> Cita para ${empresa.nombre_empresa}</h3>
-                `;
-                fetchPeluqueros(empresa.id);
+        function getIcon(tipoEmpresa) {
+            var iconUrl;
+            switch (tipoEmpresa) {
+                case 'barberia':
+                    iconUrl = '/img/bar.png';
+                    break;
+                case 'peluqueria':
+                    iconUrl = '/img/pelu.png';
+                    break;
+                case 'peluqueria y barberia':
+                    iconUrl = '/img/peluqueria.png';
+                    break;
+                default:
+                    iconUrl = '/img/peluqueria.png';
+            }
+            return L.icon({
+                iconUrl: iconUrl,
+                iconSize: [32, 32],
+                iconAnchor: [16, 32],
+                popupAnchor: [0, -32]
             });
-
-        markers.push(marker);
-    });
-}
-
-        function fetchPeluqueros(empresaId) {
-            fetch(`/api/empresas/${empresaId}/peluqueros`)
-                .then(response => response.json())
-                .then(data => {
-                    let peluquerosDiv = document.getElementById('peluqueros');
-                    peluquerosDiv.innerHTML = '';
-                    data.forEach(peluquero => {
-                        let peluqueroDiv = document.createElement('div');
-                        peluqueroDiv.className = 'col-md-4';
-                        peluqueroDiv.innerHTML = `
-                            <div class="card bg-white shadow-md rounded-lg overflow-hidden">
-                                <div class="card-body p-4">
-                                    <h5 class="card-title text-lg font-bold">${peluquero.nombre}</h5>
-                                    <button class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded-md mt-2" onclick="selectPeluquero(${peluquero.id})">Seleccionar</button>
-                                </div>
-                            </div>
-                        `;
-                        peluquerosDiv.appendChild(peluqueroDiv);
-                    });
-                });
         }
 
-        function selectPeluquero(peluqueroId) {
-            fetch(`/api/peluqueros/${peluqueroId}/cuadrantes`)
+        function initMap() {
+            map = L.map('map').setView([40.416, -3.70], 5);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
+
+            empresas.forEach(empresa => {
+                let marker = L.marker([parseFloat(empresa.coordenadas.split(',')[0]), parseFloat(empresa.coordenadas.split(',')[1])], { icon: getIcon(empresa.tipo_empresa) }).addTo(map)
+                    .bindPopup(`
+                        <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+                            <h3 class="text-lg font-bold text-red-700">${empresa.nombre_empresa}</h3>
+                            <p class="text-white">${empresa.direccion}</p>
+                            <p class="text-white">${empresa.telefono}</p>
+                        </div>
+                    `)
+                    .on('click', function() {
+                        document.getElementById('empresa_id').value = empresa.id;
+                        document.getElementById('empresa-info').innerHTML = `
+                            <h3 class="text-lg font-bold text-white"> Cita para ${empresa.nombre_empresa}</h3>
+                        `;
+                        fetchPeluqueros(empresa.id);
+                        fetchServicios(empresa.id);
+                    })
+                    .on('mouseover', function() {
+                        document.getElementById('leyenda').classList.remove('hidden');
+                        document.getElementById('leyenda-contenido').innerHTML = `<div class="flex items-center"><img src="/img/pelu.png" class="w-7 h-7 mr-2">Peluqueria.</div>
+                                                                                  <div class="flex items-center"><img src="/img/bar.png" class="w-7 h-7 mr-2">Barbería.</div>
+                                                                                  <div class="flex items-center"><img src="/img/peluqueria.png" class="w-7 h-7 mr-2">Barbería y peluqueria.</div>`;
+                    })
+                    .on('mouseout', function() {
+                        document.getElementById('leyenda').classList.add('hidden');
+                    });
+
+                markers.push(marker);
+            });
+
+            // Eventos para el mapa
+            map.on('mouseover', function() {
+                document.getElementById('leyenda').classList.remove('hidden');
+            });
+
+            map.on('mouseout', function() {
+                document.getElementById('leyenda').classList.add('hidden');
+            });
+        }
+
+        function fetchPeluqueros(empresaId) {
+            // ...existing code...
+        }
+
+        function fetchServicios(empresaId) {
+            fetch(`/api/empresas/${empresaId}/servicios`)
                 .then(response => response.json())
                 .then(data => {
-                    // Mostrar el cuadrante de horarios para el peluquero seleccionado
-                    // Aquí puedes agregar el código para mostrar los horarios disponibles
+                    const servicioSelect = document.getElementById('servicio_id');
+                    servicioSelect.innerHTML = '';
+                    data.forEach(servicio => {
+                        const option = document.createElement('option');
+                        option.value = servicio.id;
+                        option.textContent = `${servicio.servicio} - ${servicio.precio}€`;
+                        servicioSelect.appendChild(option);
+                    });
                 });
         }
 
@@ -103,4 +137,4 @@
     </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-</x-app-layout>
+@endsection

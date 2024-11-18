@@ -29,6 +29,7 @@ class EmpresaFactory extends Factory
             'coordenadas' => $coordenadas,
             'estado_subscripcion' => $faker->randomElement(['activo', 'inactivo']),
             'user_id' => \App\Models\User::factory(),
+            'tipo_empresa' => $faker->randomElement(['peluqueria', 'barberia', 'peluqueria y barberia']),
         ];
     }
 }

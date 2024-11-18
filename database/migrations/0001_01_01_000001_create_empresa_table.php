@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('codigo_postal');
             $table->string('coordenadas');
             $table->enum('estado_subscripcion', ['activo', 'inactivo'])->default('activo');
+            $table->enum('tipo_empresa', ['peluqueria', 'barberia', 'peluqueria y barberia']);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

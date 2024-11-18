@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('content')
     <div class="bg-[url('/public/img/pared.jpg')] bg-cover bg-no-repeat">
         <div class="flex items-center justify-center min-h-screen bg-no-repeat bg-center drop-shadow-3xl z-20">
             <div class="w-full max-w-lg p-6 space-y-2 bg-gray-800 bg-opacity-70 rounded-lg shadow-xl z-10">
@@ -9,6 +10,14 @@
                     <div class="mb-3">
                         <label for="nombre_empresa" class="block text-gray-300 text-sm">Nombre de la Empresa</label>
                         <input type="text" class=" text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded" id="nombre_empresa" name="nombre_empresa" value="{{ $empresa->nombre_empresa }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tipo_empresa" class="block text-gray-300 text-sm">Tipo de Empresa</label>
+                        <select class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded" id="tipo_empresa" name="tipo_empresa" required>
+                            <option value="peluqueria" {{ $empresa->tipo_empresa == 'peluqueria' ? 'selected' : '' }}>Peluquería</option>
+                            <option value="barberia" {{ $empresa->tipo_empresa == 'barberia' ? 'selected' : '' }}>Barbería</option>
+                            <option value="peluqueria y barberia" {{ $empresa->tipo_empresa == 'peluqueria y barberia' ? 'selected' : '' }}>Peluquería y Barbería</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="block text-gray-300 text-sm">Correo Electrónico</label>
@@ -30,6 +39,22 @@
                         <label for="codigo_postal" class="block text-gray-300 text-sm">Código Postal</label>
                         <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="codigo_postal" name="codigo_postal" value="{{ $empresa->codigo_postal }}" required>
                     </div>
+                    <div id="servicios-container">
+                        @foreach($empresa->servicios as $index => $servicio)
+                        <div class="mb-3 flex space-x-2">
+                            <div class="w-1/2">
+                                <label for="servicio" class="block text-gray-300 text-sm">Servicio</label>
+                                <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="servicio" name="servicios[{{ $index }}][servicio]" value="{{ $servicio->servicio }}" required>
+                            </div>
+                            <div class="w-1/2">
+                                <label for="precio" class="block text-gray-300 text-sm">Precio</label>
+                                <input type="number" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="precio" name="servicios[{{ $index }}][precio]" value="{{ $servicio->precio }}" required>
+                            </div>
+                            <button type="button" class="bg-red-500 text-white font-bold py-2 px-4 rounded mt-6 h-10" onclick="removeServicio(this)">-</button>
+                        </div>
+                        @endforeach
+                    </div>
+                    <button type="button" class="bg-green-500 text-white font-bold py-2 px-4 rounded mt-6 h-10" onclick="addServicio()">Añadir Servicio</button>
                     <div class="mb-3 flex items-center">
                         <input type="checkbox" id="confirmar_subscripcion" name="confirmar_subscripcion" class="checked:bg-red-600 form-checkbox h-4 w-4 text-blue-600 rounded" {{ $empresa->estado_subscripcion == 'activo' ? 'checked' : '' }} required>
                         <label for="confirmar_subscripcion" class="ml-2 text-gray-300 text-sm">Confirmar Subscripción*</label>
@@ -111,10 +136,37 @@
             var empresaLng = parseFloat(coordenadas[1]);
             var map = L.map('map').setView([empresaLat, empresaLng], 15);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            var marker = L.marker([empresaLat, empresaLng]).addTo(map);
+            var marker;
+
+            function getIcon(tipoEmpresa) {
+                var iconUrl;
+                switch (tipoEmpresa) {
+                    case 'barberia':
+                        iconUrl = '/img/bar.png';
+                        break;
+                    case 'peluqueria':
+                        iconUrl = '/img/pelu.png';
+                        break;
+                    case 'peluqueria y barberia':
+                        iconUrl = '/img/peluqueria.png';
+                        break;
+                    default:
+                        iconUrl = '/img/peluqueria.png';
+                }
+                return L.icon({
+                    iconUrl: iconUrl,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [0, -32]
+                });
+            }
+
+            marker = L.marker([empresaLat, empresaLng], { icon: getIcon("{{ $empresa->tipo_empresa }}") }).addTo(map);
+
             map.on('click', function (e) {
                 if (marker) map.removeLayer(marker);
-                marker = L.marker(e.latlng).addTo(map);
+                var tipoEmpresa = document.getElementById('tipo_empresa').value;
+                marker = L.marker(e.latlng, { icon: getIcon(tipoEmpresa) }).addTo(map);
                 fetch(`/api/geocode?lat=${e.latlng.lat}&lng=${e.latlng.lng}`)
                     .then(response => response.json())
                     .then(data => {
@@ -124,5 +176,29 @@
                     .catch(error => console.error('Error:', error));
             });
         });
+
+        let servicioIndex = {{ $empresa->servicios->count() }};
+        function addServicio() {
+            const container = document.getElementById('servicios-container');
+            const newServicio = document.createElement('div');
+            newServicio.classList.add('mb-3', 'flex', 'space-x-2');
+            newServicio.innerHTML = `
+                <div class="w-1/2">
+                    <label for="servicio" class="block text-gray-300 text-sm">Servicio</label>
+                    <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="servicio" name="servicios[${servicioIndex}][servicio]" required>
+                </div>
+                <div class="w-1/2">
+                    <label for="precio" class="block text-gray-300 text-sm">Precio</label>
+                    <input type="number" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="precio" name="servicios[${servicioIndex}][precio]" required>
+                </div>
+                <button type="button" class="bg-red-500 text-white font-bold py-2 px-4 rounded mt-6 h-10" onclick="removeServicio(this)">-</button>
+            `;
+            container.appendChild(newServicio);
+            servicioIndex++;
+        }
+
+        function removeServicio(button) {
+            button.parentElement.remove();
+        }
     </script>
-</x-app-layout>
+@endsection

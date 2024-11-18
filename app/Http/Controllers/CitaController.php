@@ -38,10 +38,10 @@ class CitaController extends Controller
             'fecha_cita' => 'required|date',
             'hora_cita' => 'required|date_format:H:i',
             'observaciones' => 'nullable|string',
-            'tipo_cita' => 'required|string',
             'empresa_id' => 'required|exists:empresas,id',
             'peluquero_id' => 'required|exists:peluqueros,id',
             'estado_cita' => 'required|string',
+            'servicio_id' => 'required|exists:servicios,id',
         ]);
 
         $cita = Cita::create($request->all());
@@ -77,10 +77,10 @@ class CitaController extends Controller
             'fecha_cita' => 'required|date',
             'hora_cita' => 'required|date_format:H:i',
             'observaciones' => 'nullable|string',
-            'tipo_cita' => 'required|string',
             'empresa_id' => 'required|exists:empresas,id',
             'peluquero_id' => 'required|exists:peluqueros,id',
             'estado_cita' => 'required|string',
+            'servicio_id' => 'required|exists:servicios,id',
         ]);
 
         $cita->update($request->all());
