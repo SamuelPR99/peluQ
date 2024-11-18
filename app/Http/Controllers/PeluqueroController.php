@@ -119,11 +119,11 @@ class PeluqueroController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Peluquero $peluquero)
+    public function destroy(Empresa $empresa, Peluquero $peluquero)
     {
         // destroy() es el método que se encarga de eliminar un peluquero de la base de datos
         $peluquero->delete();
 
-        return redirect()->route('peluqueros.index');
+        return redirect()->route('empresas.peluqueros.index', $empresa)->with('success', 'Peluquero eliminado exitosamente.');
     }
 }

@@ -25,7 +25,7 @@
                         <div class="flex space-x-2">
                             <a href="{{ route('peluqueros.edit', $peluquero) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Editar</a>
                             <a href="{{ route('cuadrantes.create', ['peluquero_id' => $peluquero->id]) }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Añadir Cuadrante</a>
-                            <form action="{{ route('peluqueros.destroy', $peluquero) }}" method="POST" class="inline-block">
+                            <form action="{{ route('peluqueros.destroy', ['empresa' => $empresa->id, 'peluquero' => $peluquero->id]) }}" method="POST" class="inline-block">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
