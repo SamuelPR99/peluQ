@@ -35,13 +35,18 @@ class PeluqueroController extends Controller
         // store() es el método que se encarga de guardar el nuevo peluquero en la base de datos
         $request->validate([
             'nombre' => 'required',
-            'imagen' => 'required|image', // La imagen es obligatoria y debe ser una imagen
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // La imagen es obligatoria y debe ser una imagen
             'servicios' => 'required'
         ]);
+        $imagePath = $request->file('imagen')->store('images', 'public');
 
-        Peluquero::create($request->all());
+        Peluquero::create([
+            'nombre' => $request->nombre,
+            'imagen' => $imagePath,
+            'servicios' => $request->servicios,
+        ]);
 
-        return redirect()->route('peluqueros.index');
+        return redirect()->route('peluqueros.index')->with('success', 'Peluquero creado exitosamente.');;
     }
 
     /**
@@ -66,28 +71,26 @@ class PeluqueroController extends Controller
      * Update the specified resource in storage.
      */
     
-    public function update(Request $request, Peluquero $peluquero)
-    {
-        // Validar los datos del formulario
-        $request->validate([
-            'nombre' => 'required',
-            'imagen' => 'nullable|image', // La imagen no es obligatoria, pero si se proporciona, debe ser una imagen
-            'servicios' => 'required'
-        ]);
-
-        // Si se proporciona una nueva imagen, procesarla y actualizar el campo de la imagen
-        if ($request->hasFile('imagen')) {
-            $path = $request->file('imagen')->store('public/imagenes');
-            $peluquero->imagen = basename($path);
-        }
-
-        // Actualizar los demás campos
-        $peluquero->nombre = $request->nombre;
-        $peluquero->servicios = $request->servicios;
-        $peluquero->save();
-
-        return redirect()->route('peluqueros.index');
-    }
+     public function update(Request $request, Peluquero $peluquero)
+     {
+        $
+         $request->validate([
+             'nombre' => 'required|string|max:255',
+             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+             'servicios' => 'required|string',
+         ]);
+ 
+         if ($request->hasFile('imagen')) {
+             $imagePath = $request->file('imagen')->store('images', 'public');
+             $peluquero->imagen = $imagePath;
+         }
+ 
+         $peluquero->nombre = $request->nombre;
+         $peluquero->servicios = $request->servicios;
+         $peluquero->save();
+ 
+         return redirect()->route('peluqueros.index')->with('success', 'Peluquero actualizado exitosamente.');
+     }
 
     /**
      * Remove the specified resource from storage.

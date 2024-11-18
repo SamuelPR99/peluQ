@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>     
+                        </div>    
                             <div class="bg-gray-600 p-4 rounded-lg shadow-lg mt-7 mb-7">
                                 <h4 class="mt-4"><strong>{{ __('Valoraciones de la Empresa') }}</strong></h4>
                                 @if(Auth::user()->empresas->first()->valoracion->isEmpty())
@@ -67,7 +67,7 @@
                         @else
                         <x-citas :citas="Auth::user()->citas" />
                             @endif
-                            
+                           
                         </div>
                     <div class="bg-gray-600 p-4 rounded-lg shadow-lg ml-5 mr-5 mb-7 text-gray-200">                
                         <h4 class="mt-1 mb-3"><strong>{{ __('Valoraciones Realizadas') }}</strong></h4>
@@ -83,7 +83,7 @@
                             <h4 class="mt-1"><strong>{{ __('¿Tienes una peluquería / barbería?') }}</strong></h4>
                             <a href="{{ route('empresas.index') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Dar de alta') }}</a>
                             @endif
-                            
+                           
                             @if(Auth::user()->user_type == 'admin')
                             <h4 class="mt-4">{{ __('Acciones Administrativas') }}</h4>
                             <x-admin-actions />
