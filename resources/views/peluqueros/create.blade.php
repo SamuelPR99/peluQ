@@ -10,32 +10,44 @@
         <div class="mb-4">
             <label for="username" class="block text-white">Nombre de Usuario</label>
             <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="username" name="username" required>
-            
+            @error('username')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="name" class="block text-white">Nombre</label>
             <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="name" name="name" required>
-           
+            @error('name')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="first_name" class="block text-white">Primer Apellido</label>
             <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="first_name" name="first_name" required>
-            
+            @error('first_name')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="last_name" class="block text-white">Segundo Apellido</label>
             <input type="text" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="last_name" name="last_name" required>
-            
+            @error('last_name')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="email" class="block text-white">Correo Electrónico</label>
             <input type="email" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="email" name="email" required>
-            
+            @error('email')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="password" class="block text-white">Contraseña</label>
             <input type="password" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="password" name="password" required>
-            
+            @error('password')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="imagen" class="block text-white">Adjuntar Imagen</label>
@@ -47,7 +59,9 @@
         <div class="mb-4">
             <label for="servicios" class="block text-white">Descripción de los Servicios</label>
             <textarea class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" id="servicios" name="servicios" rows="4" required></textarea>
-            
+            @error('servicios')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="text-center">
             <button type="submit" class="mt-5 btn btn-primary bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Crear Peluquero</button>
