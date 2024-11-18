@@ -6,7 +6,7 @@
     @if($peluqueros->isEmpty())
         <p class="text-lg text-center mb-4">No hay peluqueros en esta empresa.</p>
         <div class="text-center">
-            <a href="{{ route('peluqueros.create', ['empresa_id' => $empresa->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Añadir Peluquero</a>
+            <a href="{{ route('peluqueros.create', ['empresa' => $empresa->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Añadir Peluquero</a>
         </div>
     @else
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

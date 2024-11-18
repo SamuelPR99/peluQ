@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Peluquero;
 use App\Models\Empresa;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PeluqueroController extends Controller
 {
@@ -21,32 +23,50 @@ class PeluqueroController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Empresa $empresa)
     {
-        // create() es el método que muestra el formulario de creación de un nuevo peluquero
-        return view('peluqueros.create');
+        // Pasar la empresa a la vista de creación
+        return view('peluqueros.create', compact('empresa'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Empresa $empresa)
     {
         // store() es el método que se encarga de guardar el nuevo peluquero en la base de datos
         $request->validate([
-            'nombre' => 'required',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // La imagen es obligatoria y debe ser una imagen
+            'username' => 'required|unique:users',
+            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'servicios' => 'required'
         ]);
         $imagePath = $request->file('imagen')->store('images', 'public');
 
-        Peluquero::create([
-            'nombre' => $request->nombre,
-            'imagen' => $imagePath,
-            'servicios' => $request->servicios,
+        $user = User::create([
+            'username' => $request->username,
+            'name' => $request->name, // Asegurarse de que el campo 'name' se envíe correctamente
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'user_type' => 'peluquero',
         ]);
 
-        return redirect()->route('peluqueros.index')->with('success', 'Peluquero creado exitosamente.');;
+        $imagePath = $request->file('imagen')->store('images', 'public');
+
+        Peluquero::create([
+            'imagen' => $imagePath,
+            'servicios' => $request->servicios,
+            'empresa_id' => $empresa->id,
+            'user_id' => $user->id,
+        ]);
+
+        return redirect()->route('empresas.peluqueros.index', $empresa)->with('success', 'Peluquero creado exitosamente.');
     }
 
     /**
@@ -73,9 +93,7 @@ class PeluqueroController extends Controller
     
      public function update(Request $request, Peluquero $peluquero)
      {
-        $
          $request->validate([
-             'nombre' => 'required|string|max:255',
              'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
              'servicios' => 'required|string',
          ]);
@@ -85,7 +103,6 @@ class PeluqueroController extends Controller
              $peluquero->imagen = $imagePath;
          }
  
-         $peluquero->nombre = $request->nombre;
          $peluquero->servicios = $request->servicios;
          $peluquero->save();
  
