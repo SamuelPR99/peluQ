@@ -64,7 +64,7 @@
                         <h4 class="mt-1"><strong>{{ __('Citas Programadas') }}</strong></h4>
                         @if(Auth::user()->citas->isEmpty())
                         <p>{{ __('No tienes citas programadas.') }}</p>
-                        <a href="{{ route('citas.index') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Pedir cita') }}</a>
+                        <a href="{{ route('citas.create') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Pedir cita') }}</a>
                         @else
                         <x-citas :citas="Auth::user()->citas" />
                         @endif
