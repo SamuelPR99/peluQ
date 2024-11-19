@@ -11,7 +11,7 @@
     @else
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($peluqueros as $peluquero)
-            <div class="bg-white shadow-md rounded-lg overflow-hidden relative group flex">
+            <div class="bg-white shadow-md rounded-lg overflow-hidden relative group flex hover:scale-110 transition-transform ease-in-out">
                 <!-- Imagen del peluquero -->
                 <div class="w-1/3">
                     @if($peluquero->imagen)

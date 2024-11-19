@@ -15,7 +15,7 @@
                                 <li class="mb-6"><strong>{{ __('Teléfono:') }}</strong> {{ Auth::user()->empresas->first()->telefono }}</li>
                             </ul>
                             <a href="{{ route('empresas.edit', Auth::user()->empresas->first()->id) }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-green-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Editar Datos de la Empresa') }}</a>
-                            <a href="{{ route('empresas.peluqueros.index', ['empresa' => Auth::user()->empresas->first()->id]) }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Editar Peluqueros') }}</a>
+                            <a href="{{ route('empresas.peluqueros.index', ['empresa' => Auth::user()->empresas->first()->id]) }}" class="inline-block px-4 py-2 mt-2 bg-yellow-500 hover:bg-yellow-700 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Editar Peluqueros') }}</a>
                             <button type="button" class="inline-block px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition ease-in-out duration-150" onclick="document.getElementById('deleteModal').style.display='block'">{{ __('Eliminar Empresa') }}</button>
                             <div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto" style="display:none;">
                                 <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -77,16 +77,18 @@
                         <x-valoraciones :valoraciones="Auth::user()->valoracion" />
                         @endif
                     </div>                
+                    @if((Auth::user()->user_type == 'user' || Auth::user()->user_type == 'empresario') && Auth::user()->empresas->isEmpty())
                     <div class="bg-gray-600 p-4 rounded-lg mb-7 text-gray-200 mt-0 shadow-inner hover:shadow-red-600 transition-transform ease-in-out">                
-                        @if((Auth::user()->user_type == 'user' || Auth::user()->user_type == 'empresario') && Auth::user()->empresas->isEmpty())
                         <h4 class="mt-1"><strong>{{ __('¿Tienes una peluquería / barbería?') }}</strong></h4>
                         <a href="{{ route('empresas.index') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-green-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Dar de alta') }}</a>
-                        @endif
-                        @if(Auth::user()->user_type == 'admin')
+                    </div>
+                    @endif
+                    @if(Auth::user()->user_type == 'admin')
+                    <div class="bg-gray-600 p-4 rounded-lg mb-7 text-gray-200 mt-0 shadow-inner hover:shadow-red-600 transition-transform ease-in-out">                
                         <h4 class="mt-4">{{ __('Acciones Administrativas') }}</h4>
                         <x-admin-actions />
-                        @endif
-                    </div>                
+                    </div>
+                    @endif
                     @if(Auth::user()->user_type == 'peluquero')
                     <h4 class="mt-4">{{ __('Cuadrante') }}</h4>
                     <x-cuadrante :cuadrante="Auth::user()->cuadrante" />

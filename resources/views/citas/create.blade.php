@@ -114,37 +114,37 @@
         }
 
         function fetchPeluqueros(empresaId) {
-            fetch(`/api/empresas/${empresaId}/peluqueros`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const peluquerosDiv = document.getElementById('peluqueros');
-                    peluquerosDiv.innerHTML = '';
-                    data.forEach(peluquero => {
-                        const peluqueroDiv = document.createElement('div');
-                        peluqueroDiv.classList.add('p-4', 'bg-gray-700', 'rounded-lg', 'shadow-md', 'text-white', 'cursor-pointer');
-                        peluqueroDiv.innerHTML = `
-                            <img src="${peluquero.imagen}" alt="${peluquero.name}" class="w-16 h-16 rounded-full mx-auto mb-2">
-                            <h3 class="text-lg font-bold">${peluquero.name}</h3>
-                            <p>${peluquero.servicios}</p>
-                        `;
-                        peluqueroDiv.addEventListener('click', () => {
-                            document.getElementById('peluquero_id').value = peluquero.id;
-                            document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
-                            peluqueroDiv.classList.add('selected');
-                        });
-                        peluquerosDiv.appendChild(peluqueroDiv);
-                    });
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
+    fetch(`/api/empresas/${empresaId}/peluqueros`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const peluquerosDiv = document.getElementById('peluqueros');
+            peluquerosDiv.innerHTML = '';
+            data.forEach(peluquero => {
+                const peluqueroDiv = document.createElement('button');
+                peluqueroDiv.classList.add('p-4', 'bg-gray-700', 'rounded-lg', 'text-white', 'cursor-pointer', 'shadow-inner', 'hover:shadow-red-600', 'focus:shadow-red-600');
+                peluqueroDiv.innerHTML = `
+                    <img src="${peluquero.imagen}" alt="${peluquero.name}" class="w-16 h-16 rounded-full mx-auto mb-2">
+                    <h3 class="text-lg font-bold">${peluquero.name}</h3>
+                    <p>${peluquero.servicios}</p>
+                `;
+                peluqueroDiv.addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevenir el comportamiento predeterminado
+                    document.getElementById('peluquero_id').value = peluquero.id;
+                    document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+                    peluqueroDiv.classList.add('selected');
                 });
-        }
-
+                peluquerosDiv.appendChild(peluqueroDiv);
+            });
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
         function fetchServicios(empresaId) {
             fetch(`/api/empresas/${empresaId}/servicios`)
                 .then(response => response.json())
