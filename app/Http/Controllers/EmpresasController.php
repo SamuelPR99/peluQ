@@ -39,11 +39,17 @@ class EmpresasController extends Controller
         $request->validate([
             'nombre_empresa' => 'required',
             'email' => 'required|email',
-            'telefono' => 'required',
+            'telefono' => 'required|digits:9',
             'direccion' => 'required',
             'codigo_postal' => 'required',
             'confirmar_subscripcion' => 'required',
             'tipo_empresa' => 'required|in:peluqueria,barberia,peluqueria y barberia',
+        ], [
+            'nombre_empresa.required' => 'El nombre de la empresa es obligatorio.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'telefono.digits' => 'El teléfono debe tener 9 dígitos.',
+            'telefono.request' => 'Debe introducir un número de teléfono.',
+            'direccion.required' => 'La dirección es obligatoria.',
         ]);
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
@@ -88,11 +94,17 @@ class EmpresasController extends Controller
         $request->validate([
             'nombre_empresa' => 'required',
             'email' => 'required|email',
-            'telefono' => 'required',
+            'telefono' => 'required|digits:9', // Añadir validación de 9 dígitos
             'direccion' => 'required',
             'codigo_postal' => 'required',
             'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
             'tipo_empresa' => 'required|in:peluqueria,barberia,peluqueria y barberia',
+        ], [
+            'nombre_empresa.required' => 'El nombre de la empresa es obligatorio.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'telefono.digits' => 'El teléfono debe tener 9 dígitos.',
+            'telefono.request' => 'Debe introducir un número de teléfono.',
+            'direccion.required' => 'La dirección es obligatoria.',
         ]);
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);

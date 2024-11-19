@@ -166,4 +166,8 @@
     </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        .selected {
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.3), inset 0 0 30px rgba(255, 0, 0, 0.1);        }
+    </style>
 @endsection
