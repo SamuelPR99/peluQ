@@ -53,11 +53,16 @@ class CuadranteController extends Controller
         Cuadrante::where('peluquero_id', $request->peluquero_id)->delete();
 
         foreach ($events as $event) {
+            $start = new \DateTime($event['start']);
+            $end = new \DateTime($event['end']);
+            $start->setTimezone(new \DateTimeZone('Europe/Madrid'));
+            $end->setTimezone(new \DateTimeZone('Europe/Madrid'));
+
             Cuadrante::create([
                 'peluquero_id' => $request->peluquero_id,
-                'fecha' => substr($event['start'], 0, 10),
-                'hora_entrada' => substr($event['start'], 11, 8),
-                'hora_salida' => substr($event['end'], 11, 8),
+                'fecha' => $start->format('Y-m-d'),
+                'hora_entrada' => $start->format('H:i:s'),
+                'hora_salida' => $end->format('H:i:s'),
             ]);
         }
 
