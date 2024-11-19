@@ -1,23 +1,52 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto p-4 bg-white shadow-sm sm:rounded-lg mt-10">
-    <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Definir Cuadrante de Trabajo para {{ $peluquero->user->name }}</h1>
+<div class="container mx-auto p-4 bg-gray-900 text-gray-200 shadow-sm sm:rounded-lg mt-10">
+    <h1 class="text-4xl font-bold text-center mb-8">Definir Cuadrante de Trabajo para {{ $peluquero->user->name }}</h1>
     <form action="{{ route('cuadrantes.store') }}" method="POST">
         @csrf
         <input type="hidden" name="peluquero_id" value="{{ $peluquero_id }}">
-        <div id='calendar'></div>
+        <div id="calendar" class="bg-gray-800 p-4 rounded-lg shadow-lg"></div>
         <input type="hidden" name="events" id="events">
         <input type="hidden" name="deletedEvents" id="deletedEvents">
         <div class="text-center mt-4">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar Cuadrante</button>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                Guardar Cuadrante
+            </button>
         </div>
     </form>
 </div>
 
-<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales/es.js'></script>
+<!-- Estilos -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
+<style>
+    .fc {
+        @apply bg-gray-800 text-gray-200; /* Fondo oscuro del calendario con texto claro */
+    }
+    .fc-toolbar {
+        @apply bg-gray-900 border-b border-gray-700; /* Fondo oscuro para la barra de herramientas */
+    }
+    .fc-button {
+        @apply bg-gray-700 text-white border border-gray-600 hover:bg-gray-600; /* Estilo oscuro para los botones */
+    }
+    .fc-button.fc-button-active {
+        @apply bg-gray-600 text-white border border-gray-500; /* Botón activo */
+    }
+    .fc-daygrid-day,
+    .fc-timegrid-slot {
+        @apply bg-gray-700 border border-gray-600; /* Fondo oscuro para las celdas */
+    }
+    .fc-day-today {
+        @apply bg-gray-900 !important; /* Día actual */
+    }
+    .fc-event {
+        @apply bg-blue-500 text-white hover:bg-blue-400; /* Color para eventos */
+    }
+</style>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales/es.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
@@ -26,7 +55,7 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'timeGridWeek',
             locale: 'es',
-            themeSystem: 'superhero',
+            themeSystem: 'standard', // No necesitamos bootstrap aquí, Tailwind se encarga
             editable: true,
             selectable: true,
             slotMinTime: '08:00:00',
