@@ -24,13 +24,14 @@ class CuadranteController extends Controller
     {
         // create() es el método que muestra el formulario de creación de un nuevo cuadrante
         $peluquero_id = $request->input('peluquero_id');
+        $peluquero = \App\Models\Peluquero::with('user')->find($peluquero_id);
         $existingEvents = Cuadrante::where('peluquero_id', $peluquero_id)->get()->map(function ($cuadrante) {
             return [
                 'start' => $cuadrante->fecha . 'T' . $cuadrante->hora_entrada,
                 'end' => $cuadrante->fecha . 'T' . $cuadrante->hora_salida,
             ];
         });
-        return view('cuadrantes.create', compact('peluquero_id', 'existingEvents'));
+        return view('cuadrantes.create', compact('peluquero_id', 'existingEvents', 'peluquero'));
     }
 
     /**
@@ -42,9 +43,14 @@ class CuadranteController extends Controller
         $request->validate([
             'peluquero_id' => 'required',
             'events' => 'required|json',
+            'deletedEvents' => 'nullable|json',
         ]);
 
         $events = json_decode($request->events, true);
+        $deletedEvents = json_decode($request->deletedEvents, true);
+
+        // Eliminar todos los cuadrantes existentes del peluquero
+        Cuadrante::where('peluquero_id', $request->peluquero_id)->delete();
 
         foreach ($events as $event) {
             Cuadrante::create([
@@ -55,7 +61,10 @@ class CuadranteController extends Controller
             ]);
         }
 
-        return redirect()->route('cuadrantes.index');
+        $peluquero = \App\Models\Peluquero::find($request->peluquero_id);
+        $empresa = $peluquero->empresa;
+
+        return redirect()->route('empresas.peluqueros.index', $empresa);
     }
 
     /**
