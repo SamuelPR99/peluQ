@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <h1 class="text-center mt-10 italic text-4xl antialiased font-bold drop-shadow-md hover:scale-150 transition 1">Sobre nosotros</h1>
-    <div class="mt-10 backdrop-blur-sm w-full max-w-lg p-4 space-y-2 bg-gray-800 bg-opacity-70 rounded-lg shadow-xl z-10 grid justify-items-center">
+    <div class="animate-spin mt-10 backdrop-blur-sm w-full max-w-lg p-4 space-y-2 bg-gray-800 bg-opacity-70 rounded-lg shadow-xl z-10 grid justify-items-center">
         <p class="text-neutral-50">
             
             Esta es la página de Acerca de. Aquí puedes incluir información sobre tu aplicación.
