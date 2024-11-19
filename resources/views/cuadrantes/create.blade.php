@@ -26,7 +26,7 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'timeGridWeek',
             locale: 'es',
-            themeSystem: 'bootstrap',
+            themeSystem: 'superhero',
             editable: true,
             selectable: true,
             slotMinTime: '08:00:00',
