@@ -39,4 +39,15 @@ class Cita extends Model
     {
         return $this->belongsTo(Servicio::class);
     }
+
+    public function toFullCalendarEvent()
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->servicio->nombre,
+            'start' => $this->fecha_cita . 'T' . $this->hora_cita,
+            'end' => $this->fecha_cita . 'T' . date('H:i:s', strtotime($this->hora_cita) + 3600), // Asumiendo que la cita dura 1 hora
+            'description' => $this->observaciones,
+        ];
+    }
 }

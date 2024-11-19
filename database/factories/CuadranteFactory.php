@@ -16,6 +16,7 @@ class CuadranteFactory extends Factory
             'fecha' => $this->faker->date,
             'hora_entrada' => $this->faker->time,
             'hora_salida' => $this->faker->time,
+            'servicio_id' => \App\Models\Servicio::factory(),
         ];
     }
 }

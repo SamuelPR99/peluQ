@@ -98,4 +98,12 @@ class CitaController extends Controller
 
         return redirect()->route('citas.index');
     }
+
+    public function getCitas()
+    {
+        $citas = Cita::all();
+        $events = $citas->map->toFullCalendarEvent();
+
+        return response()->json($events);
+    }
 }

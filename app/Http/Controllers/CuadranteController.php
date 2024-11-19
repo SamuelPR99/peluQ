@@ -20,10 +20,12 @@ class CuadranteController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         // create() es el método que muestra el formulario de creación de un nuevo cuadrante
-        return view('cuadrantes.create');
+        $peluquero_id = $request->input('peluquero_id');
+        $servicios = \App\Models\Servicio::all();
+        return view('cuadrantes.create', compact('peluquero_id', 'servicios'));
     }
 
     /**
@@ -33,13 +35,20 @@ class CuadranteController extends Controller
     {
         // store() es el método que se encarga de guardar el nuevo cuadrante en la base de datos
         $request->validate([
-            'fecha' => 'required',
-            'hora' => 'required',
             'peluquero_id' => 'required',
-            'servicio_id' => 'required',
+            'events' => 'required|json',
         ]);
 
-        Cuadrante::create($request->all());
+        $events = json_decode($request->events, true);
+
+        foreach ($events as $event) {
+            Cuadrante::create([
+                'peluquero_id' => $request->peluquero_id,
+                'fecha' => substr($event['start'], 0, 10),
+                'hora_entrada' => substr($event['start'], 11, 8),
+                'hora_salida' => substr($event['end'], 11, 8),
+            ]);
+        }
 
         return redirect()->route('cuadrantes.index');
     }
@@ -89,5 +98,25 @@ class CuadranteController extends Controller
         $cuadrante->delete();
 
         return redirect()->route('cuadrantes.index');
+    }
+
+    public function calendario()
+    {
+        return view('calendario');
+    }
+
+    public function getCuadrantes()
+    {
+        $cuadrantes = Cuadrante::all();
+        $events = $cuadrantes->map(function ($cuadrante) {
+            return [
+                'id' => $cuadrante->id,
+                'title' => $cuadrante->servicio->nombre,
+                'start' => $cuadrante->fecha . 'T' . $cuadrante->hora_entrada,
+                'end' => $cuadrante->fecha . 'T' . $cuadrante->hora_salida,
+            ];
+        });
+
+        return response()->json($events);
     }
 }

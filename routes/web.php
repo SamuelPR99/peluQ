@@ -62,6 +62,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'store'])->name('peluqueros.store');
     Route::delete('/empresas/{empresa}/peluqueros/{peluquero}/borrar', [PeluqueroController::class, 'destroy'])->name('peluqueros.destroy');
     Route::get('/api/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'getPeluquerosByEmpresa']);
+    Route::get('/calendario', [CuadranteController::class, 'calendario'])->name('calendario');
+    Route::get('/api/cuadrantes', [CuadranteController::class, 'getCuadrantes']);
+    Route::get('/api/citas', [CitaController::class, 'getCitas']);
 });
 
 require __DIR__.'/auth.php';
