@@ -4,7 +4,7 @@
         <div class="max-w-7xl overflow-hidden mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <h3 class="text-lg font-semibold">{{ __('Bienvenid@, ') }} {{ Auth::user()->name }}</h3>
+                    <h3 class="text-lg font-semibold mb-2">{{ __('Bienvenid@, ') }} {{ Auth::user()->name }}</h3>
                     @if(Auth::user()->user_type == 'empresario' && Auth::user()->empresas->isNotEmpty())
                         <h4 class="mt-2"></h4>
                         <div class="bg-gray-600 p-4 rounded-lg mb-7 shadow-inner hover:shadow-red-600 transition-transform ease-in-out">
