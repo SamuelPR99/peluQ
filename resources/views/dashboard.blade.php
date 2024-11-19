@@ -32,7 +32,7 @@
                                                     </svg>
                                                 </div>
                                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                                    <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('Eliminar Empresa') }}</h3>
+                                                    <h3 class=" text-lg leading-6 font-medium text-gray-900">{{ __('Eliminar Empresa') }}</h3>
                                                     <div class="mt-2">
                                                         <p class="text-sm text-gray-500">{{ __('¿Estás seguro de que deseas eliminar esta empresa? Esta acción no se puede deshacer.') }}</p>
                                                     </div>
@@ -64,10 +64,13 @@
                         <h4 class="mt-1"><strong>{{ __('Citas Programadas') }}</strong></h4>
                         @if(Auth::user()->citas->isEmpty())
                         <p>{{ __('No tienes citas programadas.') }}</p>
-                        <a href="{{ route('citas.create') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Pedir cita') }}</a>
+                        <a href="{{ route('citas.create') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150" onclick="showLoadingScreen()">{{ __('Pedir cita') }}</a>
                         @else
                         <x-citas :citas="Auth::user()->citas" />
                         @endif
+                    </div>
+                    <div id="loadingScreen" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center" style="display:none;">
+                        <div class="text-white text-lg animate-bounce">{{ __('Buscando las mejores peluquerías...') }}</div>
                     </div>
                     <div class="bg-gray-600 p-4 rounded-lg mb-7 text-gray-200 shadow-inner hover:shadow-red-600 transition-transform ease-in-out">                
                         <h4 class="mt-1 mb-3"><strong>{{ __('Valoraciones Realizadas') }}</strong></h4>
@@ -80,7 +83,7 @@
                     @if((Auth::user()->user_type == 'user' || Auth::user()->user_type == 'empresario') && Auth::user()->empresas->isEmpty())
                     <div class="bg-gray-600 p-4 rounded-lg mb-7 text-gray-200 mt-0 shadow-inner hover:shadow-red-600 transition-transform ease-in-out">                
                         <h4 class="mt-1"><strong>{{ __('¿Tienes una peluquería / barbería?') }}</strong></h4>
-                        <a href="{{ route('empresas.index') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-green-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Dar de alta') }}</a>
+                        <a href="{{ route('empresas.index') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-green-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in -out duration-150">{{ __('Dar de alta') }}</a>
                     </div>
                     @endif
                     @if(Auth::user()->user_type == 'admin')
@@ -101,4 +104,12 @@
             </div>
         </div>
     </div>
+    <script>
+        function showLoadingScreen() {
+            document.getElementById('loadingScreen').style.display = 'flex';
+            setTimeout(() => {
+                window.location.href = '{{ route('citas.create') }}';
+            }, 1000); // Espera 1 segundo antes de redirigir
+        }
+    </script>
 @endsection

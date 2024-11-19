@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto p-4">
-    <h1 class="text-4xl font-bold text-center mb-8 text-white shadow-2xl">Listado de Peluqueros de {{ $empresa->nombre_empresa }}</h1>
+<div class="container mx-auto p-4 bg-gray-800 shadow-sm sm:rounded-lg mt-10">
+    <h1 class="text-4xl font-bold text-center mb-8 text-white">Listado de Peluqueros de {{ $empresa->nombre_empresa }}</h1>
     @if($peluqueros->isEmpty())
         <p class="text-lg text-center mb-4">No hay peluqueros en esta empresa.</p>
         <div class="text-center">
@@ -11,7 +11,7 @@
     @else
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($peluqueros as $peluquero)
-            <div class="bg-white shadow-md rounded-lg overflow-hidden relative group flex hover:scale-110 transition-transform ease-in-out">
+            <div class="bg-slate-500 text-white shadow-md rounded-lg overflow-hidden relative group flex hover:scale-110 transition-transform ease-in-out">
                 <!-- Imagen del peluquero -->
                 <div class="w-1/3">
                     @if($peluquero->imagen)
@@ -43,7 +43,7 @@
                 @endforeach
             </div>
             <div class="flex justify-center mt-4">
-                <a href="{{ route('peluqueros.create', ['empresa' => $empresa->id]) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded flex items-center">
+                <a href="{{ route('peluqueros.create', ['empresa' => $empresa->id]) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold h-8 w-8 rounded-full animate-bounce">
                     <span class="text-lg">+</span>
                 </a>
             </div>
