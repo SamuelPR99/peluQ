@@ -24,8 +24,13 @@ class CuadranteController extends Controller
     {
         // create() es el método que muestra el formulario de creación de un nuevo cuadrante
         $peluquero_id = $request->input('peluquero_id');
-        $servicios = \App\Models\Servicio::all();
-        return view('cuadrantes.create', compact('peluquero_id', 'servicios'));
+        $existingEvents = Cuadrante::where('peluquero_id', $peluquero_id)->get()->map(function ($cuadrante) {
+            return [
+                'start' => $cuadrante->fecha . 'T' . $cuadrante->hora_entrada,
+                'end' => $cuadrante->fecha . 'T' . $cuadrante->hora_salida,
+            ];
+        });
+        return view('cuadrantes.create', compact('peluquero_id', 'existingEvents'));
     }
 
     /**

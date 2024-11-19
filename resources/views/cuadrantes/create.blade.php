@@ -29,6 +29,7 @@
             selectable: true,
             slotMinTime: '08:00:00',
             slotMaxTime: '23:00:00',
+            events: @json($existingEvents),
             select: function(info) {
                 var event = {
                     start: info.startStr,
