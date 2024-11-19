@@ -48,7 +48,7 @@
                             </div>
                             <div class="w-1/2">
                                 <label for="precio" class="block text-gray-300 text-sm">Precio</label>
-                                <input type="number" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="precio" name="servicios[{{ $index }}][precio]" value="{{ $servicio->precio }}" required>
+                                <input type="number" step="0.01" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="precio" name="servicios[{{ $index }}][precio]" value="{{ $servicio->precio }}" required>
                             </div>
                             <button type="button" class="bg-red-500 text-white font-bold py-2 px-4 rounded mt-6 h-10" onclick="removeServicio(this)">-</button>
                         </div>
@@ -189,7 +189,7 @@
                 </div>
                 <div class="w-1/2">
                     <label for="precio" class="block text-gray-300 text-sm">Precio</label>
-                    <input type="number" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="precio" name="servicios[${servicioIndex}][precio]" required>
+                    <input type="number" step="0.01" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded" id="precio" name="servicios[${servicioIndex}][precio]" required>
                 </div>
                 <button type="button" class="bg-red-500 text-white font-bold py-2 px-4 rounded mt-6 h-10" onclick="removeServicio(this)">-</button>
             `;
