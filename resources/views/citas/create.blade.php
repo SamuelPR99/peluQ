@@ -3,7 +3,7 @@
     <div class="container mx-auto p-4">
         <div class="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-md max-w-2xl mx-auto">
             <h1 class="text-center text-white text-xl bold">Elegir Peluquería/Barbería</h1>
-            <form action="{{ route('citas.store') }}" method="POST" class="space-y-4">
+            <form action="{{ route('citas.store') }}" method="POST" class="space-y-4" enctype="multipart/form-data">
                 @csrf
                 <div id="map" class="h-96 mb-4 z-10"></div>
                 <input type="hidden" name="empresa_id" id="empresa_id">
@@ -195,7 +195,7 @@
                             }
                             // Marcar la cita
                             document.getElementById('fecha_cita').value = info.startStr.split('T')[0];
-                            document.getElementById('hora_cita').value = info.startStr.split('T')[1];
+                            document.getElementById('hora_cita').value = info.startStr.split('T')[1] + ':00';
                             calendar.addEvent({
                                 title: 'Cita seleccionada',
                                 start: info.startStr,

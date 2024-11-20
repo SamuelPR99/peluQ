@@ -6,6 +6,7 @@ use App\Models\Cita;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CitaController extends Controller
 {
@@ -34,8 +35,15 @@ class CitaController extends Controller
      */
     public function store(Request $request)
     {
-        // store() es el método que se encarga de guardar la nueva cita en la base de datos
-        $request->validate([
+        Log::info('Entrando al método store de CitaController');
+        
+        // Ajustar el formato de la hora
+        $hora_cita = explode('+', $request->hora_cita)[0];
+        $request->merge(['hora_cita' => $hora_cita]);
+
+        Log::info('Datos recibidos para validar:', $request->all());
+
+        $validatedData = $request->validate([
             'fecha_cita' => 'required|date',
             'hora_cita' => 'required|date_format:H:i:s',
             'observaciones' => 'nullable|string',
@@ -45,18 +53,38 @@ class CitaController extends Controller
             'servicio_id' => 'required|exists:servicios,id',
         ]);
 
-        $cita = Cita::create([
+        Log::info('Datos validados correctamente:', $validatedData);
+
+        Log::info('Datos recibidos para crear cita:', [
             'fecha_cita' => $request->fecha_cita,
             'hora_cita' => $request->hora_cita,
             'observaciones' => $request->observaciones,
-            'estado_cita' => $request->estado_cita,
-            'user_id' => Auth::id(),
-            'peluquero_id' => $request->peluquero_id,
             'empresa_id' => $request->empresa_id,
+            'peluquero_id' => $request->peluquero_id,
+            'estado_cita' => $request->estado_cita,
             'servicio_id' => $request->servicio_id,
+            'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('citas.show', $cita);
+        try {
+            $cita = Cita::create([
+                'fecha_cita' => $request->fecha_cita,
+                'hora_cita' => $request->hora_cita,
+                'observaciones' => $request->observaciones,
+                'estado_cita' => $request->estado_cita,
+                'user_id' => Auth::id(),
+                'peluquero_id' => $request->peluquero_id,
+                'empresa_id' => $request->empresa_id,
+                'servicio_id' => $request->servicio_id,
+            ]);
+
+            Log::info('Cita creada exitosamente:', ['cita_id' => $cita->id]);
+
+            return redirect()->route('citas.show', $cita);
+        } catch (\Exception $e) {
+            Log::error('Error al crear la cita:', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return redirect()->back()->withErrors('Error al crear la cita. Por favor, inténtelo de nuevo.');
+        }
     }
 
     /**
