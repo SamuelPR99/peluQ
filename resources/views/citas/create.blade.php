@@ -9,14 +9,9 @@
                 <input type="hidden" name="empresa_id" id="empresa_id">
                 <div id="empresa-info" class="mb-4"></div>
                 <div id="peluqueros" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"></div>
-                <div class="form-group">
-                    <label for="fecha_cita" class="block text-sm font-medium text-white">Fecha</label>
-                    <input type="date" name="fecha_cita" id="fecha_cita" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                </div>
-                <div class="form-group">
-                    <label for="hora_cita" class="block text-sm font-medium text-white">Hora</label>
-                    <input type="time" name="hora_cita" id="hora_cita" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                </div>
+                <div id="calendar" class="bg-gray-800 p-4 rounded-lg shadow-lg mb-4"></div>
+                <input type="hidden" name="fecha_cita" id="fecha_cita">
+                <input type="hidden" name="hora_cita" id="hora_cita">
                 <div class="form-group">
                     <label for="observaciones" class="block text-sm font-medium text-white">Observaciones</label>
                     <textarea name="observaciones" id="observaciones" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
@@ -137,6 +132,7 @@
                     document.getElementById('peluquero_id').value = peluquero.id;
                     document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
                     peluqueroDiv.classList.add('selected');
+                    fetchHorarios(peluquero.id);
                 });
                 peluquerosDiv.appendChild(peluqueroDiv);
             });
@@ -160,14 +156,71 @@
                 });
         }
 
+        function fetchHorarios(peluqueroId) {
+            fetch(`/api/peluqueros/${peluqueroId}/horarios`)
+                .then(response => response.json())
+                .then(data => {
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'timeGridWeek',
+                        locale: 'es',
+                        themeSystem: 'standard',
+                        editable: false,
+                        selectable: true,
+                        slotMinTime: '08:00:00',
+                        slotMaxTime: '24:00:00',
+                        slotDuration: '00:30:00', // Intervalos de media hora
+                        events: data,
+                        selectOverlap: function(event) {
+                            return event.display === 'background';
+                        },
+                        select: function(info) {
+                            // Desmarcar si ya está seleccionado
+                            var existingEvent = calendar.getEvents().find(event => event.title === 'Cita seleccionada');
+                            if (existingEvent) {
+                                existingEvent.remove();
+                            }
+                            // Marcar la cita
+                            document.getElementById('fecha_cita').value = info.startStr.split('T')[0];
+                            document.getElementById('hora_cita').value = info.startStr.split('T')[1];
+                            calendar.addEvent({
+                                title: 'Cita seleccionada',
+                                start: info.startStr,
+                                end: info.endStr,
+                                backgroundColor: 'green',
+                                borderColor: 'green'
+                            });
+                        },
+                        unselectAuto: false, // No desmarcar al hacer clic fuera del calendario
+                        selectAllow: function(selectInfo) {
+                            // Permitir seleccionar solo intervalos de media hora dentro del cuadrante del peluquero
+                            return selectInfo.end - selectInfo.start === 1800000 && // 30 minutos en milisegundos
+                                   calendar.getEvents().some(event => event.display === 'background' && 
+                                   selectInfo.start >= event.start && selectInfo.end <= event.end);
+                        }
+                    });
+                    calendar.render();
+                });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             initMap();
+            document.getElementById('peluquero_id').addEventListener('change', function() {
+                fetchHorarios(this.value);
+            });
         });
     </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales/es.js"></script>
     <style>
         .selected {
-            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.3), inset 0 0 30px rgba(255, 0, 0, 0.1);        }
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.3), inset 0 0 30px rgba(255, 0, 0, 0.1);
+        }
+        .fc {
+            color: white; /* Cambiar las letras del calendario a blanco */
+        }
     </style>
 @endsection

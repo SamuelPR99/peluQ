@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cita;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
+use Illuminate\Support\Facades\Auth;
 
 class CitaController extends Controller
 {
@@ -36,7 +37,7 @@ class CitaController extends Controller
         // store() es el método que se encarga de guardar la nueva cita en la base de datos
         $request->validate([
             'fecha_cita' => 'required|date',
-            'hora_cita' => 'required|date_format:H:i',
+            'hora_cita' => 'required|date_format:H:i:s',
             'observaciones' => 'nullable|string',
             'empresa_id' => 'required|exists:empresas,id',
             'peluquero_id' => 'required|exists:peluqueros,id',
@@ -44,7 +45,16 @@ class CitaController extends Controller
             'servicio_id' => 'required|exists:servicios,id',
         ]);
 
-        $cita = Cita::create($request->all());
+        $cita = Cita::create([
+            'fecha_cita' => $request->fecha_cita,
+            'hora_cita' => $request->hora_cita,
+            'observaciones' => $request->observaciones,
+            'estado_cita' => $request->estado_cita,
+            'user_id' => Auth::id(),
+            'peluquero_id' => $request->peluquero_id,
+            'empresa_id' => $request->empresa_id,
+            'servicio_id' => $request->servicio_id,
+        ]);
 
         return redirect()->route('citas.show', $cita);
     }

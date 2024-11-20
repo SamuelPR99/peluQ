@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Cuadrante;
+use App\Models\Cita;
 
 class PeluqueroController extends Controller
 {
@@ -149,5 +151,30 @@ class PeluqueroController extends Controller
                 'imagen' => $peluquero->imagen ? Storage::url($peluquero->imagen) : null,
             ];
         }));
+    }
+
+    public function getHorarios($peluqueroId)
+    {
+        $cuadrantes = Cuadrante::where('peluquero_id', $peluqueroId)->get();
+        $citas = Cita::where('peluquero_id', $peluqueroId)->get();
+
+        $events = $cuadrantes->map(function ($cuadrante) {
+            return [
+                'start' => $cuadrante->fecha . 'T' . $cuadrante->hora_entrada,
+                'end' => $cuadrante->fecha . 'T' . $cuadrante->hora_salida,
+                'display' => 'background'
+            ];
+        });
+
+        $citas->each(function ($cita) use (&$events) {
+            $events->push([
+                'start' => $cita->fecha_cita . 'T' . $cita->hora_cita,
+                'end' => date('Y-m-d\TH:i:s', strtotime($cita->fecha_cita . ' ' . $cita->hora_cita) + 1800),
+                'display' => 'block',
+                'backgroundColor' => 'red'
+            ]);
+        });
+
+        return response()->json($events);
     }
 }
