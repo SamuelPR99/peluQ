@@ -18,17 +18,21 @@
                 </div>
                 <div class="form-group">
                     <label for="servicio_id" class="block text-sm font-medium text-white">Servicio</label>
-                    <select name="servicio_id" id="servicio_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                    <select name="servicio_id" id="servicio_id"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                         <!-- Opciones de servicios se llenarán dinámicamente -->
                     </select>
                 </div>
                 <input type="hidden" name="estado_cita" value="pendiente">
                 <input type="hidden" name="peluquero_id" id="peluquero_id">
                 <div class="justify-center flex">
-                    <button type="submit" class="btn btn-primary bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Crear Cita</button>
+                    <button type="submit"
+                        class="btn btn-primary bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Crear
+                        Cita</button>
                 </div>
             </form>
-            <div id="leyenda" class="z-20 bg-gray-800 bg-opacity-70 p-4 rounded-lg shadow-md max-w-xs absolute right-12 mr-20 top-60 hidden">
+            <div id="leyenda"
+                class="z-20 bg-gray-800 bg-opacity-70 p-4 rounded-lg shadow-md max-w-xs absolute right-12 mr-20 top-60 hidden">
                 <h2 class="text-white text-lg font-bold mb-2">Información</h2>
                 <p id="leyenda-contenido" class="text-white">Pasa el mouse sobre el mapa para ver información.</p>
             </div>
@@ -65,11 +69,14 @@
 
         function initMap() {
             map = L.map('map').setView([40.416, -3.70], 5);
-            
+
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
 
             empresas.forEach(empresa => {
-                let marker = L.marker([parseFloat(empresa.coordenadas.split(',')[0]), parseFloat(empresa.coordenadas.split(',')[1])], { icon: getIcon(empresa.tipo_empresa) }).addTo(map)
+                let marker = L.marker([parseFloat(empresa.coordenadas.split(',')[0]), parseFloat(empresa.coordenadas
+                        .split(',')[1])], {
+                        icon: getIcon(empresa.tipo_empresa)
+                    }).addTo(map)
                     .bindPopup(`
                         <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
                             <h3 class="text-lg font-bold text-red-700">${empresa.nombre_empresa}</h3>
@@ -87,7 +94,8 @@
                     })
                     .on('mouseover', function() {
                         document.getElementById('leyenda').classList.remove('hidden');
-                        document.getElementById('leyenda-contenido').innerHTML = `<div class="flex items-center"><img src="/img/pelu.png" class="w-7 h-7 mr-2">Peluqueria.</div>
+                        document.getElementById('leyenda-contenido').innerHTML =
+                            `<div class="flex items-center"><img src="/img/pelu.png" class="w-7 h-7 mr-2">Peluqueria.</div>
                                                                                   <div class="flex items-center"><img src="/img/bar.png" class="w-7 h-7 mr-2">Barbería.</div>
                                                                                   <div class="flex items-center"><img src="/img/peluqueria.png" class="w-7 h-7 mr-2">Barbería y peluqueria.</div>`;
                     })
@@ -109,38 +117,42 @@
         }
 
         function fetchPeluqueros(empresaId) {
-    fetch(`/api/empresas/${empresaId}/peluqueros`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const peluquerosDiv = document.getElementById('peluqueros');
-            peluquerosDiv.innerHTML = '';
-            data.forEach(peluquero => {
-                const peluqueroDiv = document.createElement('button');
-                peluqueroDiv.classList.add('p-4', 'bg-gray-700', 'rounded-lg', 'text-white', 'cursor-pointer', 'shadow-inner', 'hover:shadow-red-600', 'focus:shadow-red-600');
-                peluqueroDiv.innerHTML = `
+            fetch(`/api/empresas/${empresaId}/peluqueros`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const peluquerosDiv = document.getElementById('peluqueros');
+                    peluquerosDiv.innerHTML = '';
+                    data.forEach(peluquero => {
+                        const peluqueroDiv = document.createElement('button');
+                        peluqueroDiv.classList.add('p-4', 'bg-gray-700', 'rounded-lg', 'text-white',
+                            'cursor-pointer', 'shadow-inner', 'hover:shadow-red-600', 'focus:shadow-red-600'
+                            );
+                        peluqueroDiv.innerHTML = `
                     <img src="${peluquero.imagen}" alt="${peluquero.name}" class="w-16 h-16 rounded-full mx-auto mb-2">
                     <h3 class="text-lg font-bold">${peluquero.name}</h3>
                     <p>${peluquero.servicios}</p>
                 `;
-                peluqueroDiv.addEventListener('click', (event) => {
-                    event.preventDefault(); // Prevenir el comportamiento predeterminado
-                    document.getElementById('peluquero_id').value = peluquero.id;
-                    document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
-                    peluqueroDiv.classList.add('selected');
-                    fetchHorarios(peluquero.id);
+                        peluqueroDiv.addEventListener('click', (event) => {
+                            event.preventDefault(); // Prevenir el comportamiento predeterminado
+                            document.getElementById('peluquero_id').value = peluquero.id;
+                            document.querySelectorAll('.selected').forEach(el => el.classList.remove(
+                                'selected'));
+                            peluqueroDiv.classList.add('selected');
+                            fetchHorarios(peluquero.id);
+                        });
+                        peluquerosDiv.appendChild(peluqueroDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
                 });
-                peluquerosDiv.appendChild(peluqueroDiv);
-            });
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-}
+        }
+
         function fetchServicios(empresaId) {
             fetch(`/api/empresas/${empresaId}/servicios`)
                 .then(response => response.json())
@@ -176,7 +188,8 @@
                         },
                         select: function(info) {
                             // Desmarcar si ya está seleccionado
-                            var existingEvent = calendar.getEvents().find(event => event.title === 'Cita seleccionada');
+                            var existingEvent = calendar.getEvents().find(event => event.title ===
+                                'Cita seleccionada');
                             if (existingEvent) {
                                 existingEvent.remove();
                             }
@@ -194,9 +207,10 @@
                         unselectAuto: false, // No desmarcar al hacer clic fuera del calendario
                         selectAllow: function(selectInfo) {
                             // Permitir seleccionar solo intervalos de media hora dentro del cuadrante del peluquero
-                            return selectInfo.end - selectInfo.start === 1800000 && // 30 minutos en milisegundos
-                                   calendar.getEvents().some(event => event.display === 'background' && 
-                                   selectInfo.start >= event.start && selectInfo.end <= event.end);
+                            return selectInfo.end - selectInfo.start === 1800000 &&
+                                // 30 minutos en milisegundos
+                                calendar.getEvents().some(event => event.display === 'background' &&
+                                    selectInfo.start >= event.start && selectInfo.end <= event.end);
                         }
                     });
                     calendar.render();
@@ -219,8 +233,45 @@
         .selected {
             box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.3), inset 0 0 30px rgba(255, 0, 0, 0.1);
         }
+
         .fc {
-            color: white; /* Cambiar las letras del calendario a blanco */
+            color: white;
+            /* Cambiar las letras del calendario a blanco */
+        }
+
+        /* Para navegadores WebKit (Chrome, Safari, Edge) */
+        ::-webkit-scrollbar {
+            width: 12px;
+            /* Ancho de la scrollbar */
+            height: 12px;
+            /* Altura de la scrollbar */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #414141;
+            /* Color del fondo de la scrollbar */
+            border-radius: 10px;
+            /* Bordes redondeados del track */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #252525;
+            /* Color del thumb (parte que se mueve) */
+            border-radius: 10px;
+            /* Bordes redondeados del thumb */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #000000;
+            /* Color del thumb al pasar el mouse */
+        }
+
+        /* Para Firefox */
+        .scrollbar {
+            scrollbar-width: thin;
+            /* Hacer la scrollbar más delgada */
+            scrollbar-color: #888 #f1f1f1;
+            /* Color del thumb y del track */
         }
     </style>
 @endsection
