@@ -48,20 +48,20 @@ class PeluqueroController extends Controller
             'imagen' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'servicios' => 'required'
         ], [
-            'username.required' => 'El nombre de usuario es obligatorio.',
+            'username.required' => 'El nombre de usuario obligatorio.',
             'username.unique' => 'El nombre de usuario ya está en uso.',
-            'name.required' => 'El nombre es obligatorio.',
-            'first_name.required' => 'El primer apellido es obligatorio.',
-            'last_name.required' => 'El segundo apellido es obligatorio.',
+            'name.required' => 'Campo obligatorio..',
+            'first_name.required' => 'Campo obligatorio.',
+            'last_name.required' => 'Campo obligatorio.',
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'El correo electrónico debe ser una dirección válida.',
             'email.unique' => 'El correo electrónico ya está en uso.',
             'password.required' => 'La contraseña es obligatoria.',
-            'imagen.required' => 'La imagen es obligatoria.',
+            'imagen.required' => 'Imagen obligatoria.',
             'imagen.image' => 'El archivo debe ser una imagen.',
             'imagen.mimes' => 'La imagen debe ser un archivo de tipo: jpeg, png, jpg, gif, svg.',
             'imagen.max' => 'La imagen no debe ser mayor de 2048 kilobytes.',
-            'servicios.required' => 'La descripción de los servicios es obligatoria.'
+            'servicios.required' => 'Campo obligatorio.'
        
         
         ]

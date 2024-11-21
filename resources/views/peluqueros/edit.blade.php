@@ -4,6 +4,8 @@
 <div class="container w-auto bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-md max-w-2xl mx-auto text-white mt-10">
     <form action="{{ route('peluqueros.update', ['empresa' => $empresa->id, 'peluquero' => $peluquero->id]) }}" method="POST" enctype="multipart/form-data">
         <h1 class="flex justify-center">Editar Peluquero</h1>
+    <form action="{{ route('peluqueros.update', $peluquero) }}" method="POST" enctype="multipart/form-data">
+        <h1 class="text-2xl font-bold text-center text-white mb-3">Editar Peluquero</h1>
         @csrf
         @method('PATCH')
         <div class="mb-4">
@@ -11,7 +13,7 @@
             <input type="text" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="username" name="username" value="{{ $peluquero->user->username }}" requiteal>
         </div>
         <div class="mb-4">
-            <label for="name" class="block text-white">Nombre</label>
+            <label for="name" class="block text-white">Nombre*</label>
             <input type="text" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="name" name="name" value="{{ $peluquero->user->name }}" requiteal>
         </div>
         <div class="mb-4">
@@ -36,6 +38,12 @@
         <div class="mb-4">
             <label for="servicios" class="block text-white">Descripción de los Servicios</label>
             <textarea class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="servicios" name="servicios" rows="4" requiteal>{{ $peluquero->servicios }}</textarea>
+        </div>
+        <div class="mb-4">
+            <p class="text-white text-sm"><strong> * Campos obligatorios</strong></p>
+        </div>
+        <div class="mb-4">
+            <p class="text-white text-sm"><strong> * Campos obligatorios</strong></p>
         </div>
         <div class="text-center">
             <button type="submit" class="mt-5 btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Guardar Cambios</button>
