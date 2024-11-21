@@ -100,11 +100,11 @@ class EmpresasController extends Controller
             'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
             'tipo_empresa' => 'required|in:peluqueria,barberia,peluqueria y barberia',
         ], [
-            'nombre_empresa.required' => 'El nombre de la empresa es obligatorio.',
+            'nombre_empresa.required' => 'Nombre de empresa obligatorio.',
             'email.required' => 'El correo electrónico es obligatorio.',
             'telefono.digits' => 'El teléfono debe tener 9 dígitos.',
             'telefono.request' => 'Debe introducir un número de teléfono.',
-            'direccion.required' => 'La dirección es obligatoria.',
+            'direccion.required' => 'Campo obligatorio.',
         ]);
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
