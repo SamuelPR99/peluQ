@@ -35,7 +35,7 @@
                         <div
                             class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <div class="flex space-x-2">
-                                <a href="{{ route('peluqueros.edit', $peluquero) }}"
+                                <a href="{{ route('peluqueros.edit', ['empresa' => $empresa->id, 'peluquero' => $peluquero->id]) }}"
                                     class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Editar</a>
                                 <a href="{{ route('cuadrantes.create', ['peluquero_id' => $peluquero->id]) }}"
                                     class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Cuadrante</a>
