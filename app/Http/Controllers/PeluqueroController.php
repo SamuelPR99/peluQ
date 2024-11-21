@@ -102,33 +102,49 @@ class PeluqueroController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Peluquero $peluquero)
+    public function edit(Empresa $empresa, Peluquero $peluquero)
     {
         // edit() es el método que muestra el formulario de edición de un peluquero en particular
-        return view('peluqueros.edit', compact('peluquero'));
+        return view('peluqueros.edit', compact('peluquero', 'empresa'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     
-     public function update(Request $request, Peluquero $peluquero)
-     {
-         $request->validate([
-             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-             'servicios' => 'required|string',
-         ]);
- 
-         if ($request->hasFile('imagen')) {
-             $imagePath = $request->file('imagen')->store('images', 'public');
-             $peluquero->imagen = $imagePath;
-         }
- 
-         $peluquero->servicios = $request->servicios;
-         $peluquero->save();
- 
-         return redirect()->route('peluqueros.index')->with('success', 'Peluquero actualizado exitosamente.');
-     }
+    public function update(Request $request, Empresa $empresa, Peluquero $peluquero)
+    {
+        $request->validate([
+            'username' => 'required|unique:users,username,' . $peluquero->user->id,
+            'name' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . $peluquero->user->id,
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'servicios' => 'required|string',
+        ]);
+
+        // Actualizar datos del usuario
+        $peluquero->user->update([
+            'username' => $request->username,
+            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+        ]);
+
+        // Actualizar imagen si se ha subido una nueva
+        if ($request->hasFile('imagen')) {
+            $imagePath = $request->file('imagen')->store('images', 'public');
+            $peluquero->imagen = $imagePath;
+        }
+
+        // Actualizar servicios
+        $peluquero->servicios = $request->servicios;
+        $peluquero->save();
+
+        return redirect()->route('empresas.peluqueros.index', $empresa)->with('success', 'Peluquero actualizado exitosamente.');
+    }
 
     /**
      * Remove the specified resource from storage.
