@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <div class="bg-[url('/public/img/pared.jpg')] bg-cover bg-no-repeat">
         <x-marcodiv>
             <h1 class="mt-16 text-3xl font-bold text-center text-white mb-4">Beneficios de Comprar Nuestros Servicios</h1>
             <p class="text-white mb-4">Nuestra aplicación ofrece una variedad de beneficios para tu empresa, incluyendo:</p>
