@@ -10,7 +10,7 @@
         <input type="hidden" name="events" id="events">
         <input type="hidden" name="deletedEvents" id="deletedEvents">
         <div class="text-center mt-4">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            <button type="submit" class="bg-white hover:bg-gradient-to-r from-teal-600 to-lime-500 hover:text-white text-black font-bold py-2 px-4 rounded">
                 Guardar Cuadrante
             </button>
         </div>
@@ -19,30 +19,6 @@
 
 <!-- Estilos -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet">
-<style>
-    .fc {
-        @apply bg-gray-800 text-gray-200; /* Fondo oscuro del calendario con texto claro */
-    }
-    .fc-toolbar {
-        @apply bg-gray-900 border-b border-gray-700; /* Fondo oscuro para la barra de herramientas */
-    }
-    .fc-button {
-        @apply bg-gray-700 text-white border border-gray-600 hover:bg-gray-600; /* Estilo oscuro para los botones */
-    }
-    .fc-button.fc-button-active {
-        @apply bg-gray-600 text-white border border-gray-500; /* Botón activo */
-    }
-    .fc-daygrid-day,
-    .fc-timegrid-slot {
-        @apply bg-gray-700 border border-gray-600; /* Fondo oscuro para las celdas */
-    }
-    .fc-day-today {
-        @apply bg-gray-900 !important; /* Día actual */
-    }
-    .fc-event {
-        @apply bg-blue-500 text-white hover:bg-blue-400; /* Color para eventos */
-    }
-</style>
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
