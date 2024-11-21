@@ -1,15 +1,13 @@
 @extends('layouts.app')
-
+ 
 @section('content')
 <div class="container w-auto bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-md max-w-2xl mx-auto text-white mt-10">
     <form action="{{ route('peluqueros.update', ['empresa' => $empresa->id, 'peluquero' => $peluquero->id]) }}" method="POST" enctype="multipart/form-data">
-        <h1 class="flex justify-center">Editar Peluquero</h1>
-    <form action="{{ route('peluqueros.update', $peluquero) }}" method="POST" enctype="multipart/form-data">
         <h1 class="text-2xl font-bold text-center text-white mb-3">Editar Peluquero</h1>
         @csrf
         @method('PATCH')
         <div class="mb-4">
-            <label for="username" class="block text-white">Nombre de Usuario</label>
+            <label for="username" class="block text-white">Nombre de Usuario*</label>
             <input type="text" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="username" name="username" value="{{ $peluquero->user->username }}" requiteal>
         </div>
         <div class="mb-4">
@@ -17,30 +15,27 @@
             <input type="text" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="name" name="name" value="{{ $peluquero->user->name }}" requiteal>
         </div>
         <div class="mb-4">
-            <label for="first_name" class="block text-white">Primer Apellido</label>
+            <label for="first_name" class="block text-white">Primer Apellido*</label>
             <input type="text" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="first_name" name="first_name" value="{{ $peluquero->user->first_name }}" requiteal>
         </div>
         <div class="mb-4">
-            <label for="last_name" class="block text-white">Segundo Apellido</label>
+            <label for="last_name" class="block text-white">Segundo Apellido*</label>
             <input type="text" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="last_name" name="last_name" value="{{ $peluquero->user->last_name }}" requiteal>
         </div>
         <div class="mb-4">
-            <label for="email" class="block text-white">Correo Electrónico</label>
+            <label for="email" class="block text-white">Correo Electrónico*</label>
             <input type="email" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="email" name="email" value="{{ $peluquero->user->email }}" requiteal>
         </div>
         <div class="mb-4">
-            <label for="imagen" class="block text-white">Adjuntar Imagen</label>
+            <label for="imagen" class="block text-white">Adjuntar Imagen*</label>
             <input type="file" class="form-control w-full mt-2 p-2 border rounded" id="imagen" name="imagen">
             @if($peluquero->imagen)
                 <img src="{{ asset('storage/' . $peluquero->imagen) }}" alt="Imagen de {{ $peluquero->user->name }}" class="w-32 h-32 mt-4">
             @endif
         </div>
         <div class="mb-4">
-            <label for="servicios" class="block text-white">Descripción de los Servicios</label>
+            <label for="servicios" class="block text-white">Descripción de los Servicios*</label>
             <textarea class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="servicios" name="servicios" rows="4" requiteal>{{ $peluquero->servicios }}</textarea>
-        </div>
-        <div class="mb-4">
-            <p class="text-white text-sm"><strong> * Campos obligatorios</strong></p>
         </div>
         <div class="mb-4">
             <p class="text-white text-sm"><strong> * Campos obligatorios</strong></p>
