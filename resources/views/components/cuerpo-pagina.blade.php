@@ -1,6 +1,8 @@
-<header class="backdrop-blur-sm bg-gray-800 text-white p-8 sticky top-0 shadow-2xl bg-opacity-80 z-20">
-    <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-2xl font-bold">PeluQ</h1>
+<header class="backdrop-blur-sm bg-gray-800 text-white p-8 sticky top-0 shadow-2xl bg-opacity-80 z-20 h-24">
+    <div class="container mx-auto flex justify-between items-center h-full">
+        <h1 class="text-2xl font-bold">
+            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-16">
+        </h1>
         <nav>
             <ul class="flex space-x-4">
                 @if (Auth::check())
