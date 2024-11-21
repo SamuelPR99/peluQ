@@ -36,11 +36,15 @@
             selectable: true,
             slotMinTime: '08:00:00',
             slotMaxTime: '24:00:00',
-            events: @json($existingEvents),
+            events: @json($existingEvents).map(event => {
+                event.color = '#0d9488'; // Cambia este color según tus necesidades
+                return event;
+            }),
             select: function(info) {
                 var event = {
                     start: info.startStr,
-                    end: info.endStr
+                    end: info.endStr,
+                    color: '#0d9488' // Cambia este color según tus necesidades
                 };
                 calendar.addEvent(event);
                 updateEventsInput();
