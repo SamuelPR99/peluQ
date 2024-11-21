@@ -14,9 +14,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="font-sans antialiased">
-    <div class="bg-[url('/public/img/pared.jpg')] bg-cover bg-no-repeat min-h-screen">
-        <x-cuerpo-pagina class="absolute top-0 left-0 w-full"/>
-        <main>
+    <div class="min-h-screen relative">
+        <video autoplay muted loop class="absolute top-0 left-0 w-full h-full object-cover">
+            <source src="{{ asset('img/fondoprob.mp4') }}" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+        <x-cuerpo-pagina class="relative z-10"/>
+        <main class="relative z-10">
             @yield('content')
         </main>
     </div>
