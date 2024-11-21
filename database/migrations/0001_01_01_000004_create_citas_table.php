@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
     /**
      * Run the migrations.
      *
@@ -23,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('peluquero_id');
             $table->unsignedBigInteger('empresa_id');
             $table->unsignedBigInteger('servicio_id');
-            $table->string('estado_cita')->default('pendiente');
+            $table->enum('estado_cita', ['pendiente', 'confirmada', 'anulada'])->default('pendiente'); // Cambiar a enum
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

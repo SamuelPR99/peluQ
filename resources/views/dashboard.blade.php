@@ -66,7 +66,17 @@
                         <p>{{ __('No tienes citas programadas.') }}</p>
                         <a href="{{ route('citas.create') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150" onclick="showLoadingScreen()">{{ __('Pedir cita') }}</a>
                         @else
-                        <x-citas :citas="Auth::user()->citas" />
+                        <ul>
+                            @foreach(Auth::user()->citas as $cita)
+                            <li class="mb-4">
+                                <strong>{{ __('Servicio:') }}</strong> {{ $cita->servicio->nombre }}<br>
+                                <strong>{{ __('Fecha:') }}</strong> {{ $cita->fecha_cita }}<br>
+                                <strong>{{ __('Hora:') }}</strong> {{ $cita->hora_cita }}<br>
+                                <strong>{{ __('Observaciones:') }}</strong> {{ $cita->observaciones }}<br>
+                                <strong>{{ __('Estado:') }}</strong> <span class="estado-cita" data-id="{{ $cita->id }}">{{ $cita->estado_cita }}</span><br>
+                            </li>
+                            @endforeach
+                        </ul>
                         @endif
                     </div>
                     <div id="loadingScreen" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center" style="display:none;">
@@ -111,5 +121,35 @@
                 window.location.href = '{{ route('citas.create') }}';
             }, 1000); // Espera 1 segundo antes de redirigir
         }
+
+        function actualizarEstadosCitas() {
+            document.querySelectorAll('.estado-cita').forEach(span => {
+                const citaId = span.getAttribute('data-id');
+                fetch(`/citas/${citaId}/estado`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    span.textContent = data.estado_cita;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarEstadosCitas();
+            setInterval(actualizarEstadosCitas, 5000); // Actualizar cada 5 segundos
+        });
     </script>
 @endsection

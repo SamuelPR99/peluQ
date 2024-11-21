@@ -48,6 +48,7 @@ class Cita extends Model
             'start' => $this->fecha_cita . 'T' . $this->hora_cita,
             'end' => $this->fecha_cita . 'T' . date('H:i:s', strtotime($this->hora_cita) + 3600), // Asumiendo que la cita dura 1 hora
             'description' => $this->observaciones,
+            'estado_cita' => $this->estado_cita, // Añadir estado_cita
         ];
     }
 }

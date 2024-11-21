@@ -144,4 +144,10 @@ class CitaController extends Controller
 
         return response()->json($events);
     }
+
+    public function getEstado($id)
+    {
+        $cita = Cita::findOrFail($id);
+        return response()->json(['estado_cita' => $cita->estado_cita]);
+    }
 }
