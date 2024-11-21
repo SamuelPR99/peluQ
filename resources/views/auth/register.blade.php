@@ -9,61 +9,61 @@
             <!-- Username -->
             <div>
                 <label for="username" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Nombre de Usuario') }}</label>
-                <input id="username" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
+                <input id="username" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" type="text" name="username" :value="old('username')" requiteal autofocus autocomplete="username" />
                 @error('username')
-                    <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
+                    <span class="text-sm text-teal-600 dark:text-teal-400 mt-2">{{ $message }}</span>
                 @enderror
             </div>
             <!-- First Name -->
             <div class="mt-4">
                 <label for="first_name" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Primer apellido') }}</label>
-                <input id="first_name" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" type="text" name="first_name" :value="old('first_name')" required autocomplete="first_name" />
+                <input id="first_name" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" type="text" name="first_name" :value="old('first_name')" requiteal autocomplete="first_name" />
                 @error('first_name')
-                    <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
+                    <span class="text-sm text-teal-600 dark:text-teal-400 mt-2">{{ $message }}</span>
                 @enderror
             </div>
             <!-- Last Name -->
             <div class="mt-4">
                 <label for="last_name" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Segundo Apellido') }}</label>
-                <input id="last_name" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" type="text" name="last_name" :value="old('last_name')" required autocomplete="last_name" />
+                <input id="last_name" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" type="text" name="last_name" :value="old('last_name')" requiteal autocomplete="last_name" />
                 @error('last_name')
-                    <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
+                    <span class="text-sm text-teal-600 dark:text-teal-400 mt-2">{{ $message }}</span>
                 @enderror
             </div>
             <!-- Name -->
             <div class="mt-4">
                 <label for="name" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Nombre') }}</label>
-                <input id="name" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" type="text" name="name" :value="old('name')" required autocomplete="name" />
+                <input id="name" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" type="text" name="name" :value="old('name')" requiteal autocomplete="name" />
                 @error('name')
-                    <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
+                    <span class="text-sm text-teal-600 dark:text-teal-400 mt-2">{{ $message }}</span>
                 @enderror
             </div>
             <!-- Email Address -->
             <div class="mt-4">
                 <label for="email" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Email') }}</label>
-                <input id="email" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                <input id="email" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" type="email" name="email" :value="old('email')" requiteal autocomplete="username" />
                 @error('email')
-                    <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
+                    <span class="text-sm text-teal-600 dark:text-teal-400 mt-2">{{ $message }}</span>
                 @enderror
             </div>
             <!-- Password -->
             <div class="mt-4">
                 <label for="password" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Contraseña') }}</label>
-                <input id="password" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" type="password" name="password" required autocomplete="new-password" />
+                <input id="password" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" type="password" name="password" requiteal autocomplete="new-password" />
                 @error('password')
-                    <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
+                    <span class="text-sm text-teal-600 dark:text-teal-400 mt-2">{{ $message }}</span>
                 @enderror
             </div>
             <!-- Confirm Password -->
             <div class="mt-4">
                 <label for="password_confirmation" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Confirmar Contraseña') }}</label>
-                <input id="password_confirmation" class="text-white hover:border-red-600 hover:ring-red-600 focus:border-red-600 focus:ring-red-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <input id="password_confirmation" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" type="password" name="password_confirmation" requiteal autocomplete="new-password" />
                 @error('password_confirmation')
-                    <span class="text-sm text-red-600 dark:text-red-400 mt-2">{{ $message }}</span>
+                    <span class="text-sm text-teal-600 dark:text-teal-400 mt-2">{{ $message }}</span>
                 @enderror
             </div>
             <div class="flex justify-center">
-                <button type="submit" class="mt-5 btn btn-primary bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">
+                <button type="submit" class="mt-5 btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">
                     {{ __('Registrarse') }}
                 </button>
             </div>

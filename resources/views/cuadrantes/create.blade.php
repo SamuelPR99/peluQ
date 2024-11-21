@@ -37,14 +37,14 @@
             slotMinTime: '08:00:00',
             slotMaxTime: '24:00:00',
             events: @json($existingEvents).map(event => {
-                event.color = '#0d9488'; // Cambia este color según tus necesidades
+                event.color = '#0d9488';
                 return event;
             }),
             select: function(info) {
                 var event = {
                     start: info.startStr,
                     end: info.endStr,
-                    color: '#0d9488' // Cambia este color según tus necesidades
+                    color: '#0d9488'
                 };
                 calendar.addEvent(event);
                 updateEventsInput();
