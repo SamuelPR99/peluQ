@@ -11,7 +11,7 @@
                 <li>Y mucho más...</li>
             </ul>
             <div class="text-center">
-                <a href="{{ route('empresas.create') }}" class="btn btn-primary bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded">Abónate Ahora</a>
+                <a href="{{ route('empresas.create') }}" class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded">Abónate Ahora</a>
             </div>
         </x-marcodiv>
     </div>

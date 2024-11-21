@@ -14,12 +14,12 @@
                 <input type="hidden" name="hora_cita" id="hora_cita">
                 <div class="form-group">
                     <label for="observaciones" class="block text-sm font-medium text-white">Observaciones</label>
-                    <textarea name="observaciones" id="observaciones" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"></textarea>
+                    <textarea name="observaciones" id="observaciones" class="mt-1 block w-full text-white focus:border-teal-700 focus:ring-teal-700 hover:border-teal-700 bg-gray-600 border-gray-600 rounded-md shadow-sm"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="servicio_id" class="block text-sm font-medium text-white">Servicio</label>
                     <select name="servicio_id" id="servicio_id"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        class="mt-1 block w-full bg-gray-600 border-gray-600 focus:border-teal-700 focus:ring-teal-700 hover:border-teal-700 text-white rounded-md shadow-sm">
                         <!-- Opciones de servicios se llenarán dinámicamente -->
                     </select>
                 </div>
@@ -27,7 +27,7 @@
                 <input type="hidden" name="peluquero_id" id="peluquero_id">
                 <div class="justify-center flex">
                     <button type="submit"
-                        class="btn btn-primary bg-white hover:bg-red-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Crear
+                        class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Crear
                         Cita</button>
                 </div>
             </form>
@@ -79,7 +79,7 @@
                     }).addTo(map)
                     .bindPopup(`
                         <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
-                            <h3 class="text-lg font-bold text-red-700">${empresa.nombre_empresa}</h3>
+                            <h3 class="text-lg font-bold text-teal-600">${empresa.nombre_empresa}</h3>
                             <p class="text-white">${empresa.direccion}</p>
                             <p class="text-white">${empresa.telefono}</p>
                         </div>
@@ -130,7 +130,7 @@
                     data.forEach(peluquero => {
                         const peluqueroDiv = document.createElement('button');
                         peluqueroDiv.classList.add('p-4', 'bg-gray-700', 'rounded-lg', 'text-white',
-                            'cursor-pointer', 'shadow-inner', 'hover:shadow-red-600', 'focus:shadow-red-600'
+                            'cursor-pointer', 'shadow-inner', 'hover:shadow-teal-600', 'focus:shadow-teal-600'
                             );
                         peluqueroDiv.innerHTML = `
                     <img src="${peluquero.imagen}" alt="${peluquero.name}" class="w-16 h-16 rounded-full mx-auto mb-2">
@@ -138,7 +138,7 @@
                     <p>${peluquero.servicios}</p>
                 `;
                         peluqueroDiv.addEventListener('click', (event) => {
-                            event.preventDefault(); // Prevenir el comportamiento predeterminado
+                            event.preventDefault(); // Prevenir el comportamiento ptealeterminado
                             document.getElementById('peluquero_id').value = peluquero.id;
                             document.querySelectorAll('.selected').forEach(el => el.classList.remove(
                                 'selected'));
@@ -231,7 +231,7 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales/es.js"></script>
     <style>
         .selected {
-            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.3), inset 0 0 30px rgba(255, 0, 0, 0.1);
+            box-shadow: inset 0 0 10px rgba(7, 199, 135, 0.5), inset 0 0 20px rgba(7, 199, 135, 0.5), inset 0 0 30px rgba(255, 0, 0, 0.1);
         }
 
         .fc {
@@ -251,14 +251,14 @@
             background: #414141;
             /* Color del fondo de la scrollbar */
             border-radius: 10px;
-            /* Bordes redondeados del track */
+            /* Bordes tealondeados del track */
         }
 
         ::-webkit-scrollbar-thumb {
             background: #252525;
             /* Color del thumb (parte que se mueve) */
             border-radius: 10px;
-            /* Bordes redondeados del thumb */
+            /* Bordes tealondeados del thumb */
         }
 
         ::-webkit-scrollbar-thumb:hover {
