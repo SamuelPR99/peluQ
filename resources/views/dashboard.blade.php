@@ -77,6 +77,11 @@
                                 <strong>{{ __('Observaciones:') }}</strong> {{ $cita->observaciones }}<br>
                                 <span class="estado-cita" data-id="{{ $cita->id }}">
                                 </span>
+                                <form action="{{ route('citas.destroy', $cita->id) }}" method="POST" class="inline-block mt-2">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded transition ease-in-out duration-150">{{ __('Cancelar Cita') }}</button>
+                                </form>
                             </li>
                             @endforeach
                         </ul>
