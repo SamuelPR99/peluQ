@@ -182,6 +182,9 @@
                         slotMinTime: '08:00:00',
                         slotMaxTime: '24:00:00',
                         slotDuration: '00:30:00', // Intervalos de media hora
+                        validRange: {
+                            start: new Date().toISOString().split('T')[0] // Solo permite seleccionar desde el día actual en adelante
+                        },
                         events: data,
                         selectOverlap: function(event) {
                             return event.display === 'background';

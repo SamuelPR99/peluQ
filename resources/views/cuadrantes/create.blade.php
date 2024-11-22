@@ -36,6 +36,9 @@
             selectable: true,
             slotMinTime: '08:00:00',
             slotMaxTime: '24:00:00',
+            validRange: {
+                start: new Date().toISOString().split('T')[0] // Solo permite seleccionar desde el día actual en adelante
+            },
             events: @json($existingEvents).map(event => {
                 event.color = '#0d9488';
                 return event;

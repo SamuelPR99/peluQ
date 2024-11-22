@@ -51,12 +51,12 @@
                                             <li><strong>{{ __('Observaciones:') }}</strong> {{ $cita->observaciones }}</li>
                                         @endif
                                     </ul>
-                                    <form id="cancelCitaForm" action="" method="POST" class="inline-block mt-2">
+                                    <form id="cancelCitaForm-{{ $cita->id }}" action="{{ route('citas.destroy', $cita->id) }}" method="POST" class="inline-block mt-2">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded transition ease-in-out duration-150" onclick="showCancelModal(this)">{{ __('Cancelar Cita') }}</button>
+                                        <button type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded transition ease-in-out duration-150" onclick="showCancelModal({{ $cita->id }})">{{ __('Cancelar Cita') }}</button>
                                     </form>
-                                    <x-modal id="cancelModal" title="{{ __('Cancelar Cita') }}" message="{{ __('¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.') }}" action="" actionText="{{ __('Cancelar') }}" />
+                                    <x-modal id="cancelModal-{{ $cita->id }}" title="{{ __('Cancelar Cita') }}" message="{{ __('¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.') }}" action="{{ route('citas.destroy', $cita->id) }}" actionText="{{ __('Cancelar') }}" />
                                 </div>
                             </li>
                             @endforeach
@@ -157,10 +157,9 @@
             });
         }
 
-        function showCancelModal(button) {
-            const form = document.getElementById('cancelCitaForm');
-            form.action = button.closest('form').action;
-            document.getElementById('cancelModal').style.display = 'block';
+        function showCancelModal(citaId) {
+            const modal = document.getElementById(`cancelModal-${citaId}`);
+            modal.style.display = 'block';
         }
 
         document.addEventListener('DOMContentLoaded', function() {

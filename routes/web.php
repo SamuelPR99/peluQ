@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('empresas', EmpresasController::class);
     Route::resource('cuadrantes', CuadranteController::class);
     Route::resource('citas', CitaController::class);
+    Route::delete('/citas/{cita}', [CitaController::class, 'destroy'])->name('citas.destroy');
     Route::get('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'index'])->name('empresas.peluqueros.index');
     Route::get('/empresas/{empresa}/peluqueros/create', [PeluqueroController::class, 'create'])->name('peluqueros.create');
     Route::post('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'store'])->name('peluqueros.store');
