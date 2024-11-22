@@ -2,7 +2,7 @@
 @section('content')
     <div class="container mx-auto p-4">
         <div class="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-            <h1 class="text-center text-white text-xl bold">Elegir Peluquería/Barbería</h1>
+            <h1 class="text-2xl font-bold text-center text-white mb-3">Elegir Peluquería/Barbería</h1>
             <form action="{{ route('citas.store') }}" method="POST" class="space-y-4" enctype="multipart/form-data">
                 @csrf
                 <div id="map" class="h-96 mb-4 z-10"></div>

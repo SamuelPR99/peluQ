@@ -9,22 +9,37 @@
         <div class="mb-4">
             <label for="username" class="block text-white">Nombre de Usuario*</label>
             <input type="text" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="username" name="username" value="{{ $peluquero->user->username }}" requiteal>
+            @error('username')
+                <span class="text-teal-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="name" class="block text-white">Nombre*</label>
             <input type="text" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="name" name="name" value="{{ $peluquero->user->name }}" requiteal>
+            @error('name')
+                <span class="text-teal-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="first_name" class="block text-white">Primer Apellido*</label>
             <input type="text" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="first_name" name="first_name" value="{{ $peluquero->user->first_name }}" requiteal>
+            @error('first_name')
+                <span class="text-teal-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="last_name" class="block text-white">Segundo Apellido*</label>
             <input type="text" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="last_name" name="last_name" value="{{ $peluquero->user->last_name }}" requiteal>
+            @error('last_name')
+                <span class="text-teal-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="email" class="block text-white">Correo Electrónico*</label>
             <input type="email" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="email" name="email" value="{{ $peluquero->user->email }}" requiteal>
+            @error('email')
+                <span class="text-teal-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="imagen" class="block text-white">Adjuntar Imagen*</label>
@@ -36,6 +51,9 @@
         <div class="mb-4">
             <label for="servicios" class="block text-white">Descripción de los Servicios*</label>
             <textarea class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full rounded-md shadow-sm" id="servicios" name="servicios" rows="4" requiteal>{{ $peluquero->servicios }}</textarea>
+            @error('servicios')
+                <span class="text-teal-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <p class="text-white text-sm"><strong> * Campos obligatorios</strong></p>
