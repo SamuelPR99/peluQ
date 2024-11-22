@@ -134,7 +134,7 @@ class CitaController extends Controller
         // destroy() es el método que se encarga de eliminar una cita de la base de datos
         $cita->delete();
 
-        return redirect()->route('citas.index');
+        return redirect()->route('dashboard');
     }
 
     public function getCitas()
