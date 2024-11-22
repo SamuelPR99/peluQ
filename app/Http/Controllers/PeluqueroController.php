@@ -50,7 +50,7 @@ class PeluqueroController extends Controller
         ], [
             'username.required' => 'El nombre de usuario obligatorio.',
             'username.unique' => 'El nombre de usuario ya está en uso.',
-            'name.required' => 'Campo obligatorio..',
+            'name.required' => 'Campo obligatorio.',
             'first_name.required' => 'Campo obligatorio.',
             'last_name.required' => 'Campo obligatorio.',
             'email.required' => 'El correo electrónico es obligatorio.',
@@ -61,9 +61,7 @@ class PeluqueroController extends Controller
             'imagen.image' => 'El archivo debe ser una imagen.',
             'imagen.mimes' => 'La imagen debe ser un archivo de tipo: jpeg, png, jpg, gif, svg.',
             'imagen.max' => 'La imagen no debe ser mayor de 2048 kilobytes.',
-            'servicios.required' => 'Campo obligatorio.'
-       
-        
+            'servicios.required' => 'Campo obligatorio.',        
         ]
     );
         $imagePath = $request->file('imagen')->store('images', 'public');
@@ -122,6 +120,21 @@ class PeluqueroController extends Controller
             'email' => 'required|email|unique:users,email,' . $peluquero->user->id,
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'servicios' => 'required|string',
+        ], [
+            'username.required' => 'El nombre de usuario obligatorio.',
+            'username.unique' => 'El nombre de usuario ya está en uso.',
+            'name.required' => 'Campo obligatorio.',
+            'first_name.required' => 'Campo obligatorio.',
+            'last_name.required' => 'Campo obligatorio.',
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'El correo electrónico debe ser una dirección válida.',
+            'email.unique' => 'El correo electrónico ya está en uso.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'imagen.required' => 'Imagen obligatoria.',
+            'imagen.image' => 'El archivo debe ser una imagen.',
+            'imagen.mimes' => 'La imagen debe ser un archivo de tipo: jpeg, png, jpg, gif, svg.',
+            'imagen.max' => 'La imagen no debe ser mayor de 2048 kilobytes.',
+            'servicios.required' => 'Campo obligatorio.',        
         ]);
 
         // Actualizar datos del usuario
