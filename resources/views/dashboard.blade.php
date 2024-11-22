@@ -69,11 +69,14 @@
                         <ul>
                             @foreach(Auth::user()->citas as $cita)
                             <li class="mb-4">
-                                <strong>{{ __('Servicio:') }}</strong> {{ $cita->servicio->nombre }}<br>
-                                <strong>{{ __('Fecha:') }}</strong> {{ $cita->fecha_cita }}<br>
-                                <strong>{{ __('Hora:') }}</strong> {{ $cita->hora_cita }}<br>
+                                <strong>{{ __('Servicio:') }}</strong> {{ $cita->servicio->servicio }}<br>
+                                <strong>{{ __('Peluquero:') }}</strong> {{ $cita->peluquero->user->name }} {{ $cita->peluquero->user->first_name}} {{ $cita->peluquero->user->last_name }}<br>
+                                <strong>{{ __('Fecha:') }}</strong> {{ \Carbon\Carbon::parse($cita->fecha_cita)->format('d/m/Y') }}<br>
+                                <strong>{{ __('Hora:') }}</strong> {{ \Carbon\Carbon::parse($cita->hora_cita)->format('H:i') }}<br>
+                                <strong>{{ __('Precio:') }}</strong> {{ $cita->servicio->precio }} €<br>
                                 <strong>{{ __('Observaciones:') }}</strong> {{ $cita->observaciones }}<br>
-                                <strong>{{ __('Estado:') }}</strong> <span class="estado-cita" data-id="{{ $cita->id }}">{{ $cita->estado_cita }}</span><br>
+                                <span class="estado-cita" data-id="{{ $cita->id }}">
+                                </span>
                             </li>
                             @endforeach
                         </ul>
@@ -139,7 +142,33 @@
                     return response.json();
                 })
                 .then(data => {
-                    span.textContent = data.estado_cita;
+                    let estadoHtml = '';
+                    if (data.estado_cita === 'confirmada') {
+                        estadoHtml = `
+                            <div class="pl-5 pt-5">
+                                <div class="flex h-10 w-32 items-center rounded-full bg-green-200 p-4 shadow-md">
+                                    <div class="mr-2 h-3 w-3 rounded-full bg-green-500"></div>
+                                    <span class="text-green-700">Aceptada</span>
+                                </div>
+                            </div>`;
+                    } else if (data.estado_cita === 'anulada') {
+                        estadoHtml = `
+                            <div class="pl-5 pt-5">
+                                <div class="flex h-10 w-32 items-center rounded-full bg-red-200 p-4 shadow-md">
+                                    <div class="mr-2 h-3 w-3 rounded-full bg-red-500"></div>
+                                    <span class="text-red-700">Cancelada</span>
+                                </div>
+                            </div>`;
+                    } else if (data.estado_cita === 'pendiente') {
+                        estadoHtml = `
+                            <div class="pl-5 pt-5">
+                                <div class="flex h-10 w-32 items-center rounded-full bg-yellow-200 p-4 shadow-md">
+                                    <div class="mr-2 h-3 w-3 rounded-full bg-yellow-500"></div>
+                                    <span class="text-yellow-700">Pendiente</span>
+                                </div>
+                            </div>`;
+                    }
+                    span.innerHTML = estadoHtml;
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);

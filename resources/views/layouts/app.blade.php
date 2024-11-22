@@ -19,7 +19,7 @@
             <source src="{{ asset('img/fondoprob.mp4') }}" type="video/mp4">
             Tu navegador no soporta la etiqueta de video.
         </video>
-        <x-cuerpo-pagina class="relative z-10"/>
+        <x-encabezado class="relative z-10"/>
         <main class="relative z-10">
             @yield('content')
         </main>

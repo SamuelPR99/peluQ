@@ -7,7 +7,7 @@
             <ul class="flex space-x-4">
                 @if (Auth::check())
                 <li>
-                    <button href="{{ route('dashboard') }}" class="hover:text-teal-600 hover:animate-pulse hover:-translate-y-1 transition ease-in-out duration-150">
+                    <button onclick="window.location='{{ url('/dashboard')}}'" class="hover:text-teal-600 hover:animate-pulse hover:-translate-y-1 transition ease-in-out duration-150">
                         {{ Auth::user()->name }}
                     </button>
                 </li>
