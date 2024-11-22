@@ -3,7 +3,7 @@
     <div class="flex items-center justify-center min-h-screen bg-no-repeat bg-center drop-shadow-3xl z-20">
         <div class="w-full max-w-lg p-6 space-y-2 bg-gray-800 bg-opacity-70 rounded-lg shadow-xl z-10">
             <h1 class="text-2xl font-bold text-center text-white mb-3">Editar Empresa</h1>
-            @component('components.form', ['action' => route('empresas.update', $empresa->id), 'method' => 'PUT', 'empresa' => $empresa, 'buttonText' => 'Actualizar Empresa'])
+            @component('components.empresas-form', ['action' => route('empresas.update', $empresa->id), 'method' => 'PUT', 'empresa' => $empresa, 'buttonText' => 'Actualizar Empresa'])
             @endcomponent
         </div>
     </div>
