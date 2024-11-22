@@ -66,7 +66,7 @@ class EmpresasController extends Controller
             'tipo_empresa' => $request->tipo_empresa,
         ]);
 
-        foreach ($request->servicios as $servicio) {
+        foreach ($request->servicios ?? [] as $servicio) {
             $empresa->servicios()->create($servicio);
         }
 
@@ -121,7 +121,7 @@ class EmpresasController extends Controller
         ]);
 
         $empresa->servicios()->delete();
-        foreach ($request->servicios as $servicio) {
+        foreach ($request->servicios ?? [] as $servicio) {
             $empresa->servicios()->create($servicio);
         }
 

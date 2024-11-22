@@ -17,39 +17,7 @@
                             <a href="{{ route('empresas.edit', Auth::user()->empresas->first()->id) }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-green-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Editar Datos de la Empresa') }}</a>
                             <a href="{{ route('empresas.peluqueros.index', ['empresa' => Auth::user()->empresas->first()->id]) }}" class="inline-block px-4 py-2 mt-2 bg-yellow-500 hover:bg-yellow-700 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Editar Peluqueros') }}</a>
                             <button type="button" class="inline-block px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition ease-in-out duration-150" onclick="document.getElementById('deleteModal').style.display='block'">{{ __('Eliminar Empresa') }}</button>
-                            <div id="deleteModal" class="fixed z-10 inset-0 overflow-y-auto" style="display:none;">
-                                <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                                    </div>
-                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                                    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                            <div class="sm:flex sm:items-start">
-                                                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                    <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                                    </svg>
-                                                </div>
-                                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                                    <h3 class=" text-lg leading-6 font-medium text-gray-900">{{ __('Eliminar Empresa') }}</h3>
-                                                    <div class="mt-2">
-                                                        <p class="text-sm text-gray-500">{{ __('¿Estás seguro de que deseas eliminar esta empresa? Esta acción no se puede deshacer.') }}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                            <form action="{{ route('empresas.destroy', Auth::user()->empresas->first()->id) }}" method="POST" class="inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">{{ __('Eliminar') }}</button>
-                                            </form>
-                                            <button type="button" onclick="document.getElementById('deleteModal').style.display='none'" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">{{ __('Cancelar') }}</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <x-modal id="deleteModal" title="{{ __('Eliminar Empresa') }}" message="{{ __('¿Estás seguro de que deseas eliminar esta empresa? Esta acción no se puede deshacer.') }}" action="{{ route('empresas.destroy', Auth::user()->empresas->first()->id) }}" actionText="{{ __('Eliminar') }}" />
                         </div>    
                         <div class="bg-gray-600 p-4 rounded-lg mt-7 mb-7 shadow-inner hover:shadow-teal-600 transition-transform ease-in-out">
                             <h4 class="mt-4"><strong>{{ __('Valoraciones de la Empresa') }}</strong></h4>
@@ -68,20 +36,28 @@
                         @else
                         <ul>
                             @foreach(Auth::user()->citas as $cita)
-                            <li class="mb-4">
-                                <strong>{{ __('Servicio:') }}</strong> {{ $cita->servicio->servicio }}<br>
-                                <strong>{{ __('Peluquero:') }}</strong> {{ $cita->peluquero->user->name }} {{ $cita->peluquero->user->first_name}} {{ $cita->peluquero->user->last_name }}<br>
-                                <strong>{{ __('Fecha:') }}</strong> {{ \Carbon\Carbon::parse($cita->fecha_cita)->format('d/m/Y') }}<br>
-                                <strong>{{ __('Hora:') }}</strong> {{ \Carbon\Carbon::parse($cita->hora_cita)->format('H:i') }}<br>
-                                <strong>{{ __('Precio:') }}</strong> {{ $cita->servicio->precio }} €<br>
-                                <strong>{{ __('Observaciones:') }}</strong> {{ $cita->observaciones }}<br>
-                                <span class="estado-cita" data-id="{{ $cita->id }}">
-                                </span>
-                                <form action="{{ route('citas.destroy', $cita->id) }}" method="POST" class="inline-block mt-2">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded transition ease-in-out duration-150">{{ __('Cancelar Cita') }}</button>
-                                </form>
+                            <li class="mb-4 relative">
+                                <div class="bg-gray-700 p-4 rounded-lg shadow-inner relative">
+                                    <div class="estado-cita absolute top-0 right-0 mt-2 mr-2" data-id="{{ $cita->id }}">
+                                        <!-- Estado de la cita se actualizará dinámicamente -->
+                                    </div>
+                                    <ul class="list-disc pl-5">
+                                        <li><strong>{{ __('Servicio:') }}</strong> {{ $cita->servicio->servicio }}</li>
+                                        <li><strong>{{ __('Peluquero:') }}</strong> {{ $cita->peluquero->user->name }} {{ $cita->peluquero->user->first_name}} {{ $cita->peluquero->user->last_name }}</li>
+                                        <li><strong>{{ __('Fecha:') }}</strong> {{ \Carbon\Carbon::parse($cita->fecha_cita)->format('d/m/Y') }}</li>
+                                        <li><strong>{{ __('Hora:') }}</strong> {{ \Carbon\Carbon::parse($cita->hora_cita)->format('H:i') }}</li>
+                                        <li><strong>{{ __('Precio:') }}</strong> {{ $cita->servicio->precio }} €</li>
+                                        @if($cita->observaciones)
+                                            <li><strong>{{ __('Observaciones:') }}</strong> {{ $cita->observaciones }}</li>
+                                        @endif
+                                    </ul>
+                                    <form id="cancelCitaForm" action="" method="POST" class="inline-block mt-2">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded transition ease-in-out duration-150" onclick="showCancelModal(this)">{{ __('Cancelar Cita') }}</button>
+                                    </form>
+                                    <x-modal id="cancelModal" title="{{ __('Cancelar Cita') }}" message="{{ __('¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.') }}" action="" actionText="{{ __('Cancelar') }}" />
+                                </div>
                             </li>
                             @endforeach
                         </ul>
@@ -179,6 +155,12 @@
                     console.error('There was a problem with the fetch operation:', error);
                 });
             });
+        }
+
+        function showCancelModal(button) {
+            const form = document.getElementById('cancelCitaForm');
+            form.action = button.closest('form').action;
+            document.getElementById('cancelModal').style.display = 'block';
         }
 
         document.addEventListener('DOMContentLoaded', function() {

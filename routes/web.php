@@ -68,6 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/empresas/{empresa}/peluqueros/{peluquero}/edit', [PeluqueroController::class, 'edit'])->name('peluqueros.edit');
     Route::patch('/empresas/{empresa}/peluqueros/{peluquero}', [PeluqueroController::class, 'update'])->name('peluqueros.update');
     Route::get('/citas/{id}/estado', [CitaController::class, 'getEstado']);
+    Route::get('/citas/{cita}', [CitaController::class, 'show'])->name('citas.show');
 });
 
 require __DIR__.'/auth.php';
