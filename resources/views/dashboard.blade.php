@@ -69,11 +69,11 @@
                         <ul>
                             @foreach(Auth::user()->citas as $cita)
                             <li class="mb-4">
-                                <strong>{{ __('Servicio:') }}</strong> {{ $cita->servicio->nombre }}<br>
+                                <strong>{{ __('Servicio:') }}</strong> {{ $cita->servicio->servicio }}<br>
                                 <strong>{{ __('Fecha:') }}</strong> {{ $cita->fecha_cita }}<br>
                                 <strong>{{ __('Hora:') }}</strong> {{ $cita->hora_cita }}<br>
                                 <strong>{{ __('Observaciones:') }}</strong> {{ $cita->observaciones }}<br>
-                                <strong>{{ __('Estado:') }}</strong> <span class="estado-cita" data-id="{{ $cita->id }}">{{ $cita->estado_cita }}</span><br>
+                                <strong>{{ __('Estado:') }}</strong> <span class="estado-cita font-bold" data-id="{{ $cita->id }}" style="color: {{ $cita->estado_cita == 'confirmada' ? 'green' : ($cita->estado_cita == 'pendiente' ? 'yellow' : 'red') }}">{{ $cita->estado_cita }}</span><br>
                             </li>
                             @endforeach
                         </ul>
@@ -140,6 +140,7 @@
                 })
                 .then(data => {
                     span.textContent = data.estado_cita;
+                    span.style.color = data.estado_cita == 'confirmada' ? 'green' : (data.estado_cita == 'pendiente' ? 'yellow' : 'red');
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
