@@ -11,6 +11,9 @@ use App\Http\Controllers\CuadranteController;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\ServiciosController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CitaCreada;
+use App\Models\Cita;
 
 Route::get('/', function () {
     return view('welcome');
@@ -70,6 +73,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/empresas/{empresa}/peluqueros/{peluquero}', [PeluqueroController::class, 'update'])->name('peluqueros.update');
     Route::get('/citas/{id}/estado', [CitaController::class, 'getEstado']);
     Route::get('/citas/{cita}', [CitaController::class, 'show'])->name('citas.show');
+    Route::patch('/citas/{cita}/confirmar', [CitaController::class, 'confirmar'])->name('citas.confirmar');
+    Route::patch('/citas/{cita}/denegar', [CitaController::class, 'denegar'])->name('citas.denegar');
+    Route::get('/citas/{cita}/confirmar', [CitaController::class, 'confirmar'])->name('citas.confirmar');
+    Route::get('/citas/{cita}/denegar', [CitaController::class, 'denegar'])->name('citas.denegar');
 });
 
 require __DIR__.'/auth.php';

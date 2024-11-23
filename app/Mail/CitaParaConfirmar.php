@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Mail;
+
+use App\Models\Cita;
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class CitaParaConfirmar extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $cita;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct(Cita $cita)
+    {
+        $this->cita = $cita;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->subject('Nueva cita para confirmar')
+                    ->view('emails.cita_para_confirmar');
+    }
+}
