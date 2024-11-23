@@ -2,9 +2,10 @@
     <div class="container mx-auto text-center">
         <p>&copy; {{ date('Y') }} PeluQ® Todos los derechos reservados.</p>
         <div class="mt-2">
-            <a href="#" class="text-gray-400 hover:text-gray-300 mx-2">Facebook</a>
-            <a href="#" class="text-gray-400 hover:text-gray-300 mx-2">Twitter</a>
-            <a href="#" class="text-gray-400 hover:text-gray-300 mx-2">Instagram</a>
+            <a href="#" class="text-gray-400 hover:text-gray-300 mx-2" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-gray-400 hover:text-gray-300 mx-2" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-gray-300 mx-2" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://github.com/SamuelPR99/peluQ" class="text-gray-400 hover:text-gray-300 mx-2" target="_blank"><i class="fab fa-github"></i></a>
         </div>
     </div>
 </footer>
