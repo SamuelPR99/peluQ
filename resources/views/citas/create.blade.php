@@ -225,6 +225,9 @@
             document.getElementById('peluquero_id').addEventListener('change', function() {
                 fetchHorarios(this.value);
             });
+            document.querySelector('form').addEventListener('submit', function() {
+                showLoadingScreen();
+            });
         });
     </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />

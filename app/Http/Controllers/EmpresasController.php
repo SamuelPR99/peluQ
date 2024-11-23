@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 use App\Providers\AuthServiceProvider;
 class EmpresasController extends Controller
 {
@@ -54,25 +55,31 @@ class EmpresasController extends Controller
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
 
-        $empresa = Empresa::create([
-            'nombre_empresa' => $request->nombre_empresa,
-            'email' => $request->email,
-            'telefono' => $request->telefono,
-            'direccion' => $request->direccion,
-            'codigo_postal' => $request->codigo_postal,
-            'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
-            'coordenadas' => $coordenadas,
-            'user_id' => Auth::id(),
-            'tipo_empresa' => $request->tipo_empresa,
-        ]);
+        try {
+            $empresa = Empresa::create([
+                'nombre_empresa' => $request->nombre_empresa,
+                'email' => $request->email,
+                'telefono' => $request->telefono,
+                'direccion' => $request->direccion,
+                'codigo_postal' => $request->codigo_postal,
+                'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
+                'coordenadas' => $coordenadas,
+                'user_id' => Auth::id(),
+                'tipo_empresa' => $request->tipo_empresa,
+            ]);
 
-        foreach ($request->servicios ?? [] as $servicio) {
-            $empresa->servicios()->create($servicio);
+            foreach ($request->servicios ?? [] as $servicio) {
+                $empresa->servicios()->create($servicio);
+            }
+
+            DB::statement('CALL update_user_type(?)', [Auth::id()]);
+
+            Log::info('Empresa creada exitosamente:', ['empresa_id' => $empresa->id]);
+
+            return redirect()->route('empresas.peluqueros.index', ['empresa' => $empresa->id]);
+        } catch (\Exception $e) {
+            // Handle exception
         }
-
-        DB::statement('CALL update_user_type(?)', [Auth::id()]);
-        
-        return redirect()->route('empresas.peluqueros.index', ['empresa' => $empresa->id]);
     }
 
     public function show(Empresa $empresa)

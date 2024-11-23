@@ -77,6 +77,10 @@
                     })
                     .catch(error => console.error('Error:', error));
             });
+
+            document.querySelector('form').addEventListener('submit', function() {
+                showLoading();
+            });
         });
 
         let servicioIndex = 1;
