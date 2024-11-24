@@ -78,7 +78,7 @@ class EmpresasController extends Controller
                 $empresa->servicios()->create($servicio);
             }
 
-            DB::statement('CALL update_user_type(?)', [Auth::id()]);
+            Auth::user()->user_type = 'empresario'; 
 
             Log::info('Empresa creada exitosamente:', ['empresa_id' => $empresa->id]);
 
@@ -170,7 +170,15 @@ class EmpresasController extends Controller
     public function destroy(Empresa $empresa)
     {
         $this->authorize('delete', $empresa);
+
+        // Eliminar usuarios de los peluqueros de la empresa
+        foreach ($empresa->peluqueros as $peluquero) {
+            $peluquero->usuarios()->delete();
+        }
+
         $empresa->delete();
+        Auth::user()->user_type = 'user';
+        
         return redirect()->route('dashboard');
     }
 }
