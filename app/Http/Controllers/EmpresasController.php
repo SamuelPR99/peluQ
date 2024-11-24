@@ -45,12 +45,18 @@ class EmpresasController extends Controller
             'codigo_postal' => 'required',
             'confirmar_subscripcion' => 'required',
             'tipo_empresa' => 'required|in:peluqueria,barberia,peluqueria y barberia',
+            'servicios' => 'required|array',
+            'servicios.*.servicio' => 'required|string',
+            'servicios.*.precio' => 'required|numeric',
         ], [
             'nombre_empresa.required' => 'El nombre de la empresa es obligatorio.',
             'email.required' => 'El correo electrónico es obligatorio.',
             'telefono.digits' => 'El teléfono debe tener 9 dígitos.',
             'telefono.request' => 'Debe introducir un número de teléfono.',
             'direccion.required' => 'La dirección es obligatoria.',
+            'servicios.required' => 'Debe proporcionar al menos un servicio.',
+            'servicios.*.servicio.required' => 'El nombre del servicio es obligatorio.',
+            'servicios.*.precio.required' => 'El precio del servicio es obligatorio.',
         ]);
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
@@ -68,7 +74,7 @@ class EmpresasController extends Controller
                 'tipo_empresa' => $request->tipo_empresa,
             ]);
 
-            foreach ($request->servicios ?? [] as $servicio) {
+            foreach ($request->servicios as $servicio) {
                 $empresa->servicios()->create($servicio);
             }
 
@@ -78,7 +84,7 @@ class EmpresasController extends Controller
 
             return redirect()->route('empresas.peluqueros.index', ['empresa' => $empresa->id]);
         } catch (\Exception $e) {
-            // Handle exception
+            Log::error('Error al crear la empresa:', ['error' => $e->getMessage()]);
         }
     }
 
@@ -101,17 +107,23 @@ class EmpresasController extends Controller
         $request->validate([
             'nombre_empresa' => 'required',
             'email' => 'required|email',
-            'telefono' => 'required|digits:9', // Añadir validación de 9 dígitos
+            'telefono' => 'required|digits:9',
             'direccion' => 'required',
             'codigo_postal' => 'required',
             'estado_subscripcion' => $request->confirmar_subscripcion ? 'activo' : 'inactivo',
             'tipo_empresa' => 'required|in:peluqueria,barberia,peluqueria y barberia',
+            'servicios' => 'required|array',
+            'servicios.*.servicio' => 'required|string',
+            'servicios.*.precio' => 'required|numeric',
         ], [
             'nombre_empresa.required' => 'Nombre de empresa obligatorio.',
             'email.required' => 'El correo electrónico es obligatorio.',
             'telefono.digits' => 'El teléfono debe tener 9 dígitos.',
             'telefono.required' => 'Debe introducir un número de teléfono.',
             'direccion.required' => 'Campo obligatorio.',
+            'servicios.required' => 'Debe proporcionar al menos un servicio.',
+            'servicios.*.servicio.required' => 'El nombre del servicio es obligatorio.',
+            'servicios.*.precio.required' => 'El precio del servicio es obligatorio.',
         ]);
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
@@ -127,9 +139,29 @@ class EmpresasController extends Controller
             'tipo_empresa' => $request->tipo_empresa,
         ]);
 
-        $empresa->servicios()->delete();
-        foreach ($request->servicios ?? [] as $servicio) {
-            $empresa->servicios()->create($servicio);
+        // Actualizar servicios sin eliminar las citas
+        $existingServicios = $empresa->servicios->keyBy('id');
+        $newServicios = collect($request->servicios)->keyBy('id');
+
+        // Actualizar o crear servicios
+        foreach ($newServicios as $id => $servicio) {
+            if ($existingServicios->has($id)) {
+                $existingServicio = $existingServicios[$id];
+                if ($existingServicio->servicio !== $servicio['servicio'] || $existingServicio->precio !== $servicio['precio']) {
+                    $existingServicio->update($servicio);
+                }
+            } else {
+                $empresa->servicios()->create($servicio);
+            }
+        }
+
+        // Eliminar servicios que no están en la lista nueva y no tienen citas asociadas
+        $toDelete = $existingServicios->keys()->diff($newServicios->keys());
+        foreach ($toDelete as $id) {
+            $servicio = $existingServicios[$id];
+            if ($servicio->canBeDeleted()) {
+                $servicio->delete();
+            }
         }
 
         return redirect()->route('dashboard');
