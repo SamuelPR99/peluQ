@@ -24,9 +24,9 @@
                 <form id="cancelCitaForm-{{ $cita->id }}" action="{{ route('citas.destroy', $cita->id) }}" method="POST" class="inline-block mt-2">
                     @csrf
                     @method('DELETE')
-                    <button type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded transition ease-in-out duration-150" onclick="showCancelModal({{ $cita->id }})">{{ __('Cancelar Cita') }}</button>
+                    <button type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded transition ease-in-out duration-150" onclick="showCancelModal({{ $cita->id }})">{{ __('Borrar Cita') }}</button>
                 </form>
-                <x-modal id="cancelModal-{{ $cita->id }}" title="{{ __('Cancelar Cita') }}" message="{{ __('¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.') }}" action="{{ route('citas.destroy', $cita->id) }}" actionText="{{ __('Cancelar') }}" />
+                <x-modal id="cancelModal-{{ $cita->id }}" title="{{ __('Borrar Cita') }}" message="{{ __('¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.') }}" action="{{ route('citas.destroy', $cita->id) }}" actionText="{{ __('Cancelar') }}" />
             </div>
         </li>
         @endforeach

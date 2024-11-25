@@ -12,7 +12,7 @@
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">    
 </head>
 
 <body class="font-sans antialiased">
@@ -25,9 +25,15 @@
         <x-encabezado class="relative z-10" />
         <main class="relative z-10">
             @yield('content')
+             <x-contacto/>
         </main>
     </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+    
+
+    
 </body>
 <x-pie-pagina />
 
