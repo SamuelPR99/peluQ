@@ -78,6 +78,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/peluqueros/{peluquero}/citas-pendientes', [PeluqueroController::class, 'getCitasPendientes']);
     Route::get('/api/peluqueros/{peluquero}/calendario', [PeluqueroController::class, 'getCalendario']);
     Route::get('/api/peluqueros/{peluquero}/calendario-events', [PeluqueroController::class, 'getCalendarioEvents']);
+    Route::get('/api/peluqueros/{peluquero}/calendario-completo', [PeluqueroController::class, 'getCalendarioCompleto']);
+    Route::get('/api/peluqueros/calendario-completo', [PeluqueroController::class, 'getCalendarioCompleto']);
 });
 
 require __DIR__.'/auth.php';

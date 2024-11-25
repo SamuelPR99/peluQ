@@ -130,9 +130,11 @@ class CuadranteController extends Controller
         $events = $cuadrantes->map(function ($cuadrante) {
             return [
                 'id' => $cuadrante->id,
-                'title' => $cuadrante->servicio->nombre,
+                'title' => 'Horas',
                 'start' => $cuadrante->fecha . 'T' . $cuadrante->hora_entrada,
                 'end' => $cuadrante->fecha . 'T' . $cuadrante->hora_salida,
+                'backgroundColor' => '#38b2ac', // Color teal
+                'borderColor' => '#38b2ac', // Color teal
             ];
         });
 

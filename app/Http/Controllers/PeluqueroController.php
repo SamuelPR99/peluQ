@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Cuadrante;
 use App\Models\Cita;
 
@@ -210,6 +211,37 @@ class PeluqueroController extends Controller
     public function getCalendarioEvents(Peluquero $peluquero)
     {
         $events = $peluquero->citas->map->toFullCalendarEvent();
+        return response()->json($events);
+    }
+
+    public function getCalendarioCompleto()
+    {
+        $peluqueroId = Auth::user()->peluquero->id;
+        $cuadrantes = Cuadrante::where('peluquero_id', $peluqueroId)->get();
+        $citas = Cita::where('peluquero_id', $peluqueroId)->where('estado_cita', 'confirmada')->with('user', 'servicio')->get();
+
+        $events = $cuadrantes->map(function ($cuadrante) {
+            return [
+                'id' => 'cuadrante-' . $cuadrante->id,
+                'title' => 'Horas de Trabajo',
+                'start' => $cuadrante->fecha . 'T' . $cuadrante->hora_entrada,
+                'end' => $cuadrante->fecha . 'T' . $cuadrante->hora_salida,
+                'backgroundColor' => '#38b2ac', // Color teal
+                'borderColor' => '#38b2ac', // Color teal
+            ];
+        });
+
+        $events = $events->merge($citas->map(function ($cita) {
+            return [
+                'id' => 'cita-' . $cita->id,
+                'title' => $cita->user->name . ' - ' . $cita->servicio->nombre,
+                'start' => $cita->fecha_cita . 'T' . $cita->hora_cita,
+                'end' => $cita->fecha_cita . 'T' . date('H:i:s', strtotime($cita->hora_cita) + 1800), // Intervalo de media hora
+                'backgroundColor' => '#a3e635', // Color limón
+                'borderColor' => '#a3e635', // Color limón
+            ];
+        }));
+
         return response()->json($events);
     }
 }
