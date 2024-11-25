@@ -15,7 +15,7 @@
                 slotMinTime: '08:00:00',
                 slotMaxTime: '24:00:00',
                 events: function(fetchInfo, successCallback, failureCallback) {
-                    fetch(`/api/peluqueros/{{ Auth::user()->peluquero->id }}/calendario-events`)
+                    fetch(`/api/peluqueros/{{ Auth::user()->id }}/calendario-events`)
                         .then(response => {
                             if (!response.ok) {
                                 throw new Error('Network response was not ok');
