@@ -160,7 +160,7 @@ class CitaController extends Controller
     }
 
     // Método para confirmar la cita
-    public function confirmar(Cita $cita)
+    public function confirmar(Request $request, Cita $cita)
     {
         $cita->update(['estado_cita' => 'confirmada']);
 
