@@ -35,7 +35,7 @@
                 ¡Únete a la comunidad de PeluQ hoy mismo y transforma tu experiencia de cuidado personal!
             </p>
             <div class="text-center">
-                <button href="{{ route('register') }}" class="bg-gradient-to-r from-teal-600 to-lime-500 text-white py-2 px-4 rounded-lg hover:scale-110 transition-all ease-in-out">
+                <button onclick="window.location='{{ url('/register') }}'" class="bg-gradient-to-r from-teal-600 to-lime-500 text-white py-2 px-4 rounded-lg hover:scale-110 transition-all ease-in-out">
                     Regístrate Ahora
                 </button>
             </div>

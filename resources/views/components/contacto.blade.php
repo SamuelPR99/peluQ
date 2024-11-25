@@ -1,7 +1,7 @@
 <div>
 
     <div class="fixed bottom-10 right-10">
-        <button id="contactButton" class="bg-gradient-to-r from-teal-600 to-lime-500 hover:scale-110 text-white rounded-full p-4 shadow-lg">
+        <button id="contactButton" class="bg-gradient-to-r z-[999] from-teal-600 to-lime-500 hover:scale-110 text-white rounded-full p-4 shadow-lg">
             💬
         </button>
     </div>
