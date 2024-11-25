@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" />
     <style>
         .fc-event {
-            white-space: normal;
-            /* Permite que el texto se ajuste */
+            cursor: pointer;
+            max-width: 100%;
+            /* Cambiar cursor al pasar por encima de eventos */
         }
 
         .fc-time-grid-event {
@@ -16,12 +17,26 @@
             align-items: center;
             justify-content: center;
             width: 100%;
+            
             /* Ocupa toda la línea */
         }
 
         .event-full-width .fc-event-main {
             text-align: center;
             /* Centrar texto en eventos con esta clase */
+        }
+
+        .fc-event-main {
+            white-space: normal;
+            /* Permite que el texto ocupe múltiples líneas */
+            overflow: hidden;
+            /* Evita que el contenido se desborde */
+            text-overflow: ellipsis;
+            /* Agrega puntos suspensivos si el texto es muy largo */
+            word-wrap: break-word;
+            /* Rompe las palabras largas si es necesario */
+            padding: 4px;
+            /* Espacio interno para evitar que el texto toque los bordes */
         }
     </style>
     <script>
@@ -33,7 +48,8 @@
                 themeSystem: 'standard',
                 slotMinTime: '08:00:00',
                 slotMaxTime: '24:00:00',
-
+                slotDuration: '00:30:00',
+                
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
@@ -46,18 +62,13 @@
                         .then(data => successCallback(data))
                         .catch(error => failureCallback(error));
                 },
-                eventClassNames: function(arg) {
-                    if (arg.event.id.startsWith('cita-')) {
-                        return ['event-full-width'];
-                    }
-                    return [];
-                },
+
                 eventContent: function(arg) {
                     let customHtml = `
                     <div class="fc-event-main">
                         <strong>${arg.event.title}</strong>
-                        <br>
                         ${arg.event.extendedProps.description || ''}
+                        ${arg.event.start.toLocaleTimeString()} - ${arg.event.end.toLocaleTimeString()}
                     </div>`;
                     return {
                         html: customHtml
@@ -73,10 +84,10 @@
             });
             calendar.render();
 
-            // Actualizar eventos cada 10 segundos
+            // Actualizar eventos cada 30 segundos
             setInterval(function() {
                 calendar.refetchEvents();
-            }, 10000); // 10000 ms = 10 segundos
+            }, 30000); // 30000 ms = 30 segundos
         });
     </script>
 </div>
