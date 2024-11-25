@@ -4,13 +4,16 @@
         @method('PUT')
     @endif
     <div class="mb-3">
-        <label for="nombre_empresa" class="block text-gray-300 text-sm">Nombre de la Empresa</label>
+        <label for="nombre_empresa" class="block text-gray-300 text-sm">Nombre de la Empresa*</label>
         <input type="text"
             class=" text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded"
             id="nombre_empresa" name="nombre_empresa" value="{{ $empresa->nombre_empresa ?? '' }}" requiteal>
-    </div>
+            @error('nombre_empresa')
+                <span class="text-teal-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
     <div class="mb-3">
-        <label for="tipo_empresa" class="block text-gray-300 text-sm">Tipo de Empresa</label>
+        <label for="tipo_empresa" class="block text-gray-300 text-sm">Tipo de Empresa*</label>
         <select
             class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded"
             id="tipo_empresa" name="tipo_empresa" requiteal>
@@ -20,29 +23,38 @@
         </select>
     </div>
     <div class="mb-3">
-        <label for="email" class="block text-gray-300 text-sm">Correo Electrónico</label>
+        <label for="email" class="block text-gray-300 text-sm">Correo Electrónico*</label>
         <input type="email"
             class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 form-control w-full mt-1 p-2 border rounded"
             id="email" name="email" value="{{ $empresa->email ?? '' }}" requiteal>
-    </div>
+            @error('email')
+                <span class="text-teal-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
     <div class="mb-3">
-        <label for="telefono" class="block text-gray-300 text-sm">Teléfono</label>
+        <label for="telefono" class="block text-gray-300 text-sm">Teléfono*</label>
         <input type="text"
             class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded"
             id="telefono" name="telefono" value="{{ $empresa->telefono ?? '' }}" requiteal>
-    </div>
+            @error('telefono')
+                <span class="text-teal-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
     <div class="mb-3">
-        <label for="map" class="block text-gray-300 text-sm">Selecciona Dirección</label>
+        <label for="map" class="block text-gray-300 text-sm">Selecciona Dirección*</label>
         <div id="map" class="w-full h-48 mb-2"></div>
     </div>
     <div class="mb-3">
-        <label for="direccion" class="block text-gray-300 text-sm">Dirección</label>
+        <label for="direccion" class="block text-gray-300 text-sm">Dirección*</label>
         <input type="text"
             class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded"
             id="direccion" name="direccion" value="{{ $empresa->direccion ?? '' }}" requiteal>
-    </div>
+            @error('direccion')
+                <span class="text-teal-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
     <div class="mb-3">
-        <label for="codigo_postal" class="block text-gray-300 text-sm">Código Postal</label>
+        <label for="codigo_postal" class="block text-gray-300 text-sm">Código Postal*</label>
         <input type="text"
             class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded"
             id="codigo_postal" name="codigo_postal" value="{{ $empresa->codigo_postal ?? '' }}" requiteal>
@@ -51,7 +63,7 @@
         @foreach ($empresa->servicios ?? [] as $index => $servicio)
             <div class="mb-3 flex space-x-2">
                 <div class="w-1/2">
-                    <label for="servicio" class="block text-gray-300 text-sm">Servicio</label>
+                    <label for="servicio" class="block text-gray-300 text-sm">Servicio*</label>
                     <input type="text"
                         class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 form-control bg-gray-600 border-gray-600 w-full mt-1 p-2 border rounded"
                         id="servicio" name="servicios[{{ $index }}][servicio]"
@@ -83,6 +95,9 @@
         <label for="confirmar_terminos" class="ml-2 text-gray-300 text-sm cursor-pointer"
             onclick="openModal()">He leído y acepto la <span
                 class="text-blue-400 underline cursor-pointer">Política de Privacidad*</span></label>
+    </div>
+    <div class="mb-4">
+        <p class="text-white text-sm"><strong> * Campos obligatorios</strong></p>
     </div>
     <div class="text-center">
         <button type="submit"

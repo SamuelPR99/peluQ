@@ -120,7 +120,7 @@ class EmpresasController extends Controller
             'email.required' => 'El correo electrónico es obligatorio.',
             'telefono.digits' => 'El teléfono debe tener 9 dígitos.',
             'telefono.required' => 'Debe introducir un número de teléfono.',
-            'direccion.required' => 'Campo obligatorio.',
+            'direccion.required' => 'Debe seleccionar una peluquería/barbería.',
             'servicios.required' => 'Debe proporcionar al menos un servicio.',
             'servicios.*.servicio.required' => 'El nombre del servicio es obligatorio.',
             'servicios.*.precio.required' => 'El precio del servicio es obligatorio.',
