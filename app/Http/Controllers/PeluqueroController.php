@@ -206,4 +206,10 @@ class PeluqueroController extends Controller
 
         return response()->json($events);
     }
+
+    public function getCalendarioEvents(Peluquero $peluquero)
+    {
+        $events = $peluquero->citas->map->toFullCalendarEvent();
+        return response()->json($events);
+    }
 }

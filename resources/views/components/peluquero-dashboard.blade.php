@@ -14,23 +14,19 @@
                 themeSystem: 'standard',
                 slotMinTime: '08:00:00',
                 slotMaxTime: '24:00:00',
-                events: function(fetchInfo, successCallback, failureCallback) {
-                    fetch(`/api/peluqueros/{{ Auth::user()->id }}/calendario-events`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(events => {
-                            console.log('Eventos obtenidos:', events);
-                            successCallback(events);
-                        })
-                        .catch(error => {
-                            console.error('Error al obtener eventos:', error);
-                            failureCallback(error);
-                        });
+                
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'timeGridWeek,timeGridDay'
+                },
+
+                events: '/api/peluqueros/{{ Auth::id() }}/calendario-events',
+                eventClick: function(info) {
+                    info.jsEvent.preventDefault();
+                    window.location.href = '/citas/' + info.event.id;
                 }
+
             });
             calendar.render();
         });
