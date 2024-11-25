@@ -11,6 +11,9 @@ use App\Http\Controllers\CuadranteController;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\ServiciosController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CitaCreada;
+use App\Models\Cita;
 
 Route::get('/', function () {
     return view('welcome');
@@ -56,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('empresas', EmpresasController::class);
     Route::resource('cuadrantes', CuadranteController::class);
     Route::resource('citas', CitaController::class);
+    Route::delete('/citas/{cita}', [CitaController::class, 'destroy'])->name('citas.destroy');
     Route::get('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'index'])->name('empresas.peluqueros.index');
     Route::get('/empresas/{empresa}/peluqueros/create', [PeluqueroController::class, 'create'])->name('peluqueros.create');
     Route::post('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'store'])->name('peluqueros.store');
@@ -68,6 +72,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/empresas/{empresa}/peluqueros/{peluquero}/edit', [PeluqueroController::class, 'edit'])->name('peluqueros.edit');
     Route::patch('/empresas/{empresa}/peluqueros/{peluquero}', [PeluqueroController::class, 'update'])->name('peluqueros.update');
     Route::get('/citas/{id}/estado', [CitaController::class, 'getEstado']);
+    Route::patch('/citas/{cita}/confirmar', [CitaController::class, 'confirmar'])->name('citas.confirmar');
+    Route::patch('/citas/{cita}/denegar', [CitaController::class, 'denegar'])->name('citas.denegar');
 });
 
 require __DIR__.'/auth.php';

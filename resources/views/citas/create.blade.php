@@ -79,7 +79,7 @@
                     }).addTo(map)
                     .bindPopup(`
                         <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
-                            <h3 class="text-lg font-bold text-teal-600">${empresa.nombre_empresa}</h3>
+                            <h3 class="text-lg font-bold" style="color: #38b2ac !important;">${empresa.nombre_empresa}</h3>
                             <p class="text-white">${empresa.direccion}</p>
                             <p class="text-white">${empresa.telefono}</p>
                         </div>
@@ -182,6 +182,9 @@
                         slotMinTime: '08:00:00',
                         slotMaxTime: '24:00:00',
                         slotDuration: '00:30:00', // Intervalos de media hora
+                        validRange: {
+                            start: new Date().toISOString().split('T')[0] // Solo permite seleccionar desde el día actual en adelante
+                        },
                         events: data,
                         selectOverlap: function(event) {
                             return event.display === 'background';
@@ -221,6 +224,9 @@
             initMap();
             document.getElementById('peluquero_id').addEventListener('change', function() {
                 fetchHorarios(this.value);
+            });
+            document.querySelector('form').addEventListener('submit', function() {
+                showLoadingScreen();
             });
         });
     </script>

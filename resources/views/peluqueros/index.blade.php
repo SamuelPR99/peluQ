@@ -6,9 +6,11 @@
         </h1>
         @if ($peluqueros->isEmpty())
             <p class="text-lg text-center mb-4 text-white">No hay peluqueros en esta empresa.</p>
-            <div class="text-center">
+            <div class="flex justify-center mt-4">
                 <a href="{{ route('peluqueros.create', ['empresa' => $empresa->id]) }}"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Añadir Peluquero</a>
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold h-8 w-8 rounded-full animate-bounce flex items-center justify-center">
+                    <i class="fas fa-plus text-lg"></i>
+                </a>
             </div>
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -27,9 +29,8 @@
                         </div>
                         <!-- Información del peluquero -->
                         <div class="p-4 w-2/3">
-                            <h2 class="text-xl font-bold mb-1">{{ $peluquero->user->name }}</h2>
-                            <h3 class="text-lg mb-1">{{ $peluquero->user->first_name }}</h3>
-                            <h3 class="text-lg mb-1">{{ $peluquero->user->last_name }}</h3>
+                            <h2 class="text-xl font-bold mb-1">{{ $peluquero->user->name }} {{ $peluquero->user->first_name }} {{ $peluquero->user->last_name }}</h2>
+                            <p class="text-lg mb-1">{{ $peluquero->servicios }}</p>
                         </div>
                         <!-- Contenedor de botones ocultos -->
                         <div

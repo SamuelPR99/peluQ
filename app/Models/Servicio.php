@@ -19,4 +19,14 @@ class Servicio extends Model
     {
         return $this->belongsTo(Empresa::class);
     }
+
+    public function citas()
+    {
+        return $this->hasMany(Cita::class);
+    }
+
+    public function canBeDeleted()
+    {
+        return $this->citas()->count() === 0;
+    }
 }

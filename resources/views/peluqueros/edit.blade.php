@@ -43,10 +43,19 @@
         </div>
         <div class="mb-4">
             <label for="imagen" class="block text-white">Adjuntar Imagen*</label>
-            <input type="file" class="form-control w-full mt-2 p-2 border rounded" id="imagen" name="imagen">
-            @if($peluquero->imagen)
-                <img src="{{ asset('storage/' . $peluquero->imagen) }}" alt="Imagen de {{ $peluquero->user->name }}" class="w-32 h-32 mt-4">
-            @endif
+            <div class="flex items-center">
+                <label class="w-32 h-32 flex flex-col items-center justify-center bg-gray-700 text-white rounded-lg shadow-lg tracking-wide uppercase border border-gray-500 cursor-pointer hover:bg-gray-600 hover:text-white relative">
+                    <svg class="w-6 h-6 mb-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M16.88 9.94l-4.24-4.24a1.5 1.5 0 00-2.12 0L7.76 8.46a1.5 1.5 0 000 2.12l4.24 4.24a1.5 1.5 0 002.12 0l2.76-2.76a1.5 1.5 0 000-2.12zM10 12.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/>
+                    </svg>
+                    <span class="text-sm leading-normal text-center">Seleccionar una imagen</span>
+                    <input type="file" class="hidden" id="imagen" name="imagen" onchange="previewImage(event)">
+                    <img id="preview" src="{{ $peluquero->imagen ? asset('storage/' . $peluquero->imagen) : '' }}" alt="Imagen de {{ $peluquero->user->name }}" class="absolute inset-0 w-full h-full object-cover rounded-lg {{ $peluquero->imagen ? '' : 'hidden' }}">
+                </label>
+            </div>
+            @error('imagen')
+                <span class="text-teal-500 text-sm">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="servicios" class="block text-white">Descripción de los Servicios*</label>
@@ -63,4 +72,16 @@
         </div>
     </form>
 </div>
+
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('preview');
+            output.src = reader.result;
+            output.classList.remove('hidden');
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 @endsection

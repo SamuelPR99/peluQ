@@ -40,4 +40,9 @@ class Empresa extends Model
     {
         return $this->hasMany(Servicio::class);
     }
+
+    public function citas()
+    {
+        return $this->hasMany(Cita::class);
+    }
 }

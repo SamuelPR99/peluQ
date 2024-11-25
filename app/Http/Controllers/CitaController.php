@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Empresa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CitaCreada;
+use App\Mail\CitaParaConfirmar;
+use App\Mail\CitaConfirmada;
+use App\Mail\CitaDenegada;
 
 class CitaController extends Controller
 {
@@ -80,7 +85,10 @@ class CitaController extends Controller
 
             Log::info('Cita creada exitosamente:', ['cita_id' => $cita->id]);
 
-            return redirect()->route('citas.show', $cita);
+            // Enviar correo electrónico al peluquero para confirmar la cita
+            Mail::to($cita->peluquero->user->email)->send(new CitaParaConfirmar($cita));
+
+            return redirect()->route('citas.show', $cita->id);
         } catch (\Exception $e) {
             Log::error('Error al crear la cita:', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             return redirect()->back()->withErrors('Error al crear la cita. Por favor, inténtelo de nuevo.');
@@ -149,5 +157,27 @@ class CitaController extends Controller
     {
         $cita = Cita::findOrFail($id);
         return response()->json(['estado_cita' => $cita->estado_cita]);
+    }
+
+    // Método para confirmar la cita
+    public function confirmar(Cita $cita)
+    {
+        $cita->update(['estado_cita' => 'confirmada']);
+
+        // Enviar correo electrónico al usuario informando que la cita ha sido confirmada
+        Mail::to($cita->user->email)->send(new CitaConfirmada($cita));
+
+        return view('citas.success', ['message' => 'Cita confirmada exitosamente.']);
+    }
+
+    // Método para denegar la cita
+    public function denegar(Cita $cita)
+    {
+        $cita->update(['estado_cita' => 'anulada']);
+
+        // Enviar correo electrónico al usuario informando que la cita ha sido denegada
+        Mail::to($cita->user->email)->send(new CitaDenegada($cita));
+
+        return view('citas.success', ['message' => 'Cita denegada exitosamente.']);
     }
 }
