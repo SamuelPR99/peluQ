@@ -17,13 +17,12 @@
                 @endif
                 <li><button onclick="window.location='{{ url('/') }}'" class="hover:text-teal-600 hover:animate-pulse hover:-translate-y-1 transition ease-in-out duration-150">Inicio</button></li>
                 <li><button onclick="window.location='{{ url('/sobreNosotros') }}'" class="hover:text-teal-600 hover:animate-pulse hover:-translate-y-1 transition ease-in-out duration-150">Sobre nosotros</button></li>
-                <li><button onclick="window.location='{{ url('/Servicios') }}'" class="hover:text-teal-600 hover:animate-pulse hover:-translate-y-1 transition ease-in-out duration-150">Servicios</button></li>
-                <li><button onclick="window.location='{{ url('/Contacto') }}'" class="hover:text-teal-600 hover:animate-pulse hover:-translate-y-1 transition ease-in-out duration-150">Contacto</button></li>
+                <li><button onclick="window.location='{{ url('/Contacto') }}'" class="hover:text-teal-600 hover:animate-pulse hover:-translate-y-1 transition ease-in-out duration-150"></button></li>
                 @if (Auth::check())
                 <li>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf {{-- el csrf es para evitar ataques de tipo csrf --}}
-                        <button type="submit" class="hover:text-teal-600 hover:scale-110 hover:animate-pulse">
+                        <button type="submit" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">
                             <i class="fas fa-sign-out-alt"></i>
                         </button>
                     </form>

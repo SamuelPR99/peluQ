@@ -56,7 +56,8 @@
                         estadoHtml = `
                             <div class="pl-5 pt-5">
                                 <div class="flex h-10 w-32 items-center rounded-full bg-green-200 p-4 shadow-md">
-                                    <div class="mr-2 h-3 w-3 rounded-full bg-green-500"></div>
+                                    <div class="mr-2 h-3 w-3 rounded-full bg-green-500">
+                                        <div class="mr-2 h-3 w-3 rounded-full bg-green-500 animate-ping"></div></div>
                                     <span class="text-green-700">Aceptada</span>
                                 </div>
                             </div>`;
@@ -64,7 +65,8 @@
                         estadoHtml = `
                             <div class="pl-5 pt-5">
                                 <div class="flex h-10 w-32 items-center rounded-full bg-red-200 p-4 shadow-md">
-                                    <div class="mr-2 h-3 w-3 rounded-full bg-red-500"></div>
+                                    <div class="mr-2 h-3 w-3 rounded-full bg-red-500">
+                                        <div class="mr-2 h-3 w-3 rounded-full bg-red-500 animate-ping"></div></div>
                                     <span class="text-red-700">Cancelada</span>
                                 </div>
                             </div>`;
@@ -72,7 +74,8 @@
                         estadoHtml = `
                             <div class="pl-5 pt-5">
                                 <div class="flex h-10 w-32 items-center rounded-full bg-yellow-200 p-4 shadow-md">
-                                    <div class="mr-2 h-3 w-3 rounded-full bg-yellow-500"></div>
+                                    <div class="mr-2 h-3 w-3 rounded-full bg-yellow-500">
+                                        <div class="mr-2 h-3 w-3 rounded-full bg-yellow-500 animate-ping"></div></div>
                                     <span class="text-yellow-700">Pendiente</span>
                                 </div>
                             </div>`;
