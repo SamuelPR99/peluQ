@@ -9,6 +9,7 @@ use App\Http\Controllers\PeluqueroController;
 use App\Http\Controllers\EmpresasController;
 use App\Http\Controllers\CuadranteController;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\ServiciosController;
 use Illuminate\Support\Facades\Mail;
@@ -74,6 +75,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/citas/{id}/estado', [CitaController::class, 'getEstado']);
     Route::get('/citas/{cita}/confirmar', [CitaController::class, 'confirmar'])->name('citas.confirmar');
     Route::get('/citas/{cita}/denegar', [CitaController::class, 'denegar'])->name('citas.denegar');
+    Route::get('/api/peluqueros/{peluquero}/citas-pendientes', [PeluqueroController::class, 'getCitasPendientes']);
+    Route::get('/api/peluqueros/{peluquero}/calendario', [PeluqueroController::class, 'getCalendario']);
+    Route::get('/api/peluqueros/{peluquero}/calendario-events', [PeluqueroController::class, 'getCalendarioEvents']);
 });
 
 require __DIR__.'/auth.php';

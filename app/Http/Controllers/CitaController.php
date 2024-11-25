@@ -147,8 +147,13 @@ class CitaController extends Controller
 
     public function getCitas()
     {
+        Log::info('Obteniendo todas las citas');
+
         $citas = Cita::all();
         $events = $citas->map->toFullCalendarEvent();
+
+        Log::info('Citas obtenidas: ' . $citas->count());
+        Log::info('Eventos formateados: ' . $events->count());
 
         return response()->json($events);
     }
