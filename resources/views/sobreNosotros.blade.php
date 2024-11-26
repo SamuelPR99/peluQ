@@ -2,7 +2,7 @@
 
 @section('content')
     <section id="about" class="py-20 text-white">
-        <div class="container mx-auto px-4">
+        <div class="container mx-auto px-5 py-5 rounded bg-gray-600 bg-opacity-80">
             <h2 class="text-3xl font-bold text-center mb-8">Sobre Nosotros</h2>
             <p class="text-lg text-white text-center mb-6">
                 Bienvenido a PeluQ, la solución definitiva para gestionar tus citas en peluquerías. 
