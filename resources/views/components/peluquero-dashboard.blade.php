@@ -71,7 +71,7 @@
                                 style="display:inline;">
                                 @csrf
                                 <button type="submit"
-                                    class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded">Anular</button>
+                                    class="btn btn-primary bg-white hover:text-white hover:bg-red-600 text-gray-800 font-bold py-2 px-4 rounded">Anular</button>
                             </form>
                         </div>
                     </div>

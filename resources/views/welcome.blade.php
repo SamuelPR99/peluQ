@@ -80,10 +80,10 @@
             spaceBetween: 10, // Espacio entre los comentarios
             loop: true, // Habilitar el bucle
             autoplay: {
-                delay: 3000, // Tiempo de espera entre cambios (3 segundos)
+                delay: 2000, // Tiempo de espera entre cambios (3 segundos)
                 disableOnInteraction: false, // No desactivar el autoplay al interactuar
             },
-            speed: 600, // Duración de la transición en milisegundos
+            speed: 2000, // Duración de la transición en milisegundos
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
