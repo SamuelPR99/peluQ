@@ -54,7 +54,7 @@
         @else
             @foreach ($citasPendientes as $cita)
                 <div
-                    class="bg-gray-600 p-4 rounded-lg mb-7 text-gray-200 mt-0 shadow-inner hover:shadow-teal-600 transition-transform ease-in-out">
+                    class="bg-gray-700 mt-5 p-4 rounded-lg mb-7 text-gray-200 shadow-inner hover:shadow-teal-600 transition-transform ease-in-out">
                     <div class="flex justify-between">
                         <div>
                             <p class="text-sm">{{ $cita->user->name }} {{$cita->user->first_name}} {{$cita->user->last_name}}</p>
@@ -66,7 +66,7 @@
                                 style="display:inline;">
                                 @csrf
                                 <button type="submit"
-                                    class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded">Confirmar</button>
+                                    class="btn btn-primary mt-3 mr-2 bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded">Confirmar</button>
                             </form>
                             <form action="{{ route('citas.botonAnular', $cita) }}" method="POST"
                                 style="display:inline;">
