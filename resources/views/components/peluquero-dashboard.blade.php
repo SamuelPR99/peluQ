@@ -57,8 +57,9 @@
                     class="bg-gray-600 p-4 rounded-lg mb-7 text-gray-200 mt-0 shadow-inner hover:shadow-teal-600 transition-transform ease-in-out">
                     <div class="flex justify-between">
                         <div>
-                            <p class="text-sm">{{ $cita->user->name }}</p>
-                            <p class="text-sm">{{ $cita->fecha_hora }}</p>
+                            <p class="text-sm">{{ $cita->user->name }} {{$cita->user->first_name}} {{$cita->user->last_name}}</p>
+                            <p class="text-sm">{{ $cita->fecha_cita }}</p>
+                            <p class="text-sm">{{ $cita->hora_cita }}</p>
                         </div>
                         <div>
                             <form action="{{ route('citas.botonConfirmar', $cita) }}" method="POST"
