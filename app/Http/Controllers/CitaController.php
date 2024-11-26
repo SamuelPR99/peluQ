@@ -185,4 +185,30 @@ class CitaController extends Controller
 
         return view('citas.success', ['message' => 'Cita denegada exitosamente.']);
     }
+
+    public function botonConfirmar(Cita $cita)
+    {
+        $cita->estado_cita = 'confirmada';
+        $cita->save();
+
+        $citasPendientes = Cita::where('peluquero_id', Auth::id())
+                                ->where('estado_cita', 'pendiente')
+                                ->get();
+        $citasPendientes->load('user');
+
+        return view('dashboard', compact('citasPendientes'))->with('message', 'Cita confirmada exitosamente.');
+    }
+
+    public function botonAnular(Cita $cita)
+    {
+        $cita->estado_cita = 'anulada';
+        $cita->save();
+
+        $citasPendientes = Cita::where('peluquero_id', Auth::id())
+                                ->where('estado_cita', 'pendiente')
+                                ->get();
+        $citasPendientes->load('user');
+
+        return view('dashboard', compact('citasPendientes'))->with('message', 'Cita anulada exitosamente.');
+    }
 }

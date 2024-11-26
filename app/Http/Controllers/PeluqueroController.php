@@ -244,4 +244,15 @@ class PeluqueroController extends Controller
 
         return response()->json($events);
     }
+
+    public function getCitasPendientes()
+    {
+        $citasPendientes = Cita::where('peluquero_id', Auth::id())
+                                ->where('estado_cita', 'pendiente')
+                                ->get();
+        
+        // compact del usuario de la cita
+        $citasPendientes->load('user'); // esto carga los datos del usuario de la cita en la colección de citas
+        return view('dashboard', compact('citasPendientes'));
+    }
 }
