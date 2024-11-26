@@ -79,7 +79,7 @@ class EmpresasController extends Controller
                 $empresa->servicios()->create($servicio);
             }
 
-            User::where('id', Auth::id())->update(['user_type' => 'empresa']);
+            User::where('id', Auth::id())->update(['user_type' => 'empresario']);
             Log::info('Empresa creada exitosamente:', ['empresa_id' => $empresa->id]);
 
             return redirect()->route('empresas.peluqueros.index', ['empresa' => $empresa->id]);
