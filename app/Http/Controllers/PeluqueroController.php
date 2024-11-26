@@ -228,6 +228,7 @@ class PeluqueroController extends Controller
                 'end' => $cuadrante->fecha . 'T' . $cuadrante->hora_salida,
                 'backgroundColor' => '#38b2ac', // Color teal
                 'borderColor' => '#38b2ac', // Color teal
+                'display' => 'background',
             ];
         });
 
