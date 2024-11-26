@@ -35,3 +35,21 @@
     background-size: 400% 400%;
     animation: gradient-animation 5s ease infinite;
 }
+
+
+.relative {
+    position: relative; /* Asegura que el lazo se posicione relativo al div */
+}
+
+.ribbon {
+    position: absolute;
+    right: -85px; /* Ajusta según sea necesario */
+    top: 25px; /* Ajusta según sea necesario */
+    background: rgb(12, 209, 117); /* Color del lazo */
+    color: white; /* Color del texto */
+    padding: 5px 100px; /* Espaciado interno */
+    transform: rotate(45deg); /* Rotar el lazo */
+    font-weight: bold; /* Negrita */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para un efecto 3D */
+}
