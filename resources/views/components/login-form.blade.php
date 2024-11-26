@@ -18,7 +18,7 @@
                     <label for="email"class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Email') }}</label>
                     <input id="email" class="invalid:text-teal-400 text-white block mt-1 w-full bg-gray-600 border-gray-600 focus:border-teal-700 focus:ring-teal-700 hover:border-teal-700 rounded-md shadow-inner focus:shadow-teal-600" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
                     @error('email')
-                        <span class="text-sm text-white mt-2">{{ 'Usuario no encontrado.' }}</span>
+                        <span class="text-sm text-teal-500 mt-2">{{ 'Email o contraseña incorrectos.' }}</span>
                     @enderror
                 </div>
     

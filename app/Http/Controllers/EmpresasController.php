@@ -177,7 +177,7 @@ class EmpresasController extends Controller
         }
 
         $empresa->delete();
-        Auth::user()->user_type = 'user';
+        User::where('id', Auth::id())->update(['user_type' => 'user']);
         
         return redirect()->route('dashboard');
     }

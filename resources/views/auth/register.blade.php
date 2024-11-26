@@ -51,7 +51,7 @@
                 <label for="password" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Contraseña') }}</label>
                 <input id="password" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" type="password" name="password" requiteal autocomplete="new-password" />
                 @error('password')
-                    <span class="text-sm text-teal-600 dark:text-teal-400 mt-2">{{ $message }}</span>
+                    <span class="text-sm text-teal-600 dark:text-teal-400 mt-2">{{ 'La contraseña debe contener al menos una mayúscula y un número' }}</span>
                 @enderror
             </div>
             <!-- Confirm Password -->
@@ -59,7 +59,7 @@
                 <label for="password_confirmation" class="block font-medium text-sm text-gray-700 dark:text-gray-300">{{ __('Confirmar Contraseña') }}</label>
                 <input id="password_confirmation" class="text-white hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600 bg-gray-600 border-gray-600 block mt-1 w-full  rounded-md shadow-sm" type="password" name="password_confirmation" requiteal autocomplete="new-password" />
                 @error('password_confirmation')
-                    <span class="text-sm text-teal-600 dark:text-teal-400 mt-2">{{ $message }}</span>
+                    <span class="text-sm text-teal-600 dark:text-teal-400 mt-2">{{ 'Las contraseñas no coinciden' }}</span>
                 @enderror
             </div>
             <div class="flex justify-center">
