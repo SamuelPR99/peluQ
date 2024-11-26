@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use App\Models\User;
 use App\Services\GeocodingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,8 +79,7 @@ class EmpresasController extends Controller
                 $empresa->servicios()->create($servicio);
             }
 
-            Auth::user()->user_type = 'empresario'; 
-
+            User::where('id', Auth::id())->update(['user_type' => 'empresa']);
             Log::info('Empresa creada exitosamente:', ['empresa_id' => $empresa->id]);
 
             return redirect()->route('empresas.peluqueros.index', ['empresa' => $empresa->id]);
