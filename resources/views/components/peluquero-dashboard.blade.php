@@ -1,7 +1,5 @@
 <div
     class="bg-gray-600 p-4 rounded-lg mb-7 text-gray-200 mt-0 shadow-inner hover:shadow-teal-600 transition-transform ease-in-out">
-    <h4 class="mt-1"><strong>{{ __('Acciones de Peluquero') }}</strong></h4>
-    <div id="calendar"></div>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales/es.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" />
@@ -17,7 +15,7 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            
+
             /* Ocupa toda la línea */
         }
 
@@ -39,6 +37,48 @@
             /* Espacio interno para evitar que el texto toque los bordes */
         }
     </style>
+
+    @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
+
+    <h4 class="mt-1"><strong><i class="fa-duotone fa-solid fa-calendar-days"></i> {{ __('Calendario') }}</strong></h4>
+    <div id="calendar"></div>
+    <h4 class="mt-1"><strong><i class="fa-duotone fa-regular fa-bell fa-shake"></i>
+            {{ __('Citas Pendientes') }}</strong></h4>
+    <div id="citas-pendientes">
+        @if ($citasPendientes->isEmpty())
+            <p>{{ __('No tienes citas pendientes.') }}</p>
+        @else
+            @foreach ($citasPendientes as $cita)
+                <div
+                    class="bg-gray-600 p-4 rounded-lg mb-7 text-gray-200 mt-0 shadow-inner hover:shadow-teal-600 transition-transform ease-in-out">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-sm">{{ $cita->user->name }}</p>
+                            <p class="text-sm">{{ $cita->fecha_hora }}</p>
+                        </div>
+                        <div>
+                            <form action="{{ route('citas.botonConfirmar', $cita) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                <button type="submit"
+                                    class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded">Confirmar</button>
+                            </form>
+                            <form action="{{ route('citas.botonAnular', $cita) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                <button type="submit"
+                                    class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded">Anular</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        @endif
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
@@ -49,7 +89,7 @@
                 slotMinTime: '08:00:00',
                 slotMaxTime: '24:00:00',
                 slotDuration: '00:30:00',
-                
+
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',

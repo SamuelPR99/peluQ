@@ -20,7 +20,7 @@
                         <x-admin-dashboard />
                     @endif
                     @if(Auth::user()->user_type == 'peluquero')
-                        <x-peluquero-dashboard :user="Auth::user()" />
+                        <x-peluquero-dashboard :user="Auth::user()" :citasPendientes="$citasPendientes" />
                     @endif
                 </div>
             </div>
