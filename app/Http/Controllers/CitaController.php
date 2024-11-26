@@ -150,7 +150,14 @@ class CitaController extends Controller
         Log::info('Obteniendo todas las citas');
 
         $citas = Cita::all();
-        $events = $citas->map->toFullCalendarEvent();
+        $events = $citas->map(function ($cita) {
+            return [
+                'id' => $cita->id,
+                'title' => $cita->user->name . ' - ' . $cita->servicio->nombre,
+                'start' => $cita->fecha_cita->format('Y-m-d') . 'T' . $cita->hora_cita->format('H:i:s'),
+                'end' => $cita->fecha_cita->format('Y-m-d') . 'T' . date('H:i:s', strtotime($cita->hora_cita) + 1800),
+            ];
+        });
 
         Log::info('Citas obtenidas: ' . $citas->count());
         Log::info('Eventos formateados: ' . $events->count());
