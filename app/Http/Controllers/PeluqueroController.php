@@ -229,6 +229,7 @@ class PeluqueroController extends Controller
                 'backgroundColor' => '#38b2ac', // Color teal
                 'borderColor' => '#38b2ac', // Color teal
                 'display' => 'background',
+                'textColor' => '#000000',
             ];
         });
 
@@ -240,6 +241,7 @@ class PeluqueroController extends Controller
                 'end' => $cita->fecha_cita . 'T' . date('H:i:s', strtotime($cita->hora_cita) + 1800), // Intervalo de media hora
                 'backgroundColor' => '#a3e635', // Color limón
                 'borderColor' => '#a3e635', // Color limón
+                'textColor' => '#000000',
             ];
         }));
 

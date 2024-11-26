@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto p-4">
+<div class="container mx-auto p-4 pt-40">
     <div class="bg-gray-800 bg-opacity-70 p-6 rounded-lg shadow-md max-w-2xl mx-auto relative">
         <h1 class="text-2xl font-bold text-center text-white mb-3">Detalles de la Cita</h1>
         <div class="bg-gray-700 p-4 rounded-lg shadow-inner mb-4 relative">
@@ -20,7 +20,7 @@
             </ul>
         </div>
         <div class="flex justify-center">
-            <a href="{{ route('dashboard') }}" class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Volver al Dashboard</a>
+            <a href="{{ route('dashboard') }}" class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Menu</a>
         </div>
     </div>
 </div>
