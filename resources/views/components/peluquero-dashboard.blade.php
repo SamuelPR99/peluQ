@@ -58,8 +58,8 @@
                     <div class="flex justify-between">
                         <div>
                             <p class="text-sm">{{ $cita->user->name }} {{$cita->user->first_name}} {{$cita->user->last_name}}</p>
-                            <p class="text-sm">{{ $cita->fecha_cita }}</p>
-                            <p class="text-sm">{{ $cita->hora_cita }}</p>
+                            <p class="text-sm">{{ \Carbon\Carbon::parse($cita->fecha_cita)->format('d/m/Y') }}</p>
+                            <p class="text-sm">{{ \Carbon\Carbon::parse($cita->hora_cita)->format('H:i') }}</p>
                         </div>
                         <div>
                             <form action="{{ route('citas.botonConfirmar', $cita) }}" method="POST"
@@ -106,10 +106,10 @@
 
                 eventContent: function(arg) {
                     let customHtml = `
-                    <div class="fc-event-main">
+                    <div class="fc-event-main" >
                         <strong>${arg.event.title}</strong>
                         ${arg.event.extendedProps.description || ''}
-                        ${arg.event.start.toLocaleTimeString()} - ${arg.event.end.toLocaleTimeString()}
+                        ${arg.event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${arg.event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>`;
                     return {
                         html: customHtml
