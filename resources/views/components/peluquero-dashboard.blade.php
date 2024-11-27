@@ -107,9 +107,10 @@
                             citaDiv.innerHTML = `
                                 <div class="flex justify-between">
                                     <div>
-                                        <p class="text-sm">${cita.user.name} ${cita.user.first_name} ${cita.user.last_name}</p>
-                                        <p class="text-sm">${new Date(cita.fecha_cita).toLocaleDateString()}</p>
-                                        <p class="text-sm">${new Date('1970-01-01T' + cita.hora_cita + 'Z').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                        <p class="text-sm"><strong>Cita para ${capitalize(cita.user.name)} ${capitalize(cita.user.first_name)} ${capitalize(cita.user.last_name)}</strong></p>
+                                        <p class="text-sm">Para el dia ${new Date(cita.fecha_cita).toLocaleDateString()}</p>
+                                        <p class="text-sm">A las ${new Date('1970-01-01T' + cita.hora_cita + 'Z').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                        <p class="text-sm">${cita.observaciones ? 'Observaciones: ' + cita.observaciones : ''}</p>
                                     </div>
                                     <div>
                                         <button onclick="confirmarCita(${cita.id})" class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold mt-3 py-2 px-4 rounded">Confirmar</button>
@@ -122,6 +123,10 @@
                     }
                 })
                 .catch(error => console.error('Error al actualizar citas pendientes:', error));
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
         }
 
         document.addEventListener('DOMContentLoaded', function() {
