@@ -46,7 +46,7 @@
 
     <h4 class="mt-1"><strong><i class="fa-duotone fa-solid fa-calendar-days"></i> {{ __('Calendario') }}</strong></h4>
     <div id="calendar"></div>
-    <h4 class="mt-1"><strong><i class="fa-duotone fa-regular fa-bell fa-shake"></i>
+    <h4 class="mt-4 mb-4"><strong><i class="fa-duotone fa-regular fa-bell fa-shake"></i>
             {{ __('Citas Pendientes') }}</strong></h4>
     <div id="citas-pendientes">
         <!-- El contenido se llenará mediante AJAX -->
@@ -103,7 +103,7 @@
                     } else {
                         data.forEach(cita => {
                             const citaDiv = document.createElement('div');
-                            citaDiv.classList.add('bg-gray-600', 'p-4', 'rounded-lg', 'mb-7', 'text-gray-200', 'mt-0', 'shadow-inner', 'hover:shadow-teal-600', 'transition-transform', 'ease-in-out');
+                            citaDiv.classList.add('bg-gray-700', 'p-4', 'rounded-lg', 'mb-7', 'text-gray-200', 'mt-0', 'shadow-inner', 'hover:shadow-teal-600', 'transition-transform', 'ease-in-out');
                             citaDiv.innerHTML = `
                                 <div class="flex justify-between">
                                     <div>
@@ -112,7 +112,7 @@
                                         <p class="text-sm">${new Date('1970-01-01T' + cita.hora_cita + 'Z').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                                     </div>
                                     <div>
-                                        <button onclick="confirmarCita(${cita.id})" class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded">Confirmar</button>
+                                        <button onclick="confirmarCita(${cita.id})" class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold mt-3 py-2 px-4 rounded">Confirmar</button>
                                         <button onclick="anularCita(${cita.id})" class="btn btn-primary bg-white hover:text-white hover:bg-red-600 text-gray-800 font-bold py-2 px-4 rounded">Anular</button>
                                     </div>
                                 </div>
