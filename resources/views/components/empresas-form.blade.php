@@ -81,7 +81,7 @@
             </div>
         @endforeach
     </div>
-    <button type="button" class="bg-green-500 text-white font-bold py-2 px-4 rounded mt-6 h-10"
+    <button type="button" class="bg-green-500 text-white font-bold py-2 px-4 rounded mt-6 h-10 mb-5"
         onclick="addServicio()">Añadir Servicio</button>
     <div class="mb-3 flex items-center">
         <input type="checkbox" id="confirmar_subscripcion" name="confirmar_subscripcion"

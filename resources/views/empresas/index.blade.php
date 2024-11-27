@@ -22,7 +22,7 @@
                 <div class="relative overflow-hidden bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:scale-105 flex flex-col ease-in-out">
                     <div class="ribbon">¡Oferta!</div>
                     <h3 class="text-2xl font-bold mb-4 text-gray-800">Tarifa Profesional</h3>
-                    <p class="text-4xl font-semibold mb-4 text-teal-600"><s class="text-gray-500">34.99€</s><br>24.99€</p>
+                    <p class="text-4xl font-semibold mb-4 text-teal-600"><s class="text-gray-500 text-sm">34.99€</s><br>24.99€</p>
                     <ul class="mb-6 text-left flex-grow">
                         <li class="mb-2"><i class="fa-sharp fa-solid fa-check fa-xl pr-3 text-teal-600"></i>¡Puedes añadir una empresa más!</li>
                         <li class="mb-2"><i class="fa-sharp fa-solid fa-check fa-xl pr-3 text-teal-600"></i>¡Hasta 5 trabajadores más!</li>
