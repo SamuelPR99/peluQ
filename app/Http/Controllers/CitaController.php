@@ -198,12 +198,7 @@ class CitaController extends Controller
         $cita->estado_cita = 'confirmada';
         $cita->save();
 
-        $citasPendientes = Cita::where('peluquero_id', Auth::id())
-                                ->where('estado_cita', 'pendiente')
-                                ->get();
-        $citasPendientes->load('user');
-
-        return view('dashboard', compact('citasPendientes'))->with('message', 'Cita confirmada exitosamente.');
+        return response()->json(['message' => 'Cita confirmada exitosamente.']);
     }
 
     public function botonAnular(Cita $cita)
@@ -211,11 +206,6 @@ class CitaController extends Controller
         $cita->estado_cita = 'anulada';
         $cita->save();
 
-        $citasPendientes = Cita::where('peluquero_id', Auth::id())
-                                ->where('estado_cita', 'pendiente')
-                                ->get();
-        $citasPendientes->load('user');
-
-        return view('dashboard', compact('citasPendientes'))->with('message', 'Cita anulada exitosamente.');
+        return response()->json(['message' => 'Cita anulada exitosamente.']);
     }
 }

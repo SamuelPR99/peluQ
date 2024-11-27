@@ -49,8 +49,7 @@ Route::get('/api/empresas/{empresa}/servicios', [ServiciosController::class, 'ge
 
 // Esta ruta es para que el usuario pueda ver su perfil
 Route::get('/dashboard', function () {
-    $citasPendientes = Auth::user()->peluquero ? Auth::user()->peluquero->citas()->where('estado_cita', 'pendiente')->get() : collect();
-    return view('dashboard', compact('citasPendientes'));
+    return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Rutas protegidas por autenticación
@@ -77,13 +76,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/citas/{cita}/confirmar', [CitaController::class, 'confirmar'])->name('citas.confirmar');
     Route::get('/citas/{cita}/denegar', [CitaController::class, 'denegar'])->name('citas.denegar');
     Route::get('/citas/{cita}/anular', [CitaController::class, 'anular'])->name('citas.anular');
-    Route::get('/api/peluqueros/{peluquero}/citas-pendientes', [PeluqueroController::class, 'getCitasPendientes']);
+    Route::get('/api/peluqueros/{peluquero}/citas-pendientes', [PeluqueroController::class, 'getCitasPendientesAjax']);
     Route::get('/api/peluqueros/{peluquero}/calendario', [PeluqueroController::class, 'getCalendario']);
     Route::get('/api/peluqueros/{peluquero}/calendario-events', [PeluqueroController::class, 'getCalendarioEvents']);
     Route::get('/api/peluqueros/{peluquero}/calendario-completo', [PeluqueroController::class, 'getCalendarioCompleto']);
     Route::get('/api/peluqueros/calendario-completo', [PeluqueroController::class, 'getCalendarioCompleto']);
     Route::post('/citas/{cita}/confirmacita', [CitaController::class, 'botonConfirmar'])->name('citas.botonConfirmar');
     Route::post('/citas/{cita}/anulacita', [CitaController::class, 'botonAnular'])->name('citas.botonAnular');
+    Route::get('/api/peluqueros/citas-pendientes', [PeluqueroController::class, 'getCitasPendientesAjax']);
+    
 });
 
 require __DIR__.'/auth.php';

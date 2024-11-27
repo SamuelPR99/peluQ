@@ -49,38 +49,81 @@
     <h4 class="mt-1"><strong><i class="fa-duotone fa-regular fa-bell fa-shake"></i>
             {{ __('Citas Pendientes') }}</strong></h4>
     <div id="citas-pendientes">
-        @if ($citasPendientes->isEmpty())
-            <p>{{ __('No tienes citas pendientes.') }}</p>
-        @else
-            @foreach ($citasPendientes as $cita)
-                <div
-                    class="bg-gray-600 p-4 rounded-lg mb-7 text-gray-200 mt-0 shadow-inner hover:shadow-teal-600 transition-transform ease-in-out">
-                    <div class="flex justify-between">
-                        <div>
-                            <p class="text-sm">{{ $cita->user->name }} {{$cita->user->first_name}} {{$cita->user->last_name}}</p>
-                            <p class="text-sm">{{ \Carbon\Carbon::parse($cita->fecha_cita)->format('d/m/Y') }}</p>
-                            <p class="text-sm">{{ \Carbon\Carbon::parse($cita->hora_cita)->format('H:i') }}</p>
-                        </div>
-                        <div>
-                            <form action="{{ route('citas.botonConfirmar', $cita) }}" method="POST"
-                                style="display:inline;">
-                                @csrf
-                                <button type="submit"
-                                    class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded">Confirmar</button>
-                            </form>
-                            <form action="{{ route('citas.botonAnular', $cita) }}" method="POST"
-                                style="display:inline;">
-                                @csrf
-                                <button type="submit"
-                                    class="btn btn-primary bg-white hover:text-white hover:bg-red-600 text-gray-800 font-bold py-2 px-4 rounded">Anular</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        @endif
+        <!-- El contenido se llenará mediante AJAX -->
     </div>
     <script>
+        function confirmarCita(citaId) {
+            fetch(`/citas/${citaId}/confirmacita`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                actualizarCitasPendientes();
+            })
+            .catch(error => console.error('Error al confirmar la cita:', error));
+        }
+
+        function anularCita(citaId) {
+            fetch(`/citas/${citaId}/anulacita`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                actualizarCitasPendientes();
+            })
+            .catch(error => console.error('Error al anular la cita:', error));
+        }
+
+        function actualizarCitasPendientes() {
+            fetch(`/api/peluqueros/${{ Auth::user()->peluquero->id }}/citas-pendientes`)
+                .then(response => response.json())
+                .then(data => {
+                    const citasPendientesDiv = document.getElementById('citas-pendientes');
+                    citasPendientesDiv.innerHTML = '';
+                    if (data.length === 0) {
+                        citasPendientesDiv.innerHTML = '<p>{{ __('No tienes citas pendientes.') }}</p>';
+                    } else {
+                        data.forEach(cita => {
+                            const citaDiv = document.createElement('div');
+                            citaDiv.classList.add('bg-gray-600', 'p-4', 'rounded-lg', 'mb-7', 'text-gray-200', 'mt-0', 'shadow-inner', 'hover:shadow-teal-600', 'transition-transform', 'ease-in-out');
+                            citaDiv.innerHTML = `
+                                <div class="flex justify-between">
+                                    <div>
+                                        <p class="text-sm">${cita.user.name} ${cita.user.first_name} ${cita.user.last_name}</p>
+                                        <p class="text-sm">${new Date(cita.fecha_cita).toLocaleDateString()}</p>
+                                        <p class="text-sm">${new Date('1970-01-01T' + cita.hora_cita + 'Z').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                    </div>
+                                    <div>
+                                        <button onclick="confirmarCita(${cita.id})" class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded">Confirmar</button>
+                                        <button onclick="anularCita(${cita.id})" class="btn btn-primary bg-white hover:text-white hover:bg-red-600 text-gray-800 font-bold py-2 px-4 rounded">Anular</button>
+                                    </div>
+                                </div>
+                            `;
+                            citasPendientesDiv.appendChild(citaDiv);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error al actualizar citas pendientes:', error));
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -129,6 +172,9 @@
             setInterval(function() {
                 calendar.refetchEvents();
             }, 30000); // 30000 ms = 30 segundos
+
+            actualizarCitasPendientes();
+            setInterval(actualizarCitasPendientes, 5000); // Actualizar cada 5 segundos
         });
     </script>
 </div>
