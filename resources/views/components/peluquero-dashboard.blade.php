@@ -173,10 +173,9 @@
             });
             calendar.render();
 
-            // Actualizar eventos cada 30 segundos
             setInterval(function() {
                 calendar.refetchEvents();
-            }, 30000); // 30000 ms = 30 segundos
+            }, 5000); // Actualizar cada 5 segundos
 
             actualizarCitasPendientes();
             setInterval(actualizarCitasPendientes, 5000); // Actualizar cada 5 segundos
