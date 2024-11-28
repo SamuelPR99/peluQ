@@ -61,6 +61,9 @@
                                     <div class="mr-2 h-3 w-3 rounded-full bg-slate-400"></div>
                                     <span class="text-slate-500">Expirada</span>
                                 </div>
+                                <div class="mt-4">
+                                    <a href="{{ route('valoraciones.create') }}" class="mt-2 bg-yellow-400 text-white font-bold py-2 px-4 rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Valorar</a>
+                                </div>
                             </div>`;
                     }
                 });
