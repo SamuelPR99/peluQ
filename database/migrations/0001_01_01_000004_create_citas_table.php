@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('peluquero_id');
             $table->unsignedBigInteger('empresa_id');
             $table->unsignedBigInteger('servicio_id');
-            $table->enum('estado_cita', ['pendiente', 'confirmada', 'anulada'])->default('pendiente'); // Cambiar a enum
+            $table->enum('estado_cita', ['pendiente', 'confirmada', 'anulada', 'expirada'])->default('pendiente'); // Cambiar a enum
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
