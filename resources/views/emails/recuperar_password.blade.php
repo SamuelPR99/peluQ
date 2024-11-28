@@ -40,7 +40,6 @@
             <p>Hola,</p>
             <p>Has solicitado restablecer tu contraseña. Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
             <p><a href="{{ $resetUrl }}" style="color: #38b2ac;">Restablecer Contraseña</a></p>
-            <p>Si no solicitaste un restablecimiento de contraseña, no es necesario que hagas nada.</p>
             <p>Gracias,</p>
             <p>El equipo de {{ config('app.name') }}</p>
         </div>
