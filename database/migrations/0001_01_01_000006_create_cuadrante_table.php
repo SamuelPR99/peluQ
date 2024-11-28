@@ -10,7 +10,6 @@ return new class extends Migration
         Schema::create('cuadrantes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('peluquero_id')->constrained()->onDelete('cascade');
-            $table->foreignId('servicio_id')->constrained()->onDelete('cascade');
             $table->date('fecha');
             $table->time('hora_entrada');
             $table->time('hora_salida');
