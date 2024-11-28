@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\RecuperarPassword;
+use App\Mail\RecuperarPasswordNotificacion;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -41,6 +42,10 @@ class PasswordResetLinkController extends Controller
                 'email' => $request->email,
             ], false));
 
+            // Enviar la notificación de solicitud de restablecimiento de contraseña
+            Mail::to($request->email)->send(new RecuperarPasswordNotificacion($resetUrl));
+
+            // Enviar el correo de restablecimiento de contraseña
             Mail::to($request->email)->send(new RecuperarPassword($resetUrl));
 
             return back()->with(['status' => 'Correo enviado correctamente']);
