@@ -53,44 +53,84 @@
                     })
                     .then(data => {
                         let estadoHtml = '';
+                        const isSmallScreen = window.matchMedia('(max-width: 640px)').matches;
+
                         if (data.estado_cita === 'confirmada') {
-                            estadoHtml = `
-                            <div class="pl-5 pt-5">
-                                <div class="flex h-10 w-32 items-center rounded-full bg-green-200 p-4 shadow-md">
-                                    <div class="mr-2 h-3 w-3 rounded-full bg-green-500">
-                                    <div class="mr-2 h-3 w-3 animate-ping rounded-full bg-green-500"></div>
-                                    </div>
-                                    <span class="text-green-700">Aceptada</span>
-                                 </div>
-                             </div>`;
+                            if (isSmallScreen) {
+                                estadoHtml = `
+                                    <div class="pl-5 pt-5">
+                                        <div class="flex h-12 w-12 items-center rounded-full bg-green-200 p-4 shadow-md">
+                                            <div class="h-4 w-4 rounded-full bg-green-500">
+                                                <div class="h-4 w-4 animate-ping rounded-full bg-green-500"></div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                            } else {
+                                estadoHtml = `
+                                    <div class="pl-5 pt-5">
+                                        <div class="flex h-10 w-32 items-center rounded-full bg-green-200 p-4 shadow-md">
+                                            <div class="mr-2 h-3 w-3 rounded-full bg-green-500">
+                                                <div class="mr-2 h-3 w-3 animate-ping rounded-full bg-green-500"></div>
+                                            </div>
+                                            <span class="text-green-700">Aceptada</span>
+                                        </div>
+                                    </div>`;
+                            }
                         } else if (data.estado_cita === 'anulada') {
-                            estadoHtml = `
-                            <div class="pl-5 pt-5">
-                                <div class="flex h-10 w-32 items-center rounded-full bg-red-200 p-4 shadow-md">
-                                    <div class="mr-2 h-3 w-3 rounded-full bg-red-500">
-                                    <div class="mr-2 h-3 w-3 animate-ping rounded-full bg-red-500"></div>
-                                    </div>
-                                    <span class="text-red-700">Cancelada</span>
-                                 </div>
-                             </div>`;
+                            if (isSmallScreen) {
+                                estadoHtml = `
+                                    <div class="pl-5 pt-5">
+                                        <div class="flex h-12 w-12 items-center rounded-full bg-red-200 p-4 shadow-md">
+                                            <div class="h-4 w-4 rounded-full bg-red-500">
+                                                <div class="h-4 w-4 animate-ping rounded-full bg-red-500"></div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                            } else {
+                                estadoHtml = `
+                                    <div class="pl-5 pt-5">
+                                        <div class="flex h-10 w-32 items-center rounded-full bg-red-200 p-4 shadow-md">
+                                            <div class="mr-2 h-3 w-3 rounded-full bg-red-500">
+                                                <div class="mr-2 h-3 w-3 animate-ping rounded-full bg-red-500"></div>
+                                            </div>
+                                            <span class="text-red-700">Cancelada</span>
+                                        </div>
+                                    </div>`;
+                            }
                         } else if (data.estado_cita === 'pendiente') {
-                            estadoHtml = `
-                            <div class="pl-5 pt-5">
-                                <div class="flex h-10 w-32 items-center rounded-full bg-yellow-200 p-4 shadow-md">
-                                    <div class="mr-2 h-3 w-3 animate-pulse rounded-full bg-yellow-500">
-                                    </div>
-                                    <span class="text-yellow-700">Pendiente</span>
-                                </div>
-                            </div>`;
+                            if (isSmallScreen) {
+                                estadoHtml = `
+                                    <div class="pl-5 pt-5">
+                                        <div class="flex h-12 w-12 items-center rounded-full bg-yellow-200 p-4 shadow-md">
+                                            <div class="h-4 animate-pulse rounded-full bg-yellow-500"></div>
+                                        </div>
+                                    </div>`;
+                            } else {
+                                estadoHtml = `
+                                    <div class="pl-5 pt-5">
+                                        <div class="flex h-10 w-32 items-center rounded-full bg-yellow-200 p-4 shadow-md">
+                                            <div class="mr-2 h-3 animate-pulse rounded-full bg-yellow-500"></div>
+                                            <span class="text-yellow-700">Pendiente</span>
+                                        </div>
+                                    </div>`;
+                            }
                         } else if (data.estado_cita === 'expirada') {
-                            estadoHtml = `
-                            <div class="cursor-not-allowed pl-5 pt-5">
-                                <div class="flex h-10 w-32 items-center rounded-full bg-slate-200 p-4 shadow-md">
-                                    <div class="mr-2 h-3 w-3 rounded-full bg-slate-400">
-                                    </div>
-                                    <span class="text-slate-500">Expirada</span>
-                                 </div>
-                            </div>`;
+                            if (isSmallScreen) {
+                                estadoHtml = `
+                                    <div class="cursor-not-allowed pl-5 pt-5">
+                                        <div class="flex h-12 w-12 items-center rounded-full bg-slate-200 p-4 shadow-md">
+                                            <div class="h-4 w-4 rounded-full bg-slate-400"></div>
+                                        </div>
+                                    </div>`;
+                            } else {
+                                estadoHtml = `
+                                    <div class="cursor-not-allowed pl-5 pt-5">
+                                        <div class="flex h-10 w-32 items-center rounded-full bg-slate-200 p-4 shadow-md">
+                                            <div class="mr-2 h-3 w-3 rounded-full bg-slate-400"></div>
+                                            <span class="text-slate-500">Expirada</span>
+                                        </div>
+                                    </div>`;
+                            }
                         }
                         span.innerHTML = estadoHtml;
                     })
