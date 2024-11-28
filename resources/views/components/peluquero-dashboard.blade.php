@@ -7,7 +7,6 @@
         .fc-event {
             cursor: pointer;
             max-width: 100%;
-            /* Cambiar cursor al pasar por encima de eventos */
         }
 
         .fc-time-grid-event {
@@ -15,42 +14,55 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-
-            /* Ocupa toda la línea */
         }
 
         .event-full-width .fc-event-main {
             text-align: center;
-            /* Centrar texto en eventos con esta clase */
         }
-
+        
         .fc-event-main {
             white-space: normal;
-            /* Permite que el texto ocupe múltiples líneas */
             overflow: hidden;
-            /* Evita que el contenido se desborde */
             text-overflow: ellipsis;
-            /* Agrega puntos suspensivos si el texto es muy largo */
             word-wrap: break-word;
-            /* Rompe las palabras largas si es necesario */
             padding: 4px;
-            /* Espacio interno para evitar que el texto toque los bordes */
         }
-    </style>
+        
+        /* Animación para las citas pendientes */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
 
-    @if (session('message'))
-        <div class="alert alert-success">
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        </style>
+
+<h4 class="mt-4 mb-4">
+    <strong>
+        <i id="bell-icon" class="fa-duotone fa-regular fa-bell"></i>
+        {{ __('Citas Pendientes') }}
+    </strong>
+</h4>
+
+<button id="mostrar-citas" class="btn btn-primary bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold mt-3 mb-6 py-2 px-4 rounded">Mostrar Citas Pendientes</button>
+
+<div id="citas-pendientes" style="display: none;">
+    <!-- El contenido se llenará mediante AJAX -->
+</div>
+@if (session('message'))
+<div class="alert alert-success">
             {{ session('message') }}
         </div>
     @endif
 
     <h4 class="mt-1"><strong><i class="fa-duotone fa-solid fa-calendar-days"></i> {{ __('Calendario') }}</strong></h4>
     <div id="calendar"></div>
-    <h4 class="mt-4 mb-4"><strong><i class="fa-duotone fa-regular fa-bell fa-shake"></i>
-            {{ __('Citas Pendientes') }}</strong></h4>
-    <div id="citas-pendientes">
-        <!-- El contenido se llenará mediante AJAX -->
-    </div>
+
+
     <script>
         function confirmarCita(citaId) {
             fetch(`/citas/${citaId}/confirmacita`, {
@@ -97,13 +109,16 @@
                 .then(response => response.json())
                 .then(data => {
                     const citasPendientesDiv = document.getElementById('citas-pendientes');
+                    const bellIcon = document.getElementById('bell-icon');
                     citasPendientesDiv.innerHTML = '';
                     if (data.length === 0) {
                         citasPendientesDiv.innerHTML = '<p>{{ __('No tienes citas pendientes.') }}</p>';
+                        bellIcon.className = 'fa-duotone fa-regular fa-bell '; // Cambiar a campana normal
                     } else {
+                        bellIcon.className = 'fa-duotone fa-regular fa-bell fa-shake'; // Cambiar a campana con animación
                         data.forEach(cita => {
                             const citaDiv = document.createElement('div');
-                            citaDiv.classList.add('bg-gray-700', 'p-4', 'rounded-lg', 'mb-7', 'text-gray-200', 'mt-0', 'shadow-inner', 'hover:shadow-teal-600', 'transition-transform', 'ease-in-out');
+                            citaDiv.classList.add('bg-gray-700', 'p-4', 'rounded-lg', 'mb-7', 'text-gray-200', 'mt-0', 'shadow-inner', 'hover:shadow-teal-600', 'transition-transform', 'ease-in-out', 'fade-in');
                             citaDiv.innerHTML = `
                                 <div class="flex justify-between">
                                     <div>
@@ -120,11 +135,26 @@
                             citasPendientesDiv.appendChild(citaDiv);
                         });
                     }
+                    // Añadir la clase de animación después de que se haya llenado el contenido
+                    citasPendientesDiv.classList.add('fade-in');
                 })
                 .catch(error => console.error('Error al actualizar citas pendientes:', error));
         }
 
+        document.getElementById('mostrar-citas').addEventListener('click', function() {  //esto casca por el block
+            const citasPendientesDiv = document.getElementById('citas-pendientes');
+            if (citasPendientesDiv.style.display === 'none') {
+                citasPendientesDiv.style.display = 'block';
+                this.textContent = 'Ocultar Citas Pendientes';
+                actualizarCitasPendientes();
+            } else {
+                citasPendientesDiv.style.display = 'none';
+                this.textContent = 'Mostrar Citas Pendientes';
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
+            actualizarCitasPendientes(); // Verificar citas pendientes al cargar la página
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'timeGridDay',
@@ -149,7 +179,7 @@
 
                 eventContent: function(arg) {
                     let customHtml = `
-                    <div class="fc-event-main" >
+                    <div class="fc-event-main">
                         <strong>${arg.event.title}</strong>
                         ${arg.event.extendedProps.description || ''}
                         ${arg.event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${arg.event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -164,7 +194,6 @@
                         window.location.href = '/citas/' + info.event.id.split('-')[1];
                     }
                 }
-
             });
             calendar.render();
 
@@ -172,9 +201,6 @@
             setInterval(function() {
                 calendar.refetchEvents();
             }, 30000); // 30000 ms = 30 segundos
-
-            actualizarCitasPendientes();
-            setInterval(actualizarCitasPendientes, 5000); // Actualizar cada 5 segundos
         });
     </script>
 </div>
