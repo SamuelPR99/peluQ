@@ -36,107 +36,138 @@
         }
 
         function actualizarEstadosCitas() {
+            // Cambiar la ruta a la correcta para obtener citas expiradas
+            fetch('/api/peluqueros/citas-expiradas', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                data.citas_actualizadas.forEach(citaId => {
+                    const span = document.querySelector(`.estado-cita[data-id="${citaId}"]`);
+                    if (span) {
+                        // Actualizar el estado a "expirada"
+                        span.innerHTML = `
+                            <div class="cursor-not-allowed pl-5 pt-5">
+                                <div class="flex h-10 w-32 items-center rounded-full bg-slate-200 p-4 shadow-md">
+                                    <div class="mr-2 h-3 w-3 rounded-full bg-slate-400"></div>
+                                    <span class="text-slate-500">Expirada</span>
+                                </div>
+                            </div>`;
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+
+            // Actualizar el estado de cada cita
             document.querySelectorAll('.estado-cita').forEach(span => {
                 const citaId = span.getAttribute('data-id');
                 fetch(`/citas/${citaId}/estado`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        let estadoHtml = '';
-                        const isSmallScreen = window.matchMedia('(max-width: 640px)').matches;
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    let estadoHtml = '';
+                    const isSmallScreen = window.matchMedia('(max-width: 640px)').matches;
 
-                        if (data.estado_cita === 'confirmada') {
-                            if (isSmallScreen) {
-                                estadoHtml = `
-                                    <div class="pl-5 pt-5">
-                                        <div class="flex h-12 w-12 items-center rounded-full bg-green-200 p-4 shadow-md">
-                                            <div class="h-4 w-4 rounded-full bg-green-500">
-                                                <div class="h-4 w-4 animate-ping rounded-full bg-green-500"></div>
-                                            </div>
+                    // Manejo de los diferentes estados
+                    switch (data.estado_cita) {
+                        case 'confirmada':
+                            estadoHtml = isSmallScreen ?
+                                `<div class="pl-5 pt-5">
+                                    <div class="flex h-12 w-12 items-center rounded-full bg-green-200 p-4 shadow-md">
+                                        <div class="h-4 w-4 rounded-full bg-green-500">
+                                            <div class="h-4 w-4 animate-ping rounded-full bg-green-500"></div>
                                         </div>
-                                    </div>`;
-                            } else {
-                                estadoHtml = `
-                                    <div class="pl-5 pt-5">
-                                        <div class="flex h-10 w-32 items-center rounded-full bg-green-200 p-4 shadow-md">
-                                            <div class="mr-2 h-3 w-3 rounded-full bg-green-500">
-                                                <div class="mr-2 h-3 w-3 animate-ping rounded-full bg-green-500"></div>
-                                            </div>
-                                            <span class="text-green-700">Aceptada</span>
+                                    </div>
+                                </div>` :
+                                `<div class="pl-5 pt-5">
+                                    <div class="flex h-10 w-32 items-center rounded-full bg-green-200 p-4 shadow-md">
+                                        <div class="mr-2 h-3 w-3 rounded-full bg-green-500">
+                                            <div class="mr-2 h-3 w-3 animate-ping rounded-full bg-green-500"></div>
                                         </div>
-                                    </div>`;
-                            }
-                        } else if (data.estado_cita === 'anulada') {
-                            if (isSmallScreen) {
-                                estadoHtml = `
-                                    <div class="pl-5 pt-5">
-                                        <div class="flex h-12 w-12 items-center rounded-full bg-red-200 p-4 shadow-md">
-                                            <div class="h-4 w-4 rounded-full bg-red-500">
-                                                <div class="h-4 w-4 animate-ping rounded-full bg-red-500"></div>
-                                            </div>
+                                        <span class="text-green-700">Aceptada</span>
+                                    </div>
+                                </div>`;
+                            break;
+                        case 'anulada':
+                            estadoHtml = isSmallScreen ?
+                                `<div class="pl-5 pt-5">
+                                    <div class="flex h-12 w-12 items-center rounded-full bg-red-200 p-4 shadow-md">
+                                        <div class="h-4 w-4 rounded-full bg-red-500">
+                                            <div class="h-4 w-4 animate-ping rounded-full bg-red-500"></div>
                                         </div>
-                                    </div>`;
-                            } else {
-                                estadoHtml = `
-                                    <div class="pl-5 pt-5">
-                                        <div class="flex h-10 w-32 items-center rounded-full bg-red-200 p-4 shadow-md">
-                                            <div class="mr-2 h-3 w-3 rounded-full bg-red-500">
-                                                <div class="mr-2 h-3 w-3 animate-ping rounded-full bg-red-500"></div>
-                                            </div>
-                                            <span class="text-red-700">Cancelada</span>
+                                    </div>
+                                </div>` :
+                                `<div class="pl-5 pt-5">
+                                    <div class="flex h-10 w-32 items-center rounded-full bg-red-200 p-4 shadow-md">
+                                        <div class="mr-2 h-3 w-3 rounded-full bg-red-500">
+                                            <div class="mr-2 h-3 w-3 animate-ping rounded-full bg-red-500"></div>
                                         </div>
-                                    </div>`;
-                            }
-                        } else if (data.estado_cita === 'pendiente') {
-                            if (isSmallScreen) {
-                                estadoHtml = `
-                                    <div class="pl-5 pt-5">
-                                        <div class="flex h-12 w-12 items-center rounded-full bg-yellow-200 p-4 shadow-md">
-                                            <div class="h-4 animate-pulse rounded-full bg-yellow-500"></div>
-                                        </div>
-                                    </div>`;
-                            } else {
-                                estadoHtml = `
-                                    <div class="pl-5 pt-5">
-                                        <div class="flex h-10 w-32 items-center rounded-full bg-yellow-200 p-4 shadow-md">
-                                            <div class="mr-2 h-3 animate-pulse rounded-full bg-yellow-500"></div>
-                                            <span class="text-yellow-700">Pendiente</span>
-                                        </div>
-                                    </div>`;
-                            }
-                        } else if (data.estado_cita === 'expirada') {
-                            if (isSmallScreen) {
-                                estadoHtml = `
-                                    <div class="cursor-not-allowed pl-5 pt-5">
-                                        <div class="flex h-12 w-12 items-center rounded-full bg-slate-200 p-4 shadow-md">
-                                            <div class="h-4 w-4 rounded-full bg-slate-400"></div>
-                                        </div>
-                                    </div>`;
-                            } else {
-                                estadoHtml = `
-                                    <div class="cursor-not-allowed pl-5 pt-5">
-                                        <div class="flex h-10 w-32 items-center rounded-full bg-slate-200 p-4 shadow-md">
-                                            <div class="mr-2 h-3 w-3 rounded-full bg-slate-400"></div>
-                                            <span class="text-slate-500">Expirada</span>
-                                        </div>
-                                    </div>`;
-                            }
-                        }
-                        span.innerHTML = estadoHtml;
-                    })
-                    .catch(error => {
-                        console.error('There was a problem with the fetch operation:', error);
-                    });
+                                        <span class="text-red-700">Cancelada</span>
+                                    </div>
+                                </div>`;
+                            break;
+                        case 'pendiente':
+                            estadoHtml = isSmallScreen ?
+                                `<div class="pl-5 pt-5">
+                                    <div class="flex h-12 w-12 items-center rounded-full bg-yellow-200 p-4 shadow-md">
+                                        <div class="h-4 w-4 animate-pulse rounded-full bg-yellow-500"></div>
+                                    </div>
+                                </div>` :
+                                `<div class="pl-5 pt-5">
+                                    <div class="flex h-10 w-32 items-center rounded-full bg-yellow-200 p-4 shadow-md">
+                                        <div class="mr-2 h-3 w-3 animate-pulse rounded-full bg-yellow-500"></div>
+                                        <span class="text-yellow-700">Pendiente</span>
+                                    </div>
+                                </div>`;
+                            break;
+                        case 'expirada':
+                            estadoHtml = isSmallScreen ?
+                                `<div class="cursor-not-allowed pl-5 pt-5">
+                                    <div class="flex h-12 w-12 items-center rounded-full bg-slate-200 p-4 shadow-md">
+                                        <div class="h-4 w-4 rounded-full bg-slate-400"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="mt-24 ml-10 bg-yellow-400 text-white font-bold py-2 px-4 rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Valorar</button>
+                                </div>` :
+                                `<div class="cursor-not-allowed pl-5 pt-5">
+                                    <div class="flex h-10 w-32 items-center rounded-full bg-slate-200 p-4 shadow-md">
+                                        <div class="mr-2 h-3 w-3 rounded-full bg-slate-400"></div>
+                                        <span class="text-slate-500">Expirada</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="mt-24 ml-10 bg-yellow-400 text-white font-bold py-2 px-4 rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Valorar</button>
+                                </div>`;
+                            break;
+                    }
+                    span.innerHTML = estadoHtml;
+                })
+
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
             });
         }
 

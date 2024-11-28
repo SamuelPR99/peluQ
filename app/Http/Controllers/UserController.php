@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Cita;
 
 class UserController extends Controller
 {
@@ -93,4 +95,28 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index');
     }
+
+    public function getAndUpdateCitasExpiradasAjax()
+    {
+    
+        // Obtener citas expiradas y actualizarlas
+        $citasExpiradas = Cita::where('user_id', Auth::id())
+            ->where(function ($query) {
+                $query->where('fecha_cita', '<', now())
+                      ->orWhere(function ($query) {
+                          $query->where('fecha_cita', now()->format('Y-m-d'))
+                                ->where('hora_cita', '<', now()->format('H:i:s'));
+                      });
+            })
+            ->get()
+            ->each(function ($cita) {
+                $cita->update(['estado_cita' => 'expirada']);
+            });
+    
+        // Retornar las citas expiradas como respuesta JSON
+        return response()->json($citasExpiradas);
+    }
+
+
+
 }
