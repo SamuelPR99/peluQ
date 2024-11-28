@@ -19,7 +19,7 @@ class CitaFactory extends Factory
             'peluquero_id' => \App\Models\Peluquero::factory(),
             'empresa_id' => \App\Models\Empresa::factory(),
             'servicio_id' => \App\Models\Servicio::factory(),
-            'estado_cita' => $this->faker->randomElement(['pendiente', 'confirmada', 'cancelada']),
+            'estado_cita' => $this->faker->randomElement(['pendiente', 'confirmada', 'anulada', 'expirada']),
         ];
     }
 }
