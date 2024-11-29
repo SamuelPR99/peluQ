@@ -114,7 +114,7 @@ class UserController extends Controller
             });
     
         // Retornar las citas expiradas como respuesta JSON
-        return response()->json($citasExpiradas);
+        return response()->json(['citas_actualizadas' => $citasExpiradas->pluck('id')]);
     }
 
 

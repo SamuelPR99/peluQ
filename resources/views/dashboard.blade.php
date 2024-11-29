@@ -51,22 +51,24 @@
                 return response.json();
             })
             .then(data => {
-                data.citas_actualizadas.forEach(citaId => {
-                    const span = document.querySelector(`.estado-cita[data-id="${citaId}"]`);
-                    if (span) {
-                        // Actualizar el estado a "expirada"
-                        span.innerHTML = `
-                            <div class="cursor-not-allowed pl-5 pt-5">
-                                <div class="flex h-10 w-32 items-center rounded-full bg-slate-200 p-4 shadow-md">
-                                    <div class="mr-2 h-3 w-3 rounded-full bg-slate-400"></div>
-                                    <span class="text-slate-500">Expirada</span>
-                                </div>
-                                <div class="mt-4">
-                                    <a href="{{ route('valoraciones.create') }}" class="mt-2 bg-yellow-400 text-white font-bold py-2 px-4 rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Valorar</a>
-                                </div>
-                            </div>`;
-                    }
-                });
+                if (data.citas_actualizadas) {
+                    data.citas_actualizadas.forEach(citaId => {
+                        const span = document.querySelector(`.estado-cita[data-id="${citaId}"]`);
+                        if (span) {
+                            // Actualizar el estado a "expirada"
+                            span.innerHTML = `
+                                <div class="cursor-not-allowed pl-5 pt-5">
+                                    <div class="flex h-10 w-32 items-center rounded-full bg-slate-200 p-4 shadow-md">
+                                        <div class="mr-2 h-3 w-3 rounded-full bg-slate-400"></div>
+                                        <span class="text-slate-500">Expirada</span>
+                                    </div>
+                                    <div class="mt-4">
+                                        <a href="{{ route('valoraciones.create') }}" class="mt-2 bg-yellow-400 text-white font-bold py-2 px-4 rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Valorar</a>
+                                    </div>
+                                </div>`;
+                        }
+                    });
+                }
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
