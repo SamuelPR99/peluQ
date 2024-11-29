@@ -270,5 +270,6 @@ class PeluqueroController extends Controller
             ->get();
 
         return response()->json($citasPendientes);
+  
     }
 }

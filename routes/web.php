@@ -90,4 +90,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/valoraciones/create', [ValoracionController::class, 'create'])->name('valoraciones.create');
 });
 
+
 require __DIR__.'/auth.php';

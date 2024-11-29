@@ -65,4 +65,5 @@
     </div> <!--Lo mismo esto sobra nose-->
     @endif
     </div>
+    
 @endsection

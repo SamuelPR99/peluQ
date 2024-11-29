@@ -178,4 +178,5 @@
             setInterval(actualizarEstadosCitas, 5000); // Actualizar cada 5 segundos
         });
     </script>
+    
 @endsection
