@@ -207,7 +207,7 @@
             }, 5000); // Actualizar cada 5 segundos
 
             actualizarCitasPendientes();
-            setInterval(actualizarCitasPendientes, 5000); // Actualizar cada 5 segundos
+            setInterval(actualizarCitasPendientes, 30000); // Actualizar cada 5 segundos
         });
     </script>
 </div>

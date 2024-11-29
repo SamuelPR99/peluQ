@@ -82,6 +82,7 @@
                             <h3 class="text-lg font-bold" style="color: #38b2ac !important;">${empresa.nombre_empresa}</h3>
                             <p class="text-white">${empresa.direccion}</p>
                             <p class="text-white">${empresa.telefono}</p>
+                            <p class="text-white">4,2&#9733 (67)</p>
                         </div>
                     `)
                     .on('click', function() {

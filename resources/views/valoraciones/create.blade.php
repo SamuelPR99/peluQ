@@ -82,6 +82,7 @@
     @keyframes bounce {
         0%, 100% {
             transform: translateY(0);
+            color: gold;
         }
         50% {
             transform: translateY(-10px);
