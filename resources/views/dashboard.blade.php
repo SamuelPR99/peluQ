@@ -34,7 +34,7 @@
                 window.location.href = '{{ route('citas.create') }}';
             }, 1000); // Espera 1 segundo antes de redirigir
         }
-
+ 
         function getEstadoHtml(estado, isSmallScreen) {
             let estadoHtml = '';
             switch (estado) {
@@ -111,7 +111,7 @@
             }
             return estadoHtml;
         }
-
+ 
         function actualizarEstadosCitas() {
             // Cambiar la ruta a la correcta para obtener citas expiradas
             fetch('/api/peluqueros/citas-expiradas', {
@@ -141,7 +141,7 @@
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });
-
+ 
             // Actualizar el estado de cada cita
             document.querySelectorAll('.estado-cita').forEach(span => {
                 const citaId = span.getAttribute('data-id');
@@ -167,12 +167,12 @@
                 });
             });
         }
-
+ 
         function showCancelModal(citaId) {
             const modal = document.getElementById(`cancelModal-${citaId}`);
             modal.style.display = 'block';
         }
-
+ 
         document.addEventListener('DOMContentLoaded', function() {
             actualizarEstadosCitas();
             setInterval(actualizarEstadosCitas, 5000); // Actualizar cada 5 segundos

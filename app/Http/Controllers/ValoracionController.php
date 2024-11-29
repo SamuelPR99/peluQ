@@ -34,15 +34,15 @@ class ValoracionController extends Controller
         // store() es el método que se encarga de guardar la nueva valoración en la base de datos
         $request->validate([
             'puntuacion' => 'required',
-            'comentario' => 'required',
-            'peluquero_id' => 'required',
-            'usuario_id' => 'required',
+            'cuerpo_valoracion' => 'required',
+            'user_id' => 'required',
+            'empresa_id' => 'required',
             'cita_id' => 'required',
         ]);
 
         Valoracion::create($request->all());
 
-        return redirect()->route('valoraciones.index');
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -71,15 +71,15 @@ class ValoracionController extends Controller
         // update() es el método que se encarga de actualizar una valoración en la base de datos
         $request->validate([
             'puntuacion' => 'required',
-            'comentario' => 'required',
-            'peluquero_id' => 'required',
-            'usuario_id' => 'required',
+            'cuerpo_valoracion' => 'required',
+            'empresa_id' => 'required',
+            'user_id' => 'required',
             'cita_id' => 'required',
         ]);
 
         $valoracion->update($request->all());
 
-        return redirect()->route('valoraciones.index');
+        return redirect()->route('dashboard');
     }
 
     /**
