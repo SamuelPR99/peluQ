@@ -144,15 +144,15 @@
                                     </div>
                                 </div>`;
                             break;
-                        case 'expirada':
+                            case 'expirada':
                             estadoHtml = isSmallScreen ?
                                 `<div class="cursor-not-allowed pl-5 pt-5">
                                     <div class="flex h-12 w-12 items-center rounded-full bg-slate-200 p-4 shadow-md">
                                         <div class="h-4 w-4 rounded-full bg-slate-400"></div>
                                     </div>
                                 </div>
-                                <div>
-                                    <button class="mt-24 ml-10 bg-yellow-400 text-black font-bold py-2 px-4 rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Valorar</button>
+                                <div class="mt-4">
+                                    <a href="{{ route('valoraciones.create') }}" class="mt-24 ml-10 bg-yellow-400 text-black font-bold py-2 px-4 rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Valorar</a>
                                 </div>` :
                                 `<div class="cursor-not-allowed pl-5 pt-5">
                                     <div class="flex h-10 w-32 items-center rounded-full bg-slate-200 p-4 shadow-md">
@@ -160,8 +160,8 @@
                                         <span class="text-slate-500">Expirada</span>
                                     </div>
                                 </div>
-                                <div>
-                                    <button class="mt-24 ml-10 bg-yellow-400 text-black font-bold py-2 px-4 rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Valorar</button>
+                                <div class="mt-4">
+                                    <a href="{{ route('valoraciones.create') }}" class="mt-24 ml-10 bg-yellow-400 text-black font-bold py-2 px-4 rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Valorar</a>
                                 </div>`;
                             break;
                     }

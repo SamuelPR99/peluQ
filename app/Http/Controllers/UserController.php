@@ -102,7 +102,7 @@ class UserController extends Controller
         // Obtener citas expiradas y actualizarlas
         $citasExpiradas = Cita::where('user_id', Auth::id())
             ->where(function ($query) {
-                $query->where('fecha_cita', '<', now())
+                $query->where('fecha_cita', '<', now()->format('Y-m-d'))
                       ->orWhere(function ($query) {
                           $query->where('fecha_cita', now()->format('Y-m-d'))
                                 ->where('hora_cita', '<', now()->format('H:i:s'));
