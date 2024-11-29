@@ -15,6 +15,7 @@ use App\Http\Controllers\ServiciosController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CitaCreada;
 use App\Models\Cita;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
@@ -84,7 +85,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/citas/{cita}/confirmacita', [CitaController::class, 'botonConfirmar'])->name('citas.botonConfirmar');
     Route::post('/citas/{cita}/anulacita', [CitaController::class, 'botonAnular'])->name('citas.botonAnular');
     Route::get('/api/peluqueros/citas-pendientes', [PeluqueroController::class, 'getCitasPendientesAjax']);
-    
+    Route::get('/api/peluqueros/citas-expiradas', [UserController::class, 'getAndUpdateCitasExpiradasAjax']);
+
+    Route::get('/valoraciones/create', [ValoracionController::class, 'create'])->name('valoraciones.create');
 });
 
 require __DIR__.'/auth.php';
