@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->text('cuerpo_valoracion');
             $table->integer('puntuacion');
             $table->foreignId('empresa_id')->constrained()->onDelete('cascade');
+            $table->foreignId('cita_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
