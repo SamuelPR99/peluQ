@@ -142,6 +142,10 @@
                 .catch(error => console.error('Error al actualizar citas pendientes:', error));
         }
 
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        }
+
         document.getElementById('mostrar-citas').addEventListener('click', function() {  //esto casca por el block
             const citasPendientesDiv = document.getElementById('citas-pendientes');
             if (citasPendientesDiv.style.display === 'none') {

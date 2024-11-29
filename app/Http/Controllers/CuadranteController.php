@@ -82,33 +82,6 @@ class CuadranteController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cuadrante $cuadrante)
-    {
-        // edit() es el método que muestra el formulario de edición de un cuadrante en particular
-        return view('cuadrantes.edit', compact('cuadrante'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Cuadrante $cuadrante)
-    {
-        // update() es el método que se encarga de actualizar un cuadrante en la base de datos
-        $request->validate([
-            'fecha' => 'required',
-            'hora' => 'required',
-            'peluquero_id' => 'required',
-            'servicio_id' => 'required',
-        ]);
-
-        $cuadrante->update($request->all());
-
-        return redirect()->route('cuadrantes.index');
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Cuadrante $cuadrante)
@@ -117,11 +90,6 @@ class CuadranteController extends Controller
         $cuadrante->delete();
 
         return redirect()->route('cuadrantes.index');
-    }
-
-    public function calendario()
-    {
-        return view('calendario');
     }
 
     public function getCuadrantes()

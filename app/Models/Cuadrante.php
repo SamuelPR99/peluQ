@@ -15,7 +15,6 @@ class Cuadrante extends Model
         'fecha',
         'hora_entrada',
         'hora_salida',
-        'servicio_id',
     ];
 
     public function peluquero()
@@ -23,8 +22,4 @@ class Cuadrante extends Model
         return $this->belongsTo(Peluquero::class);
     }
 
-    public function servicio()
-    {
-        return $this->belongsTo(Servicio::class);
-    }
 }
