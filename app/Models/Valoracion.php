@@ -16,6 +16,7 @@ class Valoracion extends Model
         'cuerpo_valoracion',
         'puntuacion',
         'empresa_id',
+        'cita_id',
     ];
 
     public function user()
@@ -26,5 +27,10 @@ class Valoracion extends Model
     public function empresa()
     {
         return $this->belongsTo(Empresa::class);
+    }
+
+    public function cita()
+    {
+        return $this->belongsTo(Cita::class);
     }
 }

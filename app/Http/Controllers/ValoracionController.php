@@ -37,6 +37,7 @@ class ValoracionController extends Controller
             'comentario' => 'required',
             'peluquero_id' => 'required',
             'usuario_id' => 'required',
+            'cita_id' => 'required',
         ]);
 
         Valoracion::create($request->all());
@@ -73,6 +74,7 @@ class ValoracionController extends Controller
             'comentario' => 'required',
             'peluquero_id' => 'required',
             'usuario_id' => 'required',
+            'cita_id' => 'required',
         ]);
 
         $valoracion->update($request->all());
