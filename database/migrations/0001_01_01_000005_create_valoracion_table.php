@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('cuerpo_valoracion');
             $table->integer('puntuacion');
-            $table->foreignId('empresa_id')->constrained()->onDelete('cascade');
+            $table->foreignId('empresa_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('cita_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

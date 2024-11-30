@@ -36,7 +36,7 @@ class ValoracionController extends Controller
             'puntuacion' => 'required',
             'cuerpo_valoracion' => 'required',
             'user_id' => 'required',
-            'empresa_id' => 'required',
+            'empresa_id' => 'nullable',
             'cita_id' => 'required',
         ]);
 
@@ -72,7 +72,7 @@ class ValoracionController extends Controller
         $request->validate([
             'puntuacion' => 'required',
             'cuerpo_valoracion' => 'required',
-            'empresa_id' => 'required',
+            'empresa_id' => 'nullable',
             'user_id' => 'required',
             'cita_id' => 'required',
         ]);
