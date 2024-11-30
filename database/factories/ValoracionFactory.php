@@ -15,7 +15,7 @@ class ValoracionFactory extends Factory
             'user_id' => \App\Models\User::factory(),
             'cuerpo_valoracion' => $this->faker->paragraph,
             'puntuacion' => $this->faker->numberBetween(1, 5),
-            'empresa_id' => \App\Models\Empresa::factory()->nullable(),
+            'empresa_id' => \App\Models\Empresa::factory(),
             'cita_id' => \App\Models\Cita::factory(),
         ];
     }
