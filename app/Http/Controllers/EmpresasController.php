@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use App\Providers\AuthServiceProvider;
+
 class EmpresasController extends Controller
 {
     use AuthorizesRequests;
@@ -115,19 +116,11 @@ class EmpresasController extends Controller
             'servicios' => 'required|array',
             'servicios.*.servicio' => 'required|string',
             'servicios.*.precio' => 'required|numeric',
-        ], [
-            'nombre_empresa.required' => 'Nombre de empresa obligatorio.',
-            'email.required' => 'El correo electrónico es obligatorio.',
-            'telefono.digits' => 'El teléfono debe tener 9 dígitos.',
-            'telefono.required' => 'Debe introducir un número de teléfono.',
-            'direccion.required' => 'Debe seleccionar una peluquería/barbería.',
-            'servicios.required' => 'Debe proporcionar al menos un servicio.',
-            'servicios.*.servicio.required' => 'El nombre del servicio es obligatorio.',
-            'servicios.*.precio.required' => 'El precio del servicio es obligatorio.',
         ]);
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
 
+        // Actualizar información principal de la empresa
         $empresa->update([
             'nombre_empresa' => $request->nombre_empresa,
             'email' => $request->email,
@@ -139,32 +132,42 @@ class EmpresasController extends Controller
             'tipo_empresa' => $request->tipo_empresa,
         ]);
 
-        // Actualizar servicios sin eliminar las citas
-        $existingServicios = $empresa->servicios->keyBy('id');
-        $newServicios = collect($request->servicios)->keyBy('id');
+        // Manejar servicios
+        $existingServicios = $empresa->servicios->keyBy('id'); // Servicios existentes
+        $inputServicios = collect($request->servicios);
 
-        // Actualizar o crear servicios
-        foreach ($newServicios as $id => $servicio) {
-            if ($existingServicios->has($id)) {
-                $existingServicio = $existingServicios[$id];
-                if ($existingServicio->servicio !== $servicio['servicio'] || $existingServicio->precio !== $servicio['precio']) {
-                    $existingServicio->update($servicio);
-                }
+        // Procesar servicios
+        $processedIds = [];
+
+        foreach ($inputServicios as $inputServicio) {
+            if (!empty($inputServicio['id']) && $existingServicios->has($inputServicio['id'])) {
+                // Actualizar servicio existente
+                $servicio = $existingServicios[$inputServicio['id']];
+                $servicio->update([
+                    'servicio' => $inputServicio['servicio'],
+                    'precio' => $inputServicio['precio'],
+                ]);
+                $processedIds[] = $servicio->id;
             } else {
-                $empresa->servicios()->create($servicio);
+                // Crear nuevo servicio
+                $newServicio = $empresa->servicios()->create([
+                    'servicio' => $inputServicio['servicio'],
+                    'precio' => $inputServicio['precio'],
+                ]);
+                $processedIds[] = $newServicio->id;
             }
         }
 
-        // Eliminar servicios que no están en la lista nueva y no tienen citas asociadas
-        $toDelete = $existingServicios->keys()->diff($newServicios->keys());
+        // Eliminar servicios no procesados que no tengan citas asociadas
+        $toDelete = $existingServicios->keys()->diff($processedIds);
         foreach ($toDelete as $id) {
             $servicio = $existingServicios[$id];
-            if ($servicio->canBeDeleted()) {
+            if ($servicio->canBeDeleted() && !$servicio->citas()->exists()) {
                 $servicio->delete();
             }
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('success', 'Empresa actualizada correctamente.');
     }
 
     public function destroy(Empresa $empresa)
@@ -178,7 +181,7 @@ class EmpresasController extends Controller
 
         $empresa->delete();
         User::where('id', Auth::id())->update(['user_type' => 'user']);
-        
+
         return redirect()->route('dashboard');
     }
 }
