@@ -58,4 +58,14 @@ class ServiciosController extends Controller
     {
         return response()->json($empresa->servicios);
     }
+
+    public function confirmarEliminacion(Servicio $servicio)
+    {
+        if ($servicio->canBeDeleted()) {
+            $servicio->delete();
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'No se puede eliminar el servicio porque tiene citas confirmadas.']);
+        }
+    }
 }

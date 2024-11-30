@@ -120,7 +120,6 @@ class EmpresasController extends Controller
 
         $coordenadas = $this->geocodingService->getCoordinatesFromAddress($request->direccion . ', ' . $request->codigo_postal);
 
-        // Actualizar información principal de la empresa
         $empresa->update([
             'nombre_empresa' => $request->nombre_empresa,
             'email' => $request->email,
@@ -132,24 +131,20 @@ class EmpresasController extends Controller
             'tipo_empresa' => $request->tipo_empresa,
         ]);
 
-        // Manejar servicios
-        $existingServicios = $empresa->servicios->keyBy('id'); // Servicios existentes
+        $existingServicios = $empresa->servicios->keyBy('id');
         $inputServicios = collect($request->servicios);
-
-        // Procesar servicios
         $processedIds = [];
 
         foreach ($inputServicios as $inputServicio) {
             if (!empty($inputServicio['id']) && $existingServicios->has($inputServicio['id'])) {
-                // Actualizar servicio existente
                 $servicio = $existingServicios[$inputServicio['id']];
                 $servicio->update([
                     'servicio' => $inputServicio['servicio'],
                     'precio' => $inputServicio['precio'],
                 ]);
+                $servicio->citas()->update(['servicio_id' => $servicio->id]);
                 $processedIds[] = $servicio->id;
             } else {
-                // Crear nuevo servicio
                 $newServicio = $empresa->servicios()->create([
                     'servicio' => $inputServicio['servicio'],
                     'precio' => $inputServicio['precio'],
@@ -158,12 +153,13 @@ class EmpresasController extends Controller
             }
         }
 
-        // Eliminar servicios no procesados que no tengan citas asociadas
         $toDelete = $existingServicios->keys()->diff($processedIds);
         foreach ($toDelete as $id) {
             $servicio = $existingServicios[$id];
-            if ($servicio->canBeDeleted() && !$servicio->citas()->exists()) {
+            if ($servicio->canBeDeleted()) {
                 $servicio->delete();
+            } else {
+                return response()->json(['message' => 'No se puede eliminar el servicio porque tiene citas confirmadas.'], 400);
             }
         }
 

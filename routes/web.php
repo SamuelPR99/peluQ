@@ -86,6 +86,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/citas/{cita}/anulacita', [CitaController::class, 'botonAnular'])->name('citas.botonAnular');
     Route::get('/api/peluqueros/citas-pendientes', [PeluqueroController::class, 'getCitasPendientesAjax']);
     Route::get('/api/peluqueros/citas-expiradas', [UserController::class, 'getAndUpdateCitasExpiradasAjax']);
+    Route::delete('/servicios/{servicio}/confirmar-eliminacion', [ServiciosController::class, 'confirmarEliminacion'])->name('servicios.confirmarEliminacion');
 
     Route::get('/valoraciones/create', [ValoracionController::class, 'create'])->name('valoraciones.create');
 });
