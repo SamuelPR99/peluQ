@@ -18,7 +18,7 @@ peluQ es una aplicación web para la gestión de peluquerías, desarrollada con 
 
 ## Aprender peluQ
 
-La documentación de peluQ está en desarrollo. Mientras tanto, puedes consultar el [Consulta el PDF de la documentación](/PeluQ_Documentacion.pdf) para entender mejor el framework subyacente.
+La documentación de peluQ está en desarrollo. Mientras tanto, puedes consultar la [Documentación de PeluQ](/PeluQ_Documentacion.pdf) para entender mejor el framework subyacente.
 
 ## Contribuir
 
