@@ -32,6 +32,14 @@
         </li>
         @endforeach
     </ul>
+        @php
+            $todasExpiradas = $user->citas->every(function($cita) {
+                return $cita->estado_cita === 'expirada';
+            });
+        @endphp
+        @if($todasExpiradas)
+            <a href="{{ route('citas.create') }}" class="inline-block px-4 py-2 mt-2 bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150" onclick="showLoadingScreen()">{{ __('Pedir nueva cita') }}</a>
+        @endif
     @endif
 </div>
 <script>
