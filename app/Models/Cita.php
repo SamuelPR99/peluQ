@@ -35,6 +35,12 @@ class Cita extends Model
         return $this->belongsTo(Empresa::class);
     }
 
+    public function valoraciones()
+    {
+        return $this->belongsTo(Valoracion::class);
+    }
+
+
     public function servicio()
     {
         return $this->belongsTo(Servicio::class);

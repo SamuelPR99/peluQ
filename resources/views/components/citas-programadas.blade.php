@@ -21,6 +21,9 @@
                         <li><strong>{{ __('Observaciones:') }}</strong> {{ $cita->observaciones }}</li>
                     @endif
                 </ul>
+                @if($cita->estado_cita == 'expirada')
+                    <a href="{{ route('valoraciones.create', ['citaId' => $cita->id]) }}" class="mt-2 inline-block px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">{{ __('Valorar') }}</a>
+                @endif
                 <form id="cancelCitaForm-{{ $cita->id }}" action="{{ route('citas.destroy', $cita->id) }}" method="POST" class="inline-block mt-2">
                     @csrf
                     @method('DELETE')

@@ -87,7 +87,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/peluqueros/citas-pendientes', [PeluqueroController::class, 'getCitasPendientesAjax']);
     Route::get('/api/peluqueros/citas-expiradas', [UserController::class, 'getAndUpdateCitasExpiradasAjax']);
 
-    Route::get('/valoraciones/create', [ValoracionController::class, 'create'])->name('valoraciones.create');
+    
+    Route::get('/valoraciones/create/{citaId}', [ValoracionController::class, 'create'])->name('valoraciones.create');
+    
+    Route::post('/valoraciones/store/{citaId}', [ValoracionController::class, 'store'])->name('valoraciones.store');
+
 });
 
 

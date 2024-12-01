@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cita;
 use App\Models\Valoracion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Log;
 
 class ValoracionController extends Controller
 {
@@ -20,29 +24,46 @@ class ValoracionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($citaId)
     {
         // create() es el método que muestra el formulario de creación de una nueva valoración
-        return view('valoraciones.create');
+        return view('valoraciones.create', compact('citaId')); 
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $citaId)
     {
-        // store() es el método que se encarga de guardar la nueva valoración en la base de datos
-        $request->validate([
-            'puntuacion' => 'required',
-            'cuerpo_valoracion' => 'required',
-            'user_id' => 'required',
-            'empresa_id' => 'required',
-            'cita_id' => 'required',
-        ]);
 
-        Valoracion::create($request->all());
+        try {
+            // Registrar un mensaje informativo
+            Log::info('Entro en storage ');
+            
+            Log::info('Varible request: ', ['request' => $request]);
+    
+            /*$request->validate([
+                'cuerpo_valoracion' => 'required|string|max:255',
+                'puntuacion' => 'required|integer|between:1,5',
+                'cita_id' => 'required|exists:citas,id',
+            ]);*/
 
-        return redirect()->route('dashboard');
+            Log::info(message: 'Paso la validacion');
+    
+            Valoracion::create([
+                'cuerpo_valoracion' => $request->cuerpo_valoracion,
+                'puntuacion' => $request->puntuacion,
+                //'empresa_id' => '101',
+                'user_id' => Auth::id(),
+                'cita_id' => $citaId,
+            ]);
+
+            return redirect()->route('valoraciones.index')->with('success', 'Valoración guardada correctamente.');
+
+        } catch (\Exception $e) {
+            Log::error('Error al crear la valoracion:', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return redirect()->back()->withErrors('Error al crear la valoracion. Por favor, inténtelo de nuevo.');
+        }
     }
 
     /**
@@ -75,11 +96,13 @@ class ValoracionController extends Controller
             'empresa_id' => 'required',
             'user_id' => 'required',
             'cita_id' => 'required',
+        ], [
+            'cuerpo_valoracion.required' => 'Campo obligatorio.',
         ]);
 
         $valoracion->update($request->all());
 
-        return redirect()->route('dashboard');
+        return redirect()->route('valoraciones.create');
     }
 
     /**

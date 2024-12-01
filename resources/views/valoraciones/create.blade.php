@@ -3,12 +3,24 @@
 @section('content')
 <div class="container mx-auto px-4 py-8 w-2/5">
     <h1 class="text-3xl font-semibold text-center text-white bg-gray-800 rounded-md py-4 shadow-lg">¡Valora tu experiencia!</h1>
-    <form action="{{ route('valoraciones.store') }}" method="POST" class="bg-gray-700 shadow-md rounded-lg items-center px-8 pt-6 pb-8 mb-4 mt-6">
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+
+    <form action="{{ route('valoraciones.store', ['citaId' => $citaId]) }}" method="POST" class="bg-gray-700 shadow-md rounded-lg items-center px-8 pt-6 pb-8 mb-4 mt-6">
         @csrf
         <!-- Campos del formulario -->
         <div class="mb-4">
-            <label for="comentario" class="block text-white text-sm font-bold mb-2">Comentario</label>
-            <textarea name="comentario" id="comentario" rows="4" class="border rounded-lg w-full bg-gray-600 py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600" required></textarea>
+            <label for="cuerpo_valoracion" class="block text-white text-sm font-bold mb-2">Comentario</label>
+            <textarea name="cuerpo_valoracion" id="cuerpo_valoracion" rows="4" class="border rounded-lg w-full bg-gray-600 py-2 px-3 text-white leading-tight focus:outline-none focus:ring-2 hover:border-teal-600 hover:ring-teal-600 focus:border-teal-600 focus:ring-teal-600" required></textarea>
         </div>
         
         <div class="mb-4">
@@ -30,7 +42,7 @@
                 <label for="star5" class="cursor-pointer text-gray-400 text-3xl hover:scale-110 transition-transform duration-200" data-index="5">&#9733;</label>
             </div>
         </div>
-
+        
         <button type="submit" class="block mx-auto w-1/2 bg-white hover:text-white hover:bg-gradient-to-r from-teal-600 to-lime-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">Enviar Valoración</button>
     </form>
 </div>
