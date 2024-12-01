@@ -42,7 +42,6 @@ class ValoracionController extends Controller
             $request->validate([
                 'cuerpo_valoracion' => 'required|string|max:255',
                 'puntuacion' => 'required|integer|between:1,5',
-                'cita_id' => 'required|exists:citas,id',
             ]);
     
             Valoracion::create([
