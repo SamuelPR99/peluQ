@@ -37,9 +37,8 @@ class Cita extends Model
 
     public function valoraciones()
     {
-        return $this->belongsTo(Valoracion::class);
+        return $this->hasMany(Valoracion::class);
     }
-
 
     public function servicio()
     {

@@ -103,8 +103,8 @@ class ValoracionController extends Controller
      */
     public function destroy(Valoracion $valoracion)
     {
-        // destroy() es el método que se encarga de eliminar una valoración de la base de datos
         $valoracion->delete();
-        return redirect()->route('valoraciones.index');
+
+        return redirect()->route('dashboard');
     }
 }

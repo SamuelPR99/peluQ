@@ -33,7 +33,6 @@ Route::get('/Contacto', function () {
     return view('Contacto'); 
 });
 
-Route::resource('valoraciones', ValoracionController::class);
 
 Route::resource('users', UserController::class);
 
@@ -61,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('empresas', EmpresasController::class);
     Route::resource('cuadrantes', CuadranteController::class);
     Route::resource('citas', CitaController::class);
+    Route::resource('valoraciones', ValoracionController::class);
     Route::delete('/citas/{cita}', [CitaController::class, 'destroy'])->name('citas.destroy');
     Route::get('/empresas/{empresa}/peluqueros', [PeluqueroController::class, 'index'])->name('empresas.peluqueros.index');
     Route::get('/empresas/{empresa}/peluqueros/create', [PeluqueroController::class, 'create'])->name('peluqueros.create');
@@ -90,6 +90,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/valoraciones/create/{citaId}', [ValoracionController::class, 'create'])->name('valoraciones.create');
     Route::post('/valoraciones/store/{citaId}', [ValoracionController::class, 'store'])->name('valoraciones.store');
+    Route::delete('/valoraciones/destruir/{valoracion}', [ValoracionController::class, 'destroy'])->name('valoraciones.destroy');
 });
 
 require __DIR__.'/auth.php';
