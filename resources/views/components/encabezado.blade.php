@@ -8,7 +8,7 @@
                 @if (Auth::check())
                 <li>
                     <button onclick="window.location='{{ url('/dashboard')}}'" class="hover:text-teal-600 hover:animate-pulse hover:-translate-y-1 transition ease-in-out duration-150">
-                        {{ Auth::user()->name }}
+                        {{ Auth::user()->username }}
                     </button>
                 </li>
                 @endif
@@ -21,7 +21,7 @@
                 @if (Auth::check())
                 <li>
                     <form action="{{ route('logout') }}" method="POST">
-                        @csrf {{-- el csrf es para evitar ataques de tipo csrf --}}
+                        @csrf 
                         <button type="submit" class="hover:text-red-600 hover:scale-110 hover:animate-pulse">
                             <i class="fas fa-sign-out-alt"></i>
                         </button>
@@ -32,15 +32,3 @@
         </nav>
     </div>
 </header>
-
-{{--Aunque aqui ponga cuerpo pagina es el header el cual se usara en nuestra app, si alguien quiere modificarlo, por favor que deje un comentario explicando la modificación,seguida de 
-la fecha de la misma, y una copia comentada del código antes de la modificación, haciendo una suerte de backup. La forma de de declarar el componente es <x-cuerpo-pagina/>--}}
-
-{{-- 09/11/2024 Samu - Se ha añadido un condicional para mostrar el nombre del usuario autenticado en el menú de navegación. --}}
-{{-- 09/11/2024 Samu - Se ha añadido un condicional para mostrar el enlace de inicio de sesión solo si el usuario no está autenticado. --}}
-{{-- 09/11/2024 Samu - Se ha añadido un botón de cerrar sesión para los usuarios autenticados. --}}
-{{-- 11/11/2024 Enrique - Se ha modificado los <a> para en su lugar poner <button> y que se apliquen los estilos y se ha añadido [hover:animate-pulse]. --}}
-{{-- 11/11/2024 Hugo - Se ha añadido JavaScript en los botones del header para que al clicarlos se redireccione a la página correspondiente --}}
-{{-- 11/11/2024 Hugo - Se han creado rutas para las páginas de "Sobre nosotros", "Servicios" y "Contacto" --}}
-{{-- 14/11/2024 Samu - Se ha añadido un enlace al nombre del usuario autenticado para redirigir al dashboard --}}
-{{-- 17/11/2024 Samu - he añadio que el cerrar sesion salga ultimo y que sea un icono --}}
