@@ -163,12 +163,32 @@
             .then(data => {
                 const isSmallScreen = window.matchMedia('(max-width: 640px)').matches;
                 span.innerHTML = getEstadoHtml(data.estado_cita, isSmallScreen, citaId);
-                if (data.estado_cita === 'expirada' && !span.parentElement.querySelector('.valoracion-button')) {
-                    const valoracionButton = document.createElement('a');
-                    valoracionButton.href = `/valoraciones/create/${citaId}`;
-                    valoracionButton.className = 'valoracion-button mt-2 inline-block px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75';
-                    valoracionButton.innerText = '{{ __('Valorar') }}';
-                    span.parentElement.appendChild(valoracionButton);
+                if (data.estado_cita === 'expirada' && !span.parentElement.querySelector('.valoracion-button') && !span.parentElement.querySelector('.valoracion-text')) {
+                    fetch(`/valoraciones/check/${citaId}`, { // Verificar si ya existe una valoración
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(valoracionData => {
+                        if (!valoracionData.tiene_valoracion) {
+                            const valoracionButton = document.createElement('a');
+                            valoracionButton.href = `/valoraciones/create/${citaId}`;
+                            valoracionButton.className = 'valoracion-button mt-2 inline-block px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75';
+                            valoracionButton.innerText = '{{ __('Deja tu valoración') }}';
+                            span.parentElement.appendChild(valoracionButton);
+                        } else {
+                            const valoracionText = document.createElement('p');
+                            valoracionText.className = 'valoracion-text mt-2 text-gray-400';
+                            valoracionText.innerText = '{{ __('Ya has dejado una valoración para esta cita.') }}';
+                            span.parentElement.appendChild(valoracionText);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
                 }
             })
             .catch(error => {

@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/valoraciones/create/{citaId}', [ValoracionController::class, 'create'])->name('valoraciones.create');
     Route::post('/valoraciones/store/{citaId}', [ValoracionController::class, 'store'])->name('valoraciones.store');
     Route::delete('/valoraciones/destruir/{valoracion}', [ValoracionController::class, 'destroy'])->name('valoraciones.destroy');
+    Route::get('/valoraciones/check/{citaId}', [ValoracionController::class, 'checkValoracion'])->name('valoraciones.check');
 });
 
 require __DIR__.'/auth.php';

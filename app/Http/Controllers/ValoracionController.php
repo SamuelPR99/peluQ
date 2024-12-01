@@ -107,4 +107,10 @@ class ValoracionController extends Controller
 
         return redirect()->route('dashboard');
     }
+
+    public function checkValoracion($citaId)
+    {
+        $tiene_valoracion = Valoracion::where('cita_id', $citaId)->exists();
+        return response()->json(['tiene_valoracion' => $tiene_valoracion]);
+    }
 }
