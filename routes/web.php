@@ -88,12 +88,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/peluqueros/citas-expiradas', [UserController::class, 'getAndUpdateCitasExpiradasAjax']);
     Route::delete('/servicios/{servicio}/confirmar-eliminacion', [ServiciosController::class, 'confirmarEliminacion'])->name('servicios.confirmarEliminacion');
 
-    
     Route::get('/valoraciones/create/{citaId}', [ValoracionController::class, 'create'])->name('valoraciones.create');
-    
     Route::post('/valoraciones/store/{citaId}', [ValoracionController::class, 'store'])->name('valoraciones.store');
-
 });
-
 
 require __DIR__.'/auth.php';

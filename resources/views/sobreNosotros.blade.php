@@ -31,6 +31,7 @@
                 constantemente trabajando para mejorar nuestra plataforma y ofrecerte más funcionalidades 
                 que se adapten a tus necesidades.
             </p>
+            @guest
             <p class="text-lg text-white text-center mb-6">
                 ¡Únete a la comunidad de PeluQ hoy mismo y transforma tu experiencia de cuidado personal!
             </p>
@@ -39,6 +40,7 @@
                     Regístrate Ahora
                 </button>
             </div>
+            @endguest
         </div>
     </section>
 @endsection

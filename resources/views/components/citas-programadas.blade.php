@@ -21,9 +21,7 @@
                         <li><strong>{{ __('Observaciones:') }}</strong> {{ $cita->observaciones }}</li>
                     @endif
                 </ul>
-                @if($cita->estado_cita == 'expirada')
-                    <a href="{{ route('valoraciones.create', ['citaId' => $cita->id]) }}" class="mt-2 inline-block px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">{{ __('Valorar') }}</a>
-                @endif
+                
                 <form id="cancelCitaForm-{{ $cita->id }}" action="{{ route('citas.destroy', $cita->id) }}" method="POST" class="inline-block mt-2">
                     @csrf
                     @method('DELETE')
@@ -36,3 +34,143 @@
     </ul>
     @endif
 </div>
+<script>
+    function getEstadoHtml(estado, isSmallScreen, citaId) {
+        let estadoHtml = '';
+        switch (estado) {
+            case 'confirmada':
+                estadoHtml = isSmallScreen ?
+                    `<div class="pl-5 pt-5">
+                        <div class="flex h-12 w-12 items-center rounded-full bg-green-200 p-4 shadow-md">
+                            <div class="h-4 w-4 rounded-full bg-green-500">
+                                <div class="h-4 w-4 animate-ping rounded-full bg-green-500"></div>
+                            </div>
+                        </div>
+                    </div>` :
+                    `<div class="pl-5 pt-5">
+                        <div class="flex h-10 w-32 items-center rounded-full bg-green-200 p-4 shadow-md">
+                            <div class="mr-2 h-3 w-3 rounded-full bg-green-500">
+                                <div class="mr-2 h-3 w-3 animate-ping rounded-full bg-green-500"></div>
+                            </div>
+                            <span class="text-green-700">Aceptada</span>
+                        </div>
+                    </div>`;
+                break;
+            case 'anulada':
+                estadoHtml = isSmallScreen ?
+                    `<div class="pl-5 pt-5">
+                        <div class="flex h-12 w-12 items-center rounded-full bg-red-200 p-4 shadow-md">
+                            <div class="h-4 w-4 rounded-full bg-red-500">
+                                <div class="h-4 w-4 animate-ping rounded-full bg-red-500"></div>
+                            </div>
+                        </div>
+                    </div>` :
+                    `<div class="pl-5 pt-5">
+                        <div class="flex h-10 w-32 items-center rounded-full bg-red-200 p-4 shadow-md">
+                            <div class="mr-2 h-3 w-3 rounded-full bg-red-500">
+                                <div class="mr-2 h-3 w-3 animate-ping rounded-full bg-red-500"></div>
+                            </div>
+                            <span class="text-red-700">Cancelada</span>
+                        </div>
+                    </div>`;
+                break;
+            case 'pendiente':
+                estadoHtml = isSmallScreen ?
+                    `<div class="pl-5 pt-5">
+                        <div class="flex h-12 w-12 items-center rounded-full bg-yellow-200 p-4 shadow-md">
+                            <div class="h-4 w-4 animate-pulse rounded-full bg-yellow-500"></div>
+                        </div>
+                    </div>` :
+                    `<div class="pl-5 pt-5">
+                        <div class="flex h-10 w-32 items-center rounded-full bg-yellow-200 p-4 shadow-md">
+                            <div class="mr-2 h-3 w-3 animate-pulse rounded-full bg-yellow-500"></div>
+                            <span class="text-yellow-700">Pendiente</span>
+                        </div>
+                    </div>`;
+                break;
+            case 'expirada':
+                estadoHtml = isSmallScreen ?
+                    `<div class="cursor-not-allowed pl-5 pt-5">
+                        <div class="flex h-12 w-12 items-center rounded-full bg-slate-200 p-4 shadow-md">
+                            <div class="h-4 w-4 rounded-full bg-slate-400"></div>
+                        </div>
+                    </div>` :
+                    `<div class="cursor-not-allowed pl-5 pt-5">
+                        <div class="flex h-10 w-32 items-center rounded-full bg-slate-200 p-4 shadow-md">
+                            <div class="mr-2 h-3 w-3 rounded-full bg-slate-400"></div>
+                            <span class="text-slate-500">Expirada</span>
+                        </div>
+                    </div>`;
+                break;
+        }
+        return estadoHtml;
+    }
+
+    function actualizarEstadosCitas() {
+        // Cambiar la ruta a la correcta para obtener citas expiradas
+        fetch('/api/peluqueros/citas-expiradas', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.citas_actualizadas) {
+                data.citas_actualizadas.forEach(citaId => {
+                    const span = document.querySelector(`.estado-cita[data-id="${citaId}"]`);
+                    if (span) {
+                        // Actualizar el estado a "expirada"
+                        span.innerHTML = getEstadoHtml('expirada', window.matchMedia('(max-width: 640px)').matches, citaId);
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+
+        // Actualizar el estado de cada cita
+        document.querySelectorAll('.estado-cita').forEach(span => {
+            const citaId = span.getAttribute('data-id');
+            fetch(`/citas/${citaId}/estado`, { // Actualizar la URL aquí
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const isSmallScreen = window.matchMedia('(max-width: 640px)').matches;
+                span.innerHTML = getEstadoHtml(data.estado_cita, isSmallScreen, citaId);
+                if (data.estado_cita === 'expirada' && !span.parentElement.querySelector('.valoracion-button')) {
+                    const valoracionButton = document.createElement('a');
+                    valoracionButton.href = `/valoraciones/create/${citaId}`;
+                    valoracionButton.className = 'valoracion-button mt-2 inline-block px-4 py-2 bg-yellow-400 text-black font-bold rounded hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75';
+                    valoracionButton.innerText = '{{ __('Valorar') }}';
+                    span.parentElement.appendChild(valoracionButton);
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        actualizarEstadosCitas();
+        setInterval(actualizarEstadosCitas, 5000); // Actualizar cada 5 segundos
+    });
+</script>
