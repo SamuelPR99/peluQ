@@ -38,22 +38,16 @@ class ValoracionController extends Controller
 
         try {
             // Registrar un mensaje informativo
-            Log::info('Entro en storage ');
-            
-            Log::info('Varible request: ', ['request' => $request]);
     
-            /*$request->validate([
+            $request->validate([
                 'cuerpo_valoracion' => 'required|string|max:255',
                 'puntuacion' => 'required|integer|between:1,5',
                 'cita_id' => 'required|exists:citas,id',
-            ]);*/
-
-            Log::info(message: 'Paso la validacion');
+            ]);
     
             Valoracion::create([
                 'cuerpo_valoracion' => $request->cuerpo_valoracion,
                 'puntuacion' => $request->puntuacion,
-                //'empresa_id' => '101',
                 'user_id' => Auth::id(),
                 'cita_id' => $citaId,
             ]);
@@ -93,7 +87,7 @@ class ValoracionController extends Controller
         $request->validate([
             'puntuacion' => 'required',
             'cuerpo_valoracion' => 'required',
-            'empresa_id' => 'required',
+            'empresa_id' => 'nullable',
             'user_id' => 'required',
             'cita_id' => 'required',
         ], [

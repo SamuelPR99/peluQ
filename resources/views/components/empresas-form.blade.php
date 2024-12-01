@@ -62,6 +62,7 @@
     <div id="servicios-container">
         @foreach ($empresa->servicios ?? [] as $index => $servicio)
             <div class="mb-3 flex space-x-2">
+                <input type="hidden" name="servicios[{{ $index }}][id]" value="{{ $servicio->id }}">
                 <div class="w-1/2">
                     <label for="servicio" class="block text-gray-300 text-sm">Servicio*</label>
                     <input type="text"
@@ -77,7 +78,7 @@
                         value="{{ $servicio->precio }}" requiteal>
                 </div>
                 <button type="button" class="bg-red-600 text-white font-bold py-2 px-4 rounded mt-6 h-10"
-                    onclick="removeServicio(this)">-</button>
+                    onclick="showConfirmDeleteModal({{ $servicio->id }})">-</button>
             </div>
         @endforeach
     </div>

@@ -27,6 +27,6 @@ class Servicio extends Model
 
     public function canBeDeleted()
     {
-        return $this->citas()->count() === 0;
+        return $this->citas()->where('estado_cita', 'confirmada')->count() === 0;
     }
 }

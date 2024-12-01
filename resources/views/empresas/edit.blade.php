@@ -17,6 +17,15 @@
             <p class="mt-4 text-gray-700">Actualizando empresa, por favor espera...</p>
         </div>
     </div>
+    <div id="confirmDeleteModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+            <p class="mt-4 text-gray-700">¿Estás seguro de que deseas eliminar este servicio? Esta acción también eliminará las citas asociadas.</p>
+            <div class="mt-4">
+                <button id="confirmDeleteButton" class="bg-red-600 text-white font-bold py-2 px-4 rounded">Eliminar</button>
+                <button onclick="closeConfirmDeleteModal()" class="bg-gray-600 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+            </div>
+        </div>
+    </div>
     <script>
         function showLoading() {
             document.getElementById('loadingModal').classList.remove('hidden');
@@ -109,5 +118,37 @@
         function removeServicio(button) {
             button.parentElement.remove();
         }
+
+        let servicioToDelete = null;
+
+        function showConfirmDeleteModal(servicioId) {
+            servicioToDelete = servicioId;
+            document.getElementById('confirmDeleteModal').classList.remove('hidden');
+        }
+
+        function closeConfirmDeleteModal() {
+            servicioToDelete = null;
+            document.getElementById('confirmDeleteModal').classList.add('hidden');
+        }
+
+        document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+            if (servicioToDelete) {
+                fetch(`/servicios/${servicioToDelete}/confirmar-eliminacion`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
     </script>
 @endsection
