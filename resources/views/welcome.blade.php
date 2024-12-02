@@ -95,7 +95,7 @@
                 768: {
                     slidesPerView: 3, // Tres comentarios visibles en pantallas aún más grandes
                 },
-                414: {
+                300: {
                     slidesPerView: 1, // Tres comentarios visibles en pantallas aún más grandes
                 },
             },
