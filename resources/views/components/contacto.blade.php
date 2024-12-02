@@ -21,7 +21,7 @@
 <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center flex z-50">
     <div class="bg-slate-100 p-6 rounded-lg shadow-lg max-w-lg w-full">
         <h2 class="text-2xl font-bold text-center mb-4">Contáctanos</h2>
-        <form action="#" method="POST">
+        <form action="{{ route('contact.send') }}" method="POST">
             @csrf
             <div class="mb-4">
                 <label for="name" class="block text-sm font-semibold mb-2">Nombre</label>

@@ -11,6 +11,7 @@ use App\Http\Controllers\CuadranteController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GeocodingController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ServiciosController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CitaCreada;
@@ -46,6 +47,8 @@ Route::get('/empresas/{empresa}/peluqueros/create', [PeluqueroController::class,
 Route::get('/api/geocode', [GeocodingController::class, 'getAddressFromCoordinates']);
 
 Route::get('/api/empresas/{empresa}/servicios', [ServiciosController::class, 'getServiciosByEmpresa']);
+
+Route::post('/contact', [ContactController::class, 'sendContactEmail'])->name('contact.send');
 
 // Esta ruta es para que el usuario pueda ver su perfil
 Route::get('/dashboard', function () {
