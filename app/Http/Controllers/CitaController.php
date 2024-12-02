@@ -88,7 +88,7 @@ class CitaController extends Controller
             // Enviar correo electrónico al peluquero para confirmar la cita
             Mail::to($cita->peluquero->user->email)->send(new CitaParaConfirmar($cita));
 
-            return redirect()->route('citas.show', $cita->id);
+            return redirect()->route('dashboard');
         } catch (\Exception $e) {
             Log::error('Error al crear la cita:', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             return redirect()->back()->withErrors('Error al crear la cita. Por favor, inténtelo de nuevo.');
