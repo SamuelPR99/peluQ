@@ -1,6 +1,6 @@
 <div>
     @foreach($valoraciones as $valoracion)
-        <div class="p-4 mb-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md">
+        <div class="p-4 mb-4 bg-gray-700 rounded-lg shadow-md">
             <h5 class="font-semibold">{{ $valoracion->cita->servicio->servicio }} {{ __('en ') }} {{ $valoracion->cita->empresa->nombre_empresa }} {{ __(' - Precio: ') }} {{ $valoracion->cita->servicio->precio }} {{ __('€') }}</h5>
             <p>{{ __('Peluquero: ') }} {{ $valoracion->cita->peluquero->user->name }} {{ $valoracion->cita->peluquero->user->first_name }} {{ $valoracion->cita->peluquero->user->last_name }}</p>
             <p>{{ __('Fecha de la cita: ') }} {{ \Carbon\Carbon::parse($valoracion->cita->fecha_cita)->format('d/m/Y') }} {{ __('a las') }} {{ \Carbon\Carbon::parse($valoracion->cita->hora_cita)->format('H:i') }}</p>
