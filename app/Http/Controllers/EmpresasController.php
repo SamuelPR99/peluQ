@@ -171,12 +171,9 @@ class EmpresasController extends Controller
         $this->authorize('delete', $empresa);
 
         // Eliminar usuarios de los peluqueros de la empresa
-        foreach ($empresa->peluqueros as $peluquero) {
-            $peluquero->usuarios()->delete();
-        }
-
+        
         $empresa->delete();
-        User::where('id', Auth::id())->update(['user_type' => 'user']);
+        //User::where('id', Auth::id())->update(['user_type' => 'user']);
 
         return redirect()->route('dashboard');
     }
