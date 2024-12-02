@@ -9,7 +9,7 @@
     @endif
 
     <div class="text-center">
-        <h1 class="text-3xl font-semibold text-center text-white bg-gray-800 rounded-md py-4 shadow-lg">Valoraciones</h1>
+        <h1 class="text-3xl font-semibold text-center text-white bg-gray-800 rounded-md py-4 shadow-lg">Valoraciotyu67tyutynes</h1>
         <a href="{{ route('dashboard') }}" class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Menú
         </a>

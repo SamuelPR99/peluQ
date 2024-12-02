@@ -18,7 +18,7 @@ class ValoracionController extends Controller
     {
         // index() es el método que muestra un listado de todas las valoraciones
         $valoraciones = Valoracion::all();
-        return view('valoraciones.index', compact('valoraciones'));
+        return view('dashboard');
     }
 
     /**
