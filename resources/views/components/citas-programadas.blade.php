@@ -106,7 +106,7 @@
                     `<div class="cursor-not-allowed pl-5 pt-5">
                         <div class="flex h-10 w-32 items-center rounded-full bg-slate-200 p-4 shadow-md">
                             <div class="mr-2 h-3 w-3 rounded-full bg-slate-400"></div>
-                            <span class="text-slate-500">Expirada</span>
+                            <span class="text-slate-500 ml-1">Expirada</span>
                         </div>
                     </div>`;
                 break;
