@@ -2,8 +2,8 @@
 @section('content')
     <div class="py-12">
         <div class="max-w-7xl overflow-hidden mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="bg-gray-800 shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-100">
                     <h3 class="text-lg font-semibold mb-2">{{ __('Bienvenid@, ') }} {{ Auth::user()->name }}</h3>
                     @if (Auth::user()->user_type == 'empresario' && Auth::user()->empresas->isNotEmpty())
                         <x-empresario-dashboard :user="Auth::user()" />
