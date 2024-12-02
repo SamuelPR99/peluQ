@@ -180,6 +180,7 @@ class EmpresasController extends Controller
 
         $empresa->delete();
         
+        // Cambiar el tipo de usuario a 'user'
         User::where('id', Auth::id())->update(['user_type' => 'user']);
 
         return redirect()->route('dashboard');
