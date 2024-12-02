@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use App\Models\Peluquero;
 use App\Models\User;
 use App\Services\GeocodingService;
 use Illuminate\Http\Request;
@@ -170,10 +171,16 @@ class EmpresasController extends Controller
     {
         $this->authorize('delete', $empresa);
 
-        // Eliminar usuarios de los peluqueros de la empresa
-        
+        // Eliminar usuarios de tipo peluquero que esten relacionados con la empresa
+        $peluqueros = Peluquero::where('empresa_id', $empresa->id)->get();
+        foreach ($peluqueros as $peluquero) {
+            User::where('id', $peluquero->user_id)->where('user_type', 'peluquero')->delete();
+            $peluquero->delete();
+        }
+
         $empresa->delete();
-        //User::where('id', Auth::id())->update(['user_type' => 'user']);
+        
+        User::where('id', Auth::id())->update(['user_type' => 'user']);
 
         return redirect()->route('dashboard');
     }
