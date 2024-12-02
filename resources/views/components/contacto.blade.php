@@ -19,7 +19,10 @@
 
 <!-- Modal de Contacto -->
 <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center flex z-50">
-    <div class="bg-slate-100 p-6 rounded-lg shadow-lg max-w-lg w-full">
+    <div class="bg-slate-100 p-6 rounded-lg shadow-lg max-w-lg w-full relative">
+        <button id="closeModal" class="absolute top-2 right-2 text-red-600">
+            <i class="fa-solid fa-times"></i>
+        </button>
         <h2 class="text-2xl font-bold text-center mb-4">Contáctanos</h2>
         <form action="{{ route('contact.send') }}" method="POST">
             @csrf
@@ -37,7 +40,6 @@
             </div>
             <button type="submit" class="w-full bg-gradient-to-r from-teal-600 to-lime-500 text-white font-semibold py-2 rounded-lg transition-all ease-in-out">Enviar Mensaje</button>
         </form>
-        <button id="closeModal" class="mt-4 text-red-600">Cerrar</button>
     </div>
 </div>
 
@@ -61,5 +63,11 @@
 
     document.getElementById('closeModal').addEventListener('click', function() {
         document.getElementById('contactModal').classList.add('hidden');
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            document.getElementById('contactModal').classList.add('hidden');
+        }
     });
 </script>
