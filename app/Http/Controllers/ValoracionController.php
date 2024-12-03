@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cita;
 use App\Models\Valoracion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

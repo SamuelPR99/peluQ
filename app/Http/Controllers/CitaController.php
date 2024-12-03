@@ -8,7 +8,6 @@ use App\Models\Empresa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\CitaCreada;
 use App\Mail\CitaParaConfirmar;
 use App\Mail\CitaConfirmada;
 use App\Mail\CitaDenegada;
