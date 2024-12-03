@@ -13,7 +13,7 @@
                 </div>
                 <ul class="list-disc pl-5">
                     <li><strong>{{ __('Servicio:') }}</strong> {{ $cita->servicio->servicio }}</li>
-                    <li class="truncate"><strong>{{ __('Peluquero:') }}</strong> {{ $cita->peluquero->user->name }} {{ $cita->peluquero->user->first_name}} {{ $cita->peluquero->user->last_name }}</li>
+                    <li><strong>{{ __('Peluquero:') }}</strong> {{ $cita->peluquero->user->name }} {{ $cita->peluquero->user->first_name}} {{ $cita->peluquero->user->last_name }}</li>
                     <li><strong>{{ __('Fecha:') }}</strong> {{ \Carbon\Carbon::parse($cita->fecha_cita)->format('d/m/Y') }}</li>
                     <li><strong>{{ __('Hora:') }}</strong> {{ \Carbon\Carbon::parse($cita->hora_cita)->format('H:i') }}</li>
                     <li><strong>{{ __('Precio:') }}</strong> {{ $cita->servicio->precio }} €</li>
