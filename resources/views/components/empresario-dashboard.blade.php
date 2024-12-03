@@ -3,7 +3,7 @@
     <h4 class="text-lg font-semibold mb-2">{{ __('Detalles de la Empresa') }}</h4>
     <ul class="list-disc pl-5">
         <li><strong>{{ __('Nombre:') }}</strong> {{ $user->empresas->first()->nombre_empresa }}</li>
-        <li><strong>{{ __('Dirección:') }}</strong> {{ $user->empresas->first()->direccion }}</li>
+        <li class="truncate"><strong>{{ __('Dirección:') }}</strong> {{ $user->empresas->first()->direccion }}</li>
         <li class="mb-6"><strong>{{ __('Teléfono:') }}</strong> {{ $user->empresas->first()->telefono }}</li>
     </ul>
     <a href="{{ route('empresas.edit', $user->empresas->first()->id) }}" class="inline-block px-4 py-2 mt-2 bg-white hover:bg-green-500 text-gray-800 font-bold py-2 px-4 rounded transition ease-in-out duration-150">{{ __('Editar Datos de la Empresa') }}</a>
