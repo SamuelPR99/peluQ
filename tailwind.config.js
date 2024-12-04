@@ -7,6 +7,7 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './node_modules/flyonui/dist/js/*.js',
     ],
 
     theme: {
@@ -24,5 +25,9 @@ export default {
         },
     },
 
-    plugins: [forms],
+    plugins: [
+        forms,
+        require("flyonui"),
+        require("flyonui/plugin") // Require only if you want to use FlyonUI JS component
+    ],
 };

@@ -17,6 +17,7 @@
         "vite": "^5.4.11"
     },
     "dependencies": {
+        "flyonui": "^1.1.0",
         "sortablejs": "^1.15.3"
     }
 }
