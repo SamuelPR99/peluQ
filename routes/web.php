@@ -29,6 +29,10 @@ Route::get('/Contacto', function () {
     return view('Contacto'); 
 }); // Página de contacto
 
+Route::get('/pruebaFlyonUI', function () {
+    return view('pruebaFlyonUI');
+}); // Página de prueba para FlyonUI
+
 Route::resource('users', UserController::class); // CRUD de usuarios
 
 Route::resource('peluqueros', PeluqueroController::class); // CRUD de peluqueros
