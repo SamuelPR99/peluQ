@@ -1,22 +1,20 @@
-# Usa una imagen con PHP y Composer preinstalados
-FROM composer:2 AS base
+# Imagen base con PHP, Composer y Node.js
+FROM node:18 as build
 
-# Instala Node.js y npm
-RUN apt-get update && apt-get install -y curl && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
+# Instalar PHP y Composer
+RUN apt-get update && apt-get install -y php-cli unzip git curl && \
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Establece el directorio de trabajo
+# Establecer directorio de trabajo
 WORKDIR /app
 
-# Copia los archivos del proyecto
+# Copiar archivos
 COPY . .
 
-# Instala las dependencias de Composer y Node.js
+# Instalar dependencias
 RUN composer install --optimize-autoloader --no-dev && npm install && npm run build
 
-# Usa una imagen ligera para correr la aplicación
+# Fase final
 FROM php:8.3-apache
-
-COPY --from=base /app /var/www/html
-
-# Exponer el puerto
+COPY --from=build /app /var/www/html
 EXPOSE 80
