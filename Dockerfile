@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.2-apache
 
 # Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
@@ -32,6 +32,6 @@ RUN composer install --no-dev --optimize-autoloader \
     && npm run build
 
 # Puerto de escucha
-EXPOSE 9000
+EXPOSE 80
 
-CMD ["php-fpm"]
+CMD ["apache2-foreground"]

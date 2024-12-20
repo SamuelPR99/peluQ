@@ -21,3 +21,4 @@ yarn-error.log
 /.vscode
 /.zed
 !storage/app/public/images/
+nginx.conf
