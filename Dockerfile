@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
+    nodejs \
+    npm \
     && docker-php-ext-install pdo_mysql gd
 
 # Instalar Composer
@@ -24,8 +26,10 @@ COPY . .
 RUN chown -R www-data:www-data /var/www \
     && chmod -R 755 /var/www
 
-# Instalar dependencias de PHP
-RUN composer install --no-dev --optimize-autoloader
+# Instalar dependencias de PHP y Node.js
+RUN composer install --no-dev --optimize-autoloader \
+    && npm install \
+    && npm run build
 
 # Puerto de escucha
 EXPOSE 9000
