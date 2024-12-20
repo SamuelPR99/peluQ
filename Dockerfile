@@ -16,6 +16,9 @@ RUN apt-get update && apt-get install -y \
 # Instalar Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
+# Copiar la configuración de Apache
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
+
 # Establecer el directorio de trabajo
 WORKDIR /var/www
 
