@@ -119,7 +119,4 @@ class AdminController extends Controller
         return view('empresas.ver-empresas', compact('empresas'));
     }
 
-    
-
-    
 }

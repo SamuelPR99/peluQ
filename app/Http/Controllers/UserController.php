@@ -9,24 +9,6 @@ use App\Models\Cita;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        // index() es el método que muestra un listado de todos los usuarios
-        $users = User::all();
-        return view('users.index', compact('users'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // create() es el método que muestra el formulario de creación de un nuevo usuario
-        return view('users.create');
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -46,24 +28,6 @@ class UserController extends Controller
         User::create($request->all());
 
         return redirect()->route('users.index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        // show() es el método que muestra los detalles de un usuario en particular
-        return view('users.show', compact('user'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        // edit() es el método que muestra el formulario de edición de un usuario en particular
-        return view('users.edit', compact('user'));
     }
 
     /**
