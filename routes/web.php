@@ -11,6 +11,7 @@ use App\Http\Controllers\CuadranteController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ServiciosController;
+use App\Http\Controllers\AdminController;
 
 
 Route::get('/', function () {
@@ -93,6 +94,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/valoraciones/store/{citaId}', [ValoracionController::class, 'store'])->name('valoraciones.store'); // Guardar valoración
     Route::delete('/valoraciones/destruir/{valoracion}', [ValoracionController::class, 'destroy'])->name('valoraciones.destroy'); // Eliminar valoración
     Route::get('/valoraciones/check/{citaId}', [ValoracionController::class, 'checkValoracion'])->name('valoraciones.check'); // Verificar valoración
+
+    Route::get('/admin/usuarios', [AdminController::class, 'usuarios'])->name('admin.usuarios');
+    Route::get('/admin/empresas', [AdminController::class, 'empresas'])->name('admin.empresas');
+    Route::delete('/admin/usuarios/{user}', [AdminController::class, 'borrarUsuario'])->name('admin.usuarios.borrar');
+    Route::delete('/admin/empresas/{empresa}', [AdminController::class, 'borrarEmpresa'])->name('admin.empresas.borrar');
+    Route::get('/admin/usuarios/{user}/editar', [AdminController::class, 'editarUsuario'])->name('admin.usuarios.editar');
+    Route::get('/admin/empresas/{empresa}/editar', [AdminController::class, 'editarEmpresa'])->name('admin.empresas.editar');
+    Route::patch('/admin/usuarios/{user}', [AdminController::class, 'actualizarUsuario'])->name('admin.usuarios.actualizar');
+    Route::patch('/admin/empresas/{empresa}', [AdminController::class, 'actualizarEmpresa'])->name('admin.empresas.actualizar');
+    Route::get('/admin/usuarios/crear', [AdminController::class, 'crearUsuario'])->name('admin.usuarios.crear');
+    Route::get('/admin/usuarios/buscar', [AdminController::class, 'buscarUsuario'])->name('admin.usuarios.buscar');
+    Route::get('/admin/empresas/buscar', [AdminController::class, 'buscarEmpresa'])->name('admin.empresas.buscar');
 });
 
 require __DIR__.'/auth.php'; // Rutas de autenticación

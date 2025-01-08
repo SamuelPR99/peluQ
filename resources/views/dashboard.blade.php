@@ -18,7 +18,7 @@
                         <x-dar-de-alta />
                     @endif
                     @if (Auth::user()->user_type == 'admin')
-                        <x-admin-dashboard />
+                        <x-admin-actions />
                     @endif
                     @if (Auth::user()->user_type == 'peluquero')
                         <x-peluquero-dashboard :user="Auth::user()" />
