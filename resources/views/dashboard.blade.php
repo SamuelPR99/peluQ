@@ -13,7 +13,7 @@
                         style="display:none;">
                         <div class="text-white text-lg animate-bounce">{{ __('Buscando las mejores peluquerías...') }}</div>
                     </div>
-                  
+                    <x-valoraciones-realizadas :user="Auth::user()" />
                     @if ((Auth::user()->user_type == 'user' || Auth::user()->user_type == 'empresario') && Auth::user()->empresas->isEmpty())
                         <x-dar-de-alta />
                     @endif
@@ -27,7 +27,6 @@
             </div>
         </div>
     </div>
-    
     <script>
         function showLoadingScreen() {
             document.getElementById('loadingScreen').style.display = 'flex';

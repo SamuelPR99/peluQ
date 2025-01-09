@@ -29,9 +29,6 @@
                 </li>
                 @endif
             </ul>
-            <button type="button" class="btn btn-primary" aria-haspopup="dialog" aria-expanded="false" aria-controls="overlay-example" data-overlay="#overlay-example">Open drawer</button>
-
-
         </nav>
     </div>
 </header>

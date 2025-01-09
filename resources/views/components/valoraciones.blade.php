@@ -12,9 +12,16 @@
             <form id="deleteValoracionForm-{{ $valoracion->id }}" action="{{ route('valoraciones.destroy', $valoracion->id) }}" method="POST" class="inline-block mt-2">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded transition ease-in-out duration-150">{{ __('Eliminar Valoración') }}</button>
+                <button type="button" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white font-bold rounded transition ease-in-out duration-150" onclick="showDeleteModal({{ $valoracion->id }})">{{ __('Eliminar Valoración') }}</button>
             </form>
+            <x-modal id="deleteModal-{{ $valoracion->id }}" title="{{ __('Eliminar Valoración') }}" message="{{ __('¿Estás seguro de que deseas eliminar esta valoración? Esta acción no se puede deshacer.') }}" action="{{ route('valoraciones.destroy', $valoracion->id) }}" actionText="{{ __('Eliminar') }}" />
         </div>
     @endforeach
 </div>
 
+<script>
+    function showDeleteModal(valoracionId) {
+        const modal = document.getElementById(`deleteModal-${valoracionId}`);
+        modal.style.display = 'block';
+    }
+</script>
